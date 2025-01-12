@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Food = require('../models/Food');  // Make sure to import the Food model
-const cloudinary = require('../Utils/Cloudinary');
+const cloudinary = require('../Utils/CloudinaryConfig');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
 
@@ -13,25 +13,45 @@ router.get('/', (req, res) => {
   res.send("This is Food page");
 });
 
-router.post('/temp',  (req, res) => {
-    console.log(req.body); // Log form data
-  
-    const imagePath = req.body.image; // Get the uploaded image path
-    
-    // Upload image to Cloudinary
-    cloudinary.uploader.upload(imagePath, { resource_type: 'auto' }, (error, result) => {
-      if (error) {
-        console.log(error.message)
-        return res.status(500).json({ error: error.message });
-      }
-  
-      // Send the Cloudinary response back to the client
-      res.status(200).json({
-        message: 'Image uploaded successfully',
-        url: result.secure_url, // URL of the uploaded image
-      });
+router.post('/uploadphoto', (req, res) => {
+  console.log(req.body); // Log form data
+
+  const imagePath = req.body.image; // Get the uploaded image path
+
+  cloudinary.uploader.upload(imagePath, { resource_type: 'auto', folder: 'Foods' }, (error, result) => {
+    if (error) {
+      console.log(error.message)
+      return res.status(500).json({ error: error.message });
+    }
+    console.log(result.secure_url)
+    res.status(200).json({
+      message: 'Image uploaded successfully',
+      url: result.secure_url, // URL of the uploaded image
     });
   });
+
+});
+
+router.post('/deletephoto', async (req, res) => {
+  console.log(req.body); // Log form data
+
+  const imageUrl = req.body.imageUrl; // Get the uploaded image path
+
+  try {
+    const publicId = imageUrl.split('/').slice(-1)[0].split('.')[0];
+    
+    await cloudinary.uploader.destroy(publicId);
+
+    res.status(200).json({ message: "Image deleted successfully" });
+
+  } catch (error) {
+    console.error("Error deleting from Cloudinary:", error);
+    
+    res.status(500).json({ message: "Error deleting image from Cloudinary", error: error.message });
+  }
+});
+
+
 
 
 router.post('/createFood', upload.single('image'), [
