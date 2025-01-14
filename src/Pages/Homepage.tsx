@@ -8,7 +8,7 @@ const Homepage = () => {
             <h1 className="text-[3rem] leading-[1]">Explore Categories</h1>
             <div className="flex a gap-4 mt-4  ">
             {Categories.map((category)=>(
-              <div className="flex flex-col justify-center items-center bg-zinc-200 p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 ">
+              <div key={category.id} className="flex flex-col justify-center items-center bg-zinc-200 p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 ">
                 <Icon icon={category.icon} className="text-[3rem] text-primary-600" />
                 <h1 className="text-md">
                 {category.name}

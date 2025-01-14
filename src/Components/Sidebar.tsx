@@ -14,7 +14,7 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
       <div className=' flex flex-1 justify-start items-center flex-col gap-y-2 p-4'>
 
         {menuItems.map((item) => (
-          <div onClick={() => setIsActiveComponent(item.name)} className={`px-4 py-3 cursor-pointer flex  justify- items-center gap-x-2 w-full rounded-2xl ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
+          <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`px-4 py-3 cursor-pointer flex  justify- items-center gap-x-2 w-full rounded-2xl ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
             <Icon icon={item.icon} className={` 
                   
                      text-[1.8rem]`} />
@@ -113,7 +113,7 @@ const menuItems = [
   // },
   {
     name: "Feedback",
-    id: 3,
+    id: 4,
     icon: "ic:twotone-feedback",
     activeIcon: "fluent:person-feedback-32-filled", // bold version
     link: "/feedback"

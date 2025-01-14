@@ -21,13 +21,12 @@ const Page = () => {
           return <Menupage />
         case 'Order History':
           return <OrderHistory />
-        case 'Feedbacks':
+        case 'Feedback':
           return <Feedbacks />
         default:
           return <Homepage />
       }
     }
-    console.log(activeComponent)
   return (
     <div>
     <div className=' h-screen flex '>

@@ -8,11 +8,9 @@ const Login = () => {
   const [loginError, setLoginError] = useState('');
 
   const responseMessage = async (response: any) => {
-    console.log('Google login successful:', response);
 
     const token = response.credential;
     const decoded: any = jwtDecode(token);
-    console.log('Decoded JWT:', decoded);
 
     const userData = {
       email: decoded.email,
