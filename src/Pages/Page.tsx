@@ -7,6 +7,7 @@ import Sidebar from '../Components/Sidebar'
 import Feedbacks from './Feedbacks'
 import Navbar from '../Components/Navbar'
 import RightSidebar from '../Components/RightSidebar'
+import { CartProvider } from '../Utils/CartContext'
 
 const Page = () => {
     const [activeComponent, setIsActiveComponent] = useState('Homepage')
@@ -28,6 +29,8 @@ const Page = () => {
       }
     }
   return (
+    <CartProvider>
+
     <div>
     <div className=' h-screen flex '>
          <Sidebar activeComponent={activeComponent} setIsActiveComponent={setIsActiveComponent} />
@@ -43,6 +46,7 @@ const Page = () => {
 
     </div>
     </div>
+    </CartProvider>
 
   )
 }

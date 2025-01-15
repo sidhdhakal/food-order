@@ -6,7 +6,7 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
 
   return (
-    <div className='bg-zinc-50 w-[16rem] h-full   flex flex-col justify-between text-zinc-900 border-r border-zinc-400 text-lg z-[10]'>
+    <div className='bg-zinc-50 w-[16rem] h-full   flex flex-col justify-between text-zinc-900 border-r border-zinc-300 text-lg z-[10]'>
       <div className='h-[6rem] flex justify-center items-center'>
         <h1 className='font-bold text-[2.6rem] text-primary-600 leading-[1]'>Food<span className='text-primary-300'>Mate</span></h1>
       </div>
@@ -49,18 +49,18 @@ const UserDetail = () => {
     document.cookie = `user=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
     window.location.reload();
   };
-
+console.log(user?.picture)
   return (
     <>
       {user ? (
-        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center p-2 bg-zinc-300 aspect-square self-center rounded-[32px]'>
+        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center p-2 bg-zinc-200 aspect-square self-center rounded-[24px]'>
           <div className='flex flex-col justify-center items-center p-2'>
 
-            <img src={user.picture} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
+            <img src={user?.picture} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
             <h1 className='text-xl font-semibold'> {user.name}</h1>
             <h3 className='text-zinc-600 text-lg'>{user.email}</h3>
           </div>
-          <button onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[24px] gap-x-2 text-white flex justify-center items-center'>
+          <button onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[20px] gap-x-2 text-white flex justify-center items-center'>
             <Icon icon="solar:logout-2-bold-duotone" className='text-[1.6rem]' />
             Log out</button>
 
@@ -72,7 +72,7 @@ const UserDetail = () => {
         //     Log In</a>
         // </div>
         <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center bg-zinc-300  self-center rounded-[32px]'>
-          <a href='/' onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-2xl gap-x-2 text-white flex justify-center items-center'>
+          <a href='/login' onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-2xl gap-x-2 text-white flex justify-center items-center'>
             <Icon icon="solar:login-2-bold-duotone" className='text-[1.6rem]' />
             Log In</a>
         </div>
