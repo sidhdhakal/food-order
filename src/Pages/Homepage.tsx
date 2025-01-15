@@ -27,7 +27,7 @@ const Homepage = () => {
           {SpecialOffers.map((item: any) => (
             <div
               key={item.id}
-              className="flex flex-col justify-center items-center bg-zinc-200 p-2 w-full rounded-2xl gap-y-2"
+              className="flex flex-col select-none justify-center items-center bg-zinc-200 p-2 w-full rounded-2xl gap-y-2"
             >
               <div className="flex gap-x-2 justify-center items-center">
                 <img
@@ -45,16 +45,16 @@ const Homepage = () => {
                 <h1 className="text-[1.2vw] font-bold">
                   <span className="text-zinc-600 font-normal">Rs</span> {item.price}
                 </h1>
-                <div className="w-[7rem] h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full">
-                  <span onClick={() => decreaseQuantity(item.id)} className="h-full aspect-square rounded-full bg-white flex justify-center items-center hover:bg-zinc-300">
+                <div className=" w-[7rem] h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full">
+                  <span onClick={() => decreaseQuantity(item.id)} className="h-full cursor-pointer aspect-square rounded-full bg-white flex justify-center items-center hover:bg-zinc-300">
                     <Icon icon="ic:round-minus" />
                   </span>
                   <h1>{cart[item.id]?.qty || 0}</h1> {/* Display quantity from the cart */}
                   <span
-                    className="h-full aspect-square rounded-full bg-primary-500 flex justify-center items-center hover:bg-primary-600"
+                    className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 flex justify-center items-center hover:bg-primary-600"
                     onClick={() => addToCart(item.id, item)} // Add item to cart
                   >
-                    <Icon icon="line-md:plus" className="text-white" />
+                    <Icon icon="line-md:plus" className="text-white text-[1.3vw]" />
                   </span>
                 </div>
               </div>

@@ -36,7 +36,7 @@ const Page = () => {
          <Sidebar activeComponent={activeComponent} setIsActiveComponent={setIsActiveComponent} />
          <div className='w-[calc(100vw-16rem)] h-screen flex flex-col'>
         <Navbar activeComponent={activeComponent} />
-        <div className='bg-zinc-200 w-full h-[calc(100vh-5rem)] flex  flex-1 gap-x-4 p-4'>
+        <div className='bg-zinc-200 w-full h-[calc(100vh-5rem)] flex   gap-x-3 p-3'>
 
          {renderActiveComponent()} 
 

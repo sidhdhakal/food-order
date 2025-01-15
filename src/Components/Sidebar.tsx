@@ -57,7 +57,7 @@ console.log(user?.picture)
           <div className='flex flex-col justify-center items-center p-2'>
 
             <img src={user?.picture} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
-            <h1 className='text-xl font-semibold'> {user.name}</h1>
+            <h1 className='text-xl font-semibold mt-2'> {user.name}</h1>
             <h3 className='text-zinc-600 text-lg'>{user.email}</h3>
           </div>
           <button onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[20px] gap-x-2 text-white flex justify-center items-center'>
