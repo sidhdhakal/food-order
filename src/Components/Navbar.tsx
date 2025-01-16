@@ -11,6 +11,10 @@ const Navbar = ({activeComponent}:any) => {
 
                         <p>{activeComponent} </p>
                 </div>
+
+
+                <p className="text-zinc-500">Order #123213: <span className="text-black">Pending</span></p>
+
                 <div className='w-[25rem] relative flex  justify-center items-center'>
                     <input type='text' placeholder='Search Food' className='px-6 py-3 w-full placeholder:text-zinc-600 bg-zinc-200/50 border border-zinc-300 rounded-2xl text-black active:outline-none focus:outline-none'/>
                     <button className='ml-2 bg-primary-300 hover:bg-primary-400 transition-all duration-200 px-6 rounded-2xl text-black py-2 h-full absolute right-0 flex justify-center items-center gap-x-1 '>

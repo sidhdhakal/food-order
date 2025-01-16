@@ -1,24 +1,21 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-// Define the cart item type
 type CartItem = {
-  id?: number;
   qty: number;
   item: any;
+  size: string; // Include the size in the cart item
+  price: number; // Store the price for this size
 };
 
-// Define the context shape
 interface CartContextType {
-  cart: { [id: number]: CartItem };
-  addToCart: (itemId: number, itemData: any) => void;
-  removeFromCart: (itemId: number) => void;
-  decreaseQuantity: (itemId: number) => void; // New function signature
+  cart: { [key: string]: CartItem }; // Key will be a combination of product ID and size
+  addToCart: (itemId: number, itemData: any, size: string, price: number) => void;
+  removeFromCart: (itemId: number, size: string) => void;
+  decreaseQuantity: (itemId: number, size: string) => void;
 }
 
-// Create the Cart Context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Create a custom hook to use the Cart Context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -27,46 +24,46 @@ export const useCart = () => {
   return context;
 };
 
-// Define the props for the CartProvider component
 interface CartProviderProps {
   children: ReactNode;
 }
 
-// Create the Cart Provider component
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<{ [id: number]: CartItem }>({});
+  const [cart, setCart] = useState<{ [key: string]: CartItem }>({});
 
-  const addToCart = (itemId: number, itemData: any) => {
+  const addToCart = (itemId: number, itemData: any, size: string, price: number) => {
+    const cartKey = `${itemId}-${size}`; // Combine item ID and size to create a unique key
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      if (updatedCart[itemId]) {
-        updatedCart[itemId].qty += 1; // Increase quantity if item exists
+      if (updatedCart[cartKey]) {
+        updatedCart[cartKey].qty += 1; // Increase quantity if the item is already in the cart
       } else {
-        updatedCart[itemId] = { qty: 1, item: itemData }; // Add item if doesn't exist
+        updatedCart[cartKey] = { qty: 1, item: itemData, size, price }; // Add new item with size and price
       }
       return updatedCart;
     });
   };
 
-  const removeFromCart = (itemId: number) => {
+  const removeFromCart = (itemId: number, size: string) => {
+    const cartKey = `${itemId}-${size}`;
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      if (updatedCart[itemId]) {
-        delete updatedCart[itemId]; // Remove item from cart
+      if (updatedCart[cartKey]) {
+        delete updatedCart[cartKey]; // Remove item from cart by key
       }
       return updatedCart;
     });
   };
 
-  // Function to decrease the quantity of an item in the cart
-  const decreaseQuantity = (itemId: number) => {
+  const decreaseQuantity = (itemId: number, size: string) => {
+    const cartKey = `${itemId}-${size}`;
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      if (updatedCart[itemId]) {
-        if (updatedCart[itemId].qty > 1) {
-          updatedCart[itemId].qty -= 1; // Decrease quantity if it's greater than 1
+      if (updatedCart[cartKey]) {
+        if (updatedCart[cartKey].qty > 1) {
+          updatedCart[cartKey].qty -= 1; // Decrease quantity if greater than 1
         } else {
-          delete updatedCart[itemId]; // Remove item if quantity is 1 or less
+          delete updatedCart[cartKey]; // Remove item if quantity is 1
         }
       }
       return updatedCart;
