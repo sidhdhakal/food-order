@@ -14,7 +14,8 @@
           "price": 12.99
         }
       ],
-      "category": "Main Course"
+      "category": "Main Course",
+      "rating": 4.5
     },
     {
       "id": 2,
@@ -31,7 +32,8 @@
           "price": 16.99
         }
       ],
-      "category": "Main Course"
+      "category": "Main Course",
+      "rating": 4.7
     },
     {
       "id": 3,
@@ -48,7 +50,8 @@
           "price": 8.49
         }
       ],
-      "category": "Healthy"
+      "category": "Healthy",
+      "rating": 4.3
     },
     {
       "id": 4,
@@ -65,7 +68,8 @@
           "price": 18.49
         }
       ],
-      "category": "Main Course"
+      "category": "Main Course",
+      "rating": 4.6
     },
     {
       "id": 5,
@@ -82,7 +86,7 @@
           "price": 15.99
         }
       ],
-      "category": "Non-Veg"
+      "category": "Non-Veg",
+      "rating": 4.8
     }
-  ]
-  
+]
