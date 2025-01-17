@@ -6,6 +6,9 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        '4xl': '1620px', // Custom 4xl size
+      },
       colors: {
         primary: {
           50: '#FFF4D1',

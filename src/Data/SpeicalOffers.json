@@ -1,0 +1,88 @@
+[
+    {
+      "id": 1,
+      "name": "Cheeseburger",
+      "description": "A delicious cheeseburger with a juicy beef patty, melted cheddar cheese, lettuce, tomato, and pickles.",
+      "image": "https://www.allrecipes.com/thmb/5JVfA7MxfTUPfRerQMdF-nGKsLY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/25473-the-perfect-basic-burger-DDMFS-4x3-56eaba3833fd4a26a82755bcd0be0c54.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 8.99
+        },
+        {
+          "name": "Large",
+          "price": 12.99
+        }
+      ],
+      "category": "Main Course"
+    },
+    {
+      "id": 2,
+      "name": "Margherita Pizza",
+      "description": "A classic pizza topped with fresh mozzarella, basil, and a tangy tomato sauce.",
+      "image": "https://www.acouplecooks.com/wp-content/uploads/2022/10/Margherita-Pizza-093.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 12.99
+        },
+        {
+          "name": "Large",
+          "price": 16.99
+        }
+      ],
+      "category": "Main Course"
+    },
+    {
+      "id": 3,
+      "name": "Caesar Salad",
+      "description": "Crisp romaine lettuce, croutons, parmesan cheese, and Caesar dressing.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRV5Yp0uPt-uqJ5udVjAL71-ArAIvCzE84nYQ&s",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 6.49
+        },
+        {
+          "name": "Large",
+          "price": 8.49
+        }
+      ],
+      "category": "Healthy"
+    },
+    {
+      "id": 4,
+      "name": "Spaghetti Bolognese",
+      "description": "Traditional Italian spaghetti topped with a rich and savory beef bolognese sauce.",
+      "image": "https://www.kitchensanctuary.com/wp-content/uploads/2019/09/Spaghetti-Bolognese-square-FS-0204.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 14.49
+        },
+        {
+          "name": "Large",
+          "price": 18.49
+        }
+      ],
+      "category": "Main Course"
+    },
+    {
+      "id": 5,
+      "name": "Chicken Tikka Masala",
+      "description": "A flavorful Indian dish with tender chicken cooked in a spiced tomato and cream sauce.",
+      "image": "https://www.recipetineats.com/tachyon/2018/04/Chicken-Tikka-Masala_0-SQ.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 11.99
+        },
+        {
+          "name": "Large",
+          "price": 15.99
+        }
+      ],
+      "category": "Non-Veg"
+    }
+  ]
+  
