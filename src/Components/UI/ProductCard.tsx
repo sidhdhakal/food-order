@@ -40,7 +40,7 @@ const ProductCard = ({ item }: any) => {
       key={item.id}
       className="flex flex-col select-none justify-center items-center bg-zinc-200/70 p-2 w-full rounded-2xl gap-y-2"
     >
-      <div className="flex gap-x-2 justify-center items-center">
+      <div className="flex gap-x-2 justify-center items-start">
         <img
           src={item.image}
           alt=""

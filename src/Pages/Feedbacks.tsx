@@ -77,7 +77,7 @@ const Feedbacks = () => {
         <div>
           <div className="flex items-start gap-2">
             <h2 className="text-lg font-bold">{feedback.title}</h2>
-            <div className="px-2 py-1 mx-2 text-nowrap rounded-full text-sm bg-primary-100 text-primary-600">
+            <div className="px-3 py-1 mx-2 text-nowrap rounded-full text-sm bg-primary-100 text-primary-600">
               {feedback.category}
             </div>
           </div>
