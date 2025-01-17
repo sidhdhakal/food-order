@@ -3,6 +3,7 @@ import Categories from "../Data/Categories.json";
 import SpecialOffers from "../Data/SpeicalOffers.json";
 import ProductCard from "../Components/UI/ProductCard";
 import { useState } from "react";
+import CategoryCard from "../Components/UI/CategoryCard";
 const Menupage = () => {
   const [selectedCategory, setSelectedCategory]=useState('')
   return (
@@ -23,18 +24,8 @@ onClick={()=>setSelectedCategory('')}
   <h1 className="text-md">All Products</h1>
 </div>
           {Categories.map((category) => (
-            <div
-
-            onClick={()=>setSelectedCategory(category.name)}
-              key={category.id}
-              className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${selectedCategory===category.name?'border-primary-500 bg-primary-100/50':'border-transparent bg-zinc-100 '}`}
-            >
-              <Icon
-                icon={category.icon}
-                className="text-[3rem] text-primary-600"
-              />
-              <h1 className="text-md">{category.name}</h1>
-            </div>
+            <CategoryCard key={category.id} category={category} selectedCategory={selectedCategory} setSelectedCategory={selectedCategory}/>
+        
           ))}
         </div>
       </div>

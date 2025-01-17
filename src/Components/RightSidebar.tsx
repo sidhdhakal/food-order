@@ -22,7 +22,7 @@ const RightSidebar = () => {
     <div className="w-[25rem] p-3 flex flex-col h-full bg-white text-black rounded-[24px]">
       <div className="flex justify-between items-center">
         <h1
-          onClick={() => setIsOrderOpen(false)}
+          // onClick={() => setIsOrderOpen(false)}
           className={`text-[2rem] cursor-pointer ${
             isOrderOpen ? "text-zinc-400" : "text-black"
           }`}
@@ -31,7 +31,7 @@ const RightSidebar = () => {
         </h1>
 
         <h1
-          onClick={() => setIsOrderOpen(true)}
+          // onClick={() => setIsOrderOpen(true)}
           className={`text-[1.5rem] cursor-pointer ${
             !isOrderOpen ? "text-zinc-400" : "text-black"
           }`}

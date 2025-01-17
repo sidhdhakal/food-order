@@ -8,6 +8,7 @@ import Feedbacks from './Feedbacks'
 import Navbar from '../Components/Navbar'
 import RightSidebar from '../Components/RightSidebar'
 import { CartProvider } from '../Utils/CartContext'
+import OrdersPage from './Orderspage'
 
 const Page = () => {
     const [activeComponent, setIsActiveComponent] = useState('Homepage')
@@ -17,7 +18,8 @@ const Page = () => {
         case 'Homepage':
           return <Homepage />
         case 'Orders':
-          return <Order />
+          // return <Order />
+            return <OrdersPage />
         case 'Menu':
           return <Menupage />
         case 'Order History':

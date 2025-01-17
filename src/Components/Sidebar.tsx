@@ -118,11 +118,11 @@ const menuItems = [
     activeIcon: "fluent:person-feedback-32-filled", // bold version
     link: "/feedback"
   },
-  {
-    name: "Order History",
-    id: 5,
-    icon: "ic:twotone-history-edu",
-    activeIcon: "material-symbols:history-2", // bold version
-    link: "/order-history"
-  }
+  // {
+  //   name: "Order History",
+  //   id: 5,
+  //   icon: "ic:twotone-history-edu",
+  //   activeIcon: "material-symbols:history-2", // bold version
+  //   link: "/order-history"
+  // }
 ];
