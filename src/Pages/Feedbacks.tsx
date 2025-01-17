@@ -3,6 +3,9 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
 const Feedbacks = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
+  
+  // Assuming `userId` is provided (or customerName), this is used to filter reviews
+  const userId = "John Doe"; // Replace with actual logged-in user info (e.g., context or prop)
 
   // Sample feedback categories
   const categories = [
@@ -24,7 +27,7 @@ const Feedbacks = () => {
       title: "Amazing Burger!",
       comment: "The chicken burger was perfectly cooked and very tasty. Will order again!",
       items: ["Chicken Burger", "French Fries"],
-      customerName: "John Doe",
+      customerName: "John Doe", // Replace with `userId` or `customerId` as needed
       response: {
         text: "Thank you for your wonderful feedback! We're glad you enjoyed your meal.",
         date: "2025-01-17",
@@ -40,7 +43,7 @@ const Feedbacks = () => {
       title: "Quick Service",
       comment: "Food was prepared quickly, but would appreciate if the staff were more friendly.",
       items: ["Veggie Pizza"],
-      customerName: "Jane Smith",
+      customerName: "Jane Smith", // Replace with `userId` or `customerId` as needed
       response: null
     },
     {
@@ -52,7 +55,7 @@ const Feedbacks = () => {
       title: "App Needs Improvement",
       comment: "The app is good but sometimes crashes during payment.",
       items: ["Chicken Wings", "Sprite"],
-      customerName: "Mike Johnson",
+      customerName: "Mike Johnson", // Replace with `userId` or `customerId` as needed
       response: {
         text: "We apologize for the inconvenience. Our team is working on fixing the app issues.",
         date: "2025-01-16",
@@ -61,17 +64,20 @@ const Feedbacks = () => {
     }
   ];
 
+  // Filter feedback by the logged-in user's reviews
+  const userFeedbacks = feedbacks.filter(feedback => feedback.customerName === userId);
+
   const filteredFeedbacks = selectedCategory === '' || selectedCategory === 'All Feedback'
-    ? feedbacks
-    : feedbacks.filter(feedback => feedback.category === selectedCategory);
+    ? userFeedbacks
+    : userFeedbacks.filter(feedback => feedback.category === selectedCategory);
 
   const FeedbackCard = ({ feedback }: any) => (
     <div className="bg-white rounded-xl p-4 shadow-sm">
       <div className="flex justify-between items-start mb-3">
         <div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <h2 className="text-lg font-bold">{feedback.title}</h2>
-            <div className="px-2 py-1 rounded-full text-sm bg-primary-100 text-primary-600">
+            <div className="px-2 py-1 mx-2 text-nowrap rounded-full text-sm bg-primary-100 text-primary-600">
               {feedback.category}
             </div>
           </div>
@@ -84,9 +90,7 @@ const Feedbacks = () => {
             <Icon
               key={index}
               icon="ph:star-fill"
-              className={`text-xl ${
-                index < feedback.rating ? 'text-yellow-400' : 'text-gray-200'
-              }`}
+              className={`text-xl ${index < feedback.rating ? 'text-yellow-400' : 'text-gray-200'}`}
             />
           ))}
         </div>
@@ -131,28 +135,18 @@ const Feedbacks = () => {
         <div className="flex flex-wrap gap-4 mt-6">
           <div
             onClick={() => setSelectedCategory('')}
-            className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${
-              selectedCategory === '' ? 'border-primary-500 bg-primary-100/50' : 'border-transparent bg-zinc-100'
-            }`}
+            className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${selectedCategory === '' ? 'border-primary-500 bg-primary-100/50' : 'border-transparent bg-zinc-100'}`}
           >
-            <Icon
-              icon="icon-park-twotone:all-application"
-              className="text-[3rem] text-primary-600"
-            />
+            <Icon icon="icon-park-twotone:all-application" className="text-[3rem] text-primary-600" />
             <h1 className="text-md">All Feedback</h1>
           </div>
           {categories.slice(1).map((category) => (
             <div
               key={category.id}
               onClick={() => setSelectedCategory(category.name)}
-              className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${
-                selectedCategory === category.name ? 'border-primary-500 bg-primary-100/50' : 'border-transparent bg-zinc-100'
-              }`}
+              className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${selectedCategory === category.name ? 'border-primary-500 bg-primary-100/50' : 'border-transparent bg-zinc-100'}`}
             >
-              <Icon
-                icon={category.icon}
-                className="text-[3rem] text-primary-600"
-              />
+              <Icon icon={category.icon} className="text-[3rem] text-primary-600" />
               <h1 className="text-md">{category.name}</h1>
             </div>
           ))}
@@ -161,9 +155,7 @@ const Feedbacks = () => {
 
       <div className="w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">
-            {selectedCategory || 'All'} Reviews ({filteredFeedbacks.length})
-          </h2>
+          <h2 className="text-2xl font-bold">{selectedCategory || 'All'} Reviews ({filteredFeedbacks.length})</h2>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             <Icon icon="ph:funnel" />
             <select className="bg-transparent border-none outline-none">
