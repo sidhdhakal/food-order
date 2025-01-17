@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Homepage from './Homepage'
-import Order from './Order'
 import Menupage from './Menupage'
 import OrderHistory from './OrderHistory'
 import Sidebar from '../Components/Sidebar'
