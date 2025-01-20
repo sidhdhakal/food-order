@@ -1,0 +1,33 @@
+[
+    {
+      "id": 1,
+      "name": "All Orders",
+      "icon": "icon-park-twotone:all-application",
+      "bgColor": "bg-slate-100"
+    },
+    {
+      "id": 2,
+      "name": "Pending",
+      "icon": "ic:twotone-pending-actions",
+      "bgColor": "bg-yellow-50"
+    },
+    {
+      "id": 3,
+      "name": "Processing",
+      "icon": "ph:cooking-pot-duotone",
+      "bgColor": "bg-blue-50"
+    },
+    {
+      "id": 4,
+      "name": "Completed",
+      "icon": "icon-park-twotone:cooking",
+      "bgColor": "bg-green-50"
+    },
+    {
+      "id": 5,
+      "name": "Cancelled",
+      "icon": "icon-park-twotone:close-one",
+      "bgColor": "bg-red-50"
+    }
+  ]
+  

@@ -32,14 +32,16 @@ const RightSidebar = () => {
 
         <h1
           // onClick={() => setIsOrderOpen(true)}
-          className={`text-[1.5rem] cursor-pointer ${
+          className={`text-[1.5rem] cursor-pointer flex justify-center items-center gap-x-1 ${
             !isOrderOpen ? "text-zinc-400" : "text-black"
           }`}
         >
           Order #2121
-          <button className="bg-orange-400 ml-2  text-black py-1 px-3 rounded-full text-[1.2rem]">
-            Making
-          </button>
+          <span
+              className={`px-3 py-1 w-fit rounded-full text-sm bg-yellow-100 text-yellow-800`}
+            >
+              Processing
+            </span>
         </h1>
       </div>
       <div className="flex flex-col flex-1 justify-between h-full overflow-hidden gap-x-2 items-center">

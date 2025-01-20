@@ -54,7 +54,7 @@ const CartItem = ({ item }: any) => {
               addToCart(item.item.id, item.item, item.size, item.price)
             } // Add item to cart with selected size and price
           >
-            <Icon icon="line-md:plus" className="text-white text-[1.3vw]" />
+            <Icon icon="lucide:plus" className="text-white text-[1.3vw]" />
           </span>
         </div>
       </div>

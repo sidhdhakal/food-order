@@ -6,7 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  box-sizing: border-box;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -17,23 +17,28 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.home, .rightSidebar {
+  /* Firefox - thinnest possible */
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd transparent;
 
-.rightSidebar,  .home, .orderTable  {
-  /* For modern browsers */
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: #b3b2b2 #f1f1f1; /* Firefox - thumb and track color */
-  
-  /* For Webkit browsers like Chrome, Safari, and Edge */
-  ::-webkit-scrollbar {
-    width: 4px; /* or any value for very thin scrollbar */
+  /* Webkit browsers - 1px width */
+  &::-webkit-scrollbar {
+    width: 1px;
+    position: absolute;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #b3b2b2; /* color of the scrollbar thumb */
-    border-radius: 10px;
+  &::-webkit-scrollbar-thumb {
+    background-color: #bdbdbd;
+    /* Remove border-radius for 1px width to make it more visible */
+    border-radius: 0;
   }
 
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* background color of the track */
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-button:single-button {
+    display: none;
   }
 }

@@ -1,17 +1,10 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import CategoryCard from "../Components/UI/CategoryCard";
-
+import orderStatuses from '../Data/OrderStatus.json'
 const OrdersPage = () => {
   const [selectedStatus, setSelectedStatus] = useState("");
 
-  const orderStatuses = [
-    { id: 1, name: "All Orders", icon: "icon-park-twotone:all-application" },
-    { id: 2, name: "Pending", icon: "ic:twotone-pending-actions" },
-    { id: 3, name: "Processing", icon: "ph:cooking-pot-duotone" },
-    { id: 4, name: "Completed", icon: "icon-park-twotone:cooking" },
-    { id: 5, name: "Cancelled", icon: "icon-park-twotone:close-one" },
-  ];
 
   // Sample current order with status steps
   const currentOrder = {
@@ -257,7 +250,9 @@ const OrdersPage = () => {
   );
 
   return (
-    <div className="flex flex-col  home gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-zinc-50 overflow-hidden">
+    <div className="rounded-[24px] flex-1 relative overflow-hidden">
+
+    <div className="flex flex-col absolute inset-0  home gap-y-8  text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-zinc-50 overflow-y-auto">
       <div className="w-full">
         <h1 className="text-[3rem] leading-[1] mb-4">Current Order Status</h1>
         <CurrentOrderCard />
@@ -309,6 +304,8 @@ const OrdersPage = () => {
         </div>
       </div>
     </div>
+    </div>
+
   );
 };
 

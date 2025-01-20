@@ -90,7 +90,7 @@ const ProductCard = ({ item }: any) => {
             className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 flex justify-center items-center hover:bg-primary-600"
             onClick={() => handleAddToCart(item.id, item)}
           >
-            <Icon icon="line-md:plus" className="text-white text-[1.3vw]" />
+            <Icon icon="lucide:plus" className="text-white text-[1.3vw]" />
           </span>
         </div>
       </div>
