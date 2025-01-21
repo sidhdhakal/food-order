@@ -14,7 +14,7 @@ const filterOptions = [
 
 
 const OrdersPage = () => {
-  const [selectedStatus, setSelectedStatus] = useState("");
+  // const [selectedStatus, setSelectedStatus] = useState("");
   const [filterOption, setfilterOption] = useState('All Orders');
 
 
@@ -25,11 +25,6 @@ const OrdersPage = () => {
   const previousOrders = orders.filter(
     (order) => order.date !== new Date().toISOString().split("T")[0]
   );
-
-  const filteredTodaysOrders =
-    selectedStatus === "" || selectedStatus === "All Orders"
-      ? todaysOrders
-      : todaysOrders.filter((order) => order.status === selectedStatus);
 
 
 
@@ -98,7 +93,7 @@ const OrdersPage = () => {
           <h1 className="text-[3rem] leading-[1]">Today's Orders</h1>
      
         <div className="grid grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
-          {filteredTodaysOrders.map((order) => (
+          {todaysOrders.map((order) => (
             <OrderCard key={order.id} order={order} />
           ))}
         </div>
