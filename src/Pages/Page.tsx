@@ -15,7 +15,7 @@ const Page = () => {
     const renderActiveComponent = () => {
       switch (activeComponent) {
         case 'Homepage':
-          return <Homepage />
+          return <Homepage setIsActiveComponent={setIsActiveComponent}/>
         case 'Orders':
           // return <Order />
             return <OrdersPage />

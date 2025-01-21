@@ -19,13 +19,13 @@
 
 .home, .rightSidebar {
   /* Firefox - thinnest possible */
-  scrollbar-width: thin;
+  scrollbar-width: none;
   scrollbar-color: #bdbdbd transparent;
 
   /* Webkit browsers - 1px width */
   &::-webkit-scrollbar {
     width: 1px;
-    position: absolute;
+    /* position: absolute; */
   }
 
   &::-webkit-scrollbar-thumb {

@@ -3,10 +3,14 @@ import Categories from "../Data/Categories.json";
 import SpeicalOffers from "../Data/SpeicalOffers.json";
 import ProductCard from "../Components/UI/ProductCard";
 
-const Homepage = () => {
+const Homepage = ({setIsActiveComponent}:any) => {
   return (
-    <div className="text-black rounded-[24px] flex-1 bg-zinc-50 overflow-hidden relative h-full">
-      <div className="absolute inset-0 flex flex-col home gap-y-8 text-black p-4 overflow-y-auto">
+      <div className=" flex flex-col home gap-y-8 bg-zinc-50  flex-1 rounded-[24px] overflow-y-auto text-black p-4 ">
+        <div className="w-full h-[40vh]">
+          <img onClick={()=>setIsActiveComponent('Menu')} src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/special-food-menu-design-template-600acda7ee50facbb26ff6e05e3936e7_screen.jpg?ts=1651218525" alt="" 
+          className="w-full object-cover h-full object-center cursor-pointer  rounded-[20px] " />
+
+        </div>
         <div>
           <h1 className="text-[3rem] leading-[1]">Explore Categories</h1>
           <div className="flex flex-wrap gap-4 mt-4">
@@ -34,7 +38,6 @@ const Homepage = () => {
           </div>
         </div>
       </div>
-    </div>
   );
 };
 
