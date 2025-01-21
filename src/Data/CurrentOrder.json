@@ -1,0 +1,50 @@
+{
+    "id": "ORD001",
+    "date": "2025-01-17 14:30",
+    "status": "Processing",
+    "estimatedTime": "15 mins",
+    "total": 45.99,
+    "payment": "Cash",
+    "items": [
+      {
+        "name": "Chicken Burger",
+        "quantity": 2,
+        "price": 15.99,
+        "size": "Large"
+      },
+      {
+        "name": "French Fries",
+        "quantity": 1,
+        "price": 14.01,
+        "size": "Medium"
+      }
+    ],
+    "steps": [
+      {
+        "name": "Order Placed",
+        "status": "completed",
+        "time": "14:30"
+      },
+      {
+        "name": "Order Confirmed",
+        "status": "completed",
+        "time": "14:32"
+      },
+      {
+        "name": "Preparation",
+        "status": "current",
+        "time": "14:35"
+      },
+      {
+        "name": "Ready for Pickup",
+        "status": "pending",
+        "time": ""
+      },
+      {
+        "name": "Completed",
+        "status": "pending",
+        "time": ""
+      }
+    ]
+  }
+  

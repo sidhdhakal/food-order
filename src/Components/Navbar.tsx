@@ -7,7 +7,7 @@ const Navbar = ({activeComponent}:any) => {
             <div className='w-full px-8 flex justify-between items-center'>
 
                 <div className='h-full flex justify-center items-center gap-x-4' >
-                        <Icon icon='mynaui:arrow-long-left-solid' className='text-[3rem] px-3 rounded-2xl bg-zinc-200/70 hover:bg-zinc-300'/>
+                        <Icon onClick={()=>window.history.back()} icon='mynaui:arrow-long-left-solid' className='text-[3rem] px-3 rounded-2xl bg-zinc-200/70 hover:bg-zinc-300'/>
 
                         <p>{activeComponent} </p>
                 </div>

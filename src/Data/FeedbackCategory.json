@@ -1,0 +1,28 @@
+[
+    {
+      "id": 1,
+      "name": "All Feedback",
+      "icon": "icon-park-twotone:all-application"
+    },
+    {
+      "id": 2,
+      "name": "Food Quality",
+      "icon": "icon-park-twotone:cooking"
+    },
+    {
+      "id": 3,
+      "name": "Service",
+      "icon": "icon-park-twotone:people"
+    },
+    {
+      "id": 4,
+      "name": "App Experience",
+      "icon": "icon-park-twotone:mobile"
+    },
+    {
+      "id": 5,
+      "name": "Delivery",
+      "icon": "icon-park-twotone:delivery"
+    }
+  ]
+  

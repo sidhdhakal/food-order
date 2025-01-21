@@ -38,28 +38,28 @@ const ProductCard = ({ item }: any) => {
   return (
     <div
       key={item.id}
-      className="flex flex-col select-none justify-center items-center bg-zinc-200/70 p-2 w-full rounded-2xl gap-y-2"
+      className="flex flex-col select-none bg-zinc-200/70 p-2 w-full rounded-2xl gap-y-2"
     >
-      <div className="flex gap-x-2 justify-center items-start">
+      <div className="flex gap-x-2 flex-1 justify-center items-start">
         <img
           src={item.image}
           alt=""
           className="w-1/4 aspect-square object-cover rounded-xl"
         />
-        <div className="flex-1">
+        <div className="flex-1 ">
           <h1 className="text-[1.2vw] font-semibold">{item.name}</h1>
           <p className="text-[0.8vw] text-zinc-500">{item.description}</p>
           <div className="flex gap-x-3 justify-start items-center">
             <h1>Sizes:</h1>
-            <div className="flex  mt-1">
+            <div className="flex gap-x-2 mt-1">
               {item.sizes.map((size: any) => (
                 <div
                   key={size.name}
                   onClick={() => handleSizeChange(item.id, size.name)}
-                  className={`text-md px-3 py-1 rounded-full border  cursor-pointer ${
+                  className={`text-sm px-2 py-1 rounded-full border  cursor-pointer ${
                     selectedSizes[item.id] === size.name
                       ? "bg-primary-300/30 border-primary-400 "
-                      : "bg-transparent border-transparent"
+                      : "bg-zinc-100 border-transparent"
                   }`}
                 >
                   {size.name}

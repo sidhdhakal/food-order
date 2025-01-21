@@ -68,7 +68,7 @@ const Menupage = () => {
         <div className="flex justify-between items-center">
           <h1 className="text-[3rem] leading-[1]">Menu</h1>
           <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-sm">
-            <Icon icon="ph:funnel" className="text-gray-500" />
+            <Icon icon="solar:sort-line-duotone" className="text-gray-500 text-2xl" />
             <select 
               className="bg-transparent border-none outline-none text-gray-600 pr-8"
               value={sortOption}
