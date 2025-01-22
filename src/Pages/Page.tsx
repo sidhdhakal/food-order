@@ -8,13 +8,14 @@ import Navbar from '../Components/Navbar'
 import RightSidebar from '../Components/RightSidebar'
 import { CartProvider } from '../Utils/CartContext'
 import OrdersPage from './Orderspage'
+import Notifications from './Notifications'
 
 const Page = () => {
-    const [activeComponent, setIsActiveComponent] = useState('Homepage')
+    const [activeComponent, setIsActiveComponent] = useState('Home')
 
     const renderActiveComponent = () => {
       switch (activeComponent) {
-        case 'Homepage':
+        case 'Home':
           return <Homepage setIsActiveComponent={setIsActiveComponent}/>
         case 'Orders':
           // return <Order />
@@ -25,6 +26,8 @@ const Page = () => {
           return <OrderHistory />
         case 'Feedback':
           return <Feedbacks />
+        case 'Notifications':
+          return <Notifications />
         default:
           return <Homepage />
       }
@@ -33,9 +36,9 @@ const Page = () => {
     <CartProvider>
 
     <div>
-    <div className=' h-screen flex '>
+    <div className=' h-screen w-full flex '>
          <Sidebar activeComponent={activeComponent} setIsActiveComponent={setIsActiveComponent} />
-         <div className='w-[calc(100vw-16rem)] h-screen flex flex-col'>
+         <div className='flex-1 h-screen flex flex-col'>
         <Navbar activeComponent={activeComponent} />
         <div className='bg-zinc-200 w-full h-[calc(100vh-5rem)] flex   gap-x-3 p-3'>
 

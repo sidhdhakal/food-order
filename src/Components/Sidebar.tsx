@@ -6,28 +6,27 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
 
   return (
-    <div className='bg-zinc-50 w-[16rem] h-full   flex flex-col justify-between text-zinc-900 border-r border-zinc-300 text-lg z-[10]'>
+    <div className='bg-zinc-50  w-[8rem] 4xl:w-[16rem] h-full   flex flex-col justify-between text-zinc-900 border-r border-zinc-300 text-lg z-[10]'>
       <div className='h-[6rem] flex justify-center items-center'>
-        <h1 className='font-bold text-[2.6rem] text-primary-600 leading-[1]'>Food<span className='text-primary-300'>Mate</span></h1>
+        <h1 className='font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1]'>Food<span className='text-primary-300'>Mate</span></h1>
       </div>
 
-      <div className=' flex flex-1 justify-start items-center flex-col gap-y-2 p-4'>
+      <div className=' flex flex-1  justify-start items-center flex-col gap-y-2  p-4'>
 
         {menuItems.map((item) => (
-          <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`px-4 py-3 cursor-pointer flex  justify- items-center gap-x-2 w-full rounded-2xl ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
-            <Icon icon={item.icon} className={` 
-                  
-                     text-[1.8rem]`} />
+          <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`4xl:px-4 py-3 cursor-pointer flex flex-col 4xl:flex-row 4xl:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] aspect-square 4xl:aspect-auto
+           ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
+            <Icon icon={item.icon} className={`text-3xl 4xl:text-[1.8rem]`} />
             {item.name}
           </div>
         ))}
-        <div className='border-t border-zinc-400 pt-2 w-full'>
+        {/* <div className='border-t border-zinc-400 pt-2 w-full'>
           <div onClick={() => setIsActiveComponent('Notifications')} className={`px-4 py-3 cursor-pointer flex  justify- items-center gap-x-2 w-full rounded-2xl ${activeComponent === 'Notifications' ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
             <Icon icon='solar:notification-unread-bold-duotone' className={` 
                      text-[1.8rem]`} />
             Notifications
           </div>
-        </div>
+        </div> */}
       </div>
       <UserDetail />
     </div>
@@ -56,11 +55,11 @@ console.log(user?.picture)
         <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center p-2 bg-zinc-200 aspect-square self-center rounded-[24px]'>
           <div className='flex flex-col justify-center items-center p-2'>
 
-            <img src={user?.picture} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
-            <h1 className='text-xl font-semibold mt-2'> {user.name}</h1>
-            <h3 className='text-zinc-600 text-lg'>{user.email}</h3>
+            <img src={user?.picture || 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
+            <h1 className='text-md 4xl:text-xl font-semibold mt-2 text-center'> {user.name}</h1>
+            <h3 className='text-zinc-600 hidden 4xl:flex 4xl:text-lg '>{user.email}</h3>
           </div>
-          <button onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[20px] gap-x-2 text-white flex justify-center items-center'>
+          <button onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[20px] gap-x-2 text-white flex flex-col 4xl:flex-row justify-center items-center'>
             <Icon icon="solar:logout-2-bold-duotone" className='text-[1.6rem]' />
             Log out</button>
 
@@ -83,7 +82,7 @@ console.log(user?.picture)
 
 const menuItems = [
   {
-    name: "Homepage",
+    name: "Home",
     id: 1,
     icon: "si:home-duotone",
     activeIcon: "solar:home-2-bold", // bold version

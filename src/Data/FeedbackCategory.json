@@ -14,11 +14,7 @@
       "name": "Service",
       "icon": "icon-park-twotone:people"
     },
-    {
-      "id": 4,
-      "name": "App Experience",
-      "icon": "icon-park-twotone:mobile"
-    },
+
     {
       "id": 5,
       "name": "Delivery",

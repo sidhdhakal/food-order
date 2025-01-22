@@ -19,7 +19,7 @@ const RightSidebar = () => {
   const [isOrderOpen, _] = useState(false);
 
   return (
-    <div className="w-[25rem] p-3 pt-1 flex flex-col h-full bg-white text-black rounded-[24px]">
+    <div className="w-[20rem] 4xl:w-[25rem] p-3 pt-1 flex flex-col h-full bg-white text-black rounded-[24px]">
       <div className="flex justify-between items-center">
         <h1
           // onClick={() => setIsOrderOpen(false)}
@@ -128,7 +128,7 @@ const RightSidebar = () => {
           </div>
         </div>
 
-        <div className="w-full aspect-square flex flex-col self-end justify-between">
+        <div className="w-full aspect-square flex flex-col gap-y-2 self-end justify-between">
           <textarea
             className="w-full bg-zinc-100 rounded-[24px] p-3 focus:outline-none active:outline-none"
             placeholder="Any Special Requirements?"

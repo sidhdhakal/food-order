@@ -8,7 +8,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
       <div className=" flex flex-col home gap-y-8 bg-zinc-50  flex-1 rounded-[24px] overflow-y-auto text-black p-4 ">
         <div className="w-full h-[40vh]">
           <img onClick={()=>setIsActiveComponent('Menu')} src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/special-food-menu-design-template-600acda7ee50facbb26ff6e05e3936e7_screen.jpg?ts=1651218525" alt="" 
-          className="w-full object-cover h-full object-center cursor-pointer  rounded-[20px] " />
+          className="w-full object-cover h-full object-center cursor-pointer  rounded-[16px] " />
 
         </div>
         <div>

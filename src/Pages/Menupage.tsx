@@ -37,7 +37,7 @@ const Menupage = () => {
   };
 
   return (
-    <div className="flex flex-col home gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-zinc-50 overflow-hidden">
+    <div className="flex flex-col home gap-y-8 overflow-y-auto overflow-x-hidden text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-zinc-50 overflow-hidden">
       <div>
         <h1 className="text-[3rem] leading-[1]">Explore Categories</h1>
         <div className="flex flex-wrap gap-4 mt-4">
