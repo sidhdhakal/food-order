@@ -42,7 +42,7 @@ const RightSidebar = () => {
           <span
               className={`px-3 py-1 w-fit rounded-full text-sm bg-yellow-100 text-yellow-800`}
             >
-              Processing
+              Preparing
             </span>
         </h1>
       </div>

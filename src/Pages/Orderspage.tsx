@@ -7,7 +7,7 @@ import CurrentOrderCard from "../Components/UI/CurrentOrderCard";
 const filterOptions = [
   { value: 'orderPlaced', label: 'Order Placed', icon: 'ph:clock' },
   { value: 'orderConfirmed', label: 'Order Confirmed', icon: 'ph:check-circle' },
-  { value: 'preparation', label: 'Preparation', icon: 'ph:cogs' },
+  { value: 'Preparing', label: 'Preparing', icon: 'ph:cogs' },
   { value: 'readyToPickup', label: 'Ready to Pickup', icon: 'ph:shopping-bag' },
   { value: 'completed', label: 'Completed', icon: 'ph:thumbs-up' },
 ];

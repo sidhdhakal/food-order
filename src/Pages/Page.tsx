@@ -39,7 +39,7 @@ const Page = () => {
       </div>
          <div className='flex-1 h-screen flex flex-col'>
         <Navbar activeComponent={activeComponent} />
-        <div className='bg-zinc-100 w-full  flex'>
+        <div className='bg-zinc-100 w-full pt-[5rem] flex'>
 
          {renderActiveComponent()} 
 

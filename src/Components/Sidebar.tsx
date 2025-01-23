@@ -52,7 +52,7 @@ console.log(user?.picture)
   return (
     <>
       {user ? (
-        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center p-2 bg-zinc-200 aspect-square self-center rounded-[24px]'>
+        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center p-2 bg-zinc-200/70 aspect-square self-center rounded-[24px]'>
           <div className='flex flex-col justify-center items-center p-2'>
 
             <img src={user?.picture || 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg'} alt="" className='w-[4rem] object-cover rounded-[24px] aspect-square' />
@@ -65,11 +65,6 @@ console.log(user?.picture)
 
         </div>
       ) : (
-        // <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center bg-zinc-300  self-center rounded-[32px]'>
-        //   <a href='/login' onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-2xl gap-x-2 text-white flex justify-center items-center'>
-        //     <Icon icon="solar:login-2-bold-duotone" className='text-[1.6rem]' />
-        //     Log In</a>
-        // </div>
         <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center bg-zinc-300  self-center rounded-[24px]'>
           <a href='/login' onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-2xl gap-x-2 text-white flex justify-center items-center'>
             <Icon icon="solar:login-2-bold-duotone" className='text-[1.6rem]' />

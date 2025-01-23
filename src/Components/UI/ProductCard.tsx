@@ -48,7 +48,7 @@ const ProductCard = ({ item }: any) => {
         />
         <div className="flex-1 ">
           <h1 className="text-[1.2vw] font-semibold">{item.name}</h1>
-          <p className="text-[0.8vw] text-zinc-500">{item.description}</p>
+          <p className="text-[0.8vw] text-zinc-600 ">{item.description}</p>
           <div className="flex gap-x-3 justify-start items-center">
             <h1>Sizes:</h1>
             <div className="flex gap-x-2 mt-1">
@@ -59,7 +59,7 @@ const ProductCard = ({ item }: any) => {
                   className={`text-sm px-2 py-1 rounded-full border  cursor-pointer ${
                     selectedSizes[item.id] === size.name
                       ? "bg-primary-300/30 border-primary-400 "
-                      : "bg-zinc-100 border-transparent"
+                      : " border-zinc-200"
                   }`}
                 >
                   {size.name}
