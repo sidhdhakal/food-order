@@ -162,6 +162,20 @@
       "rating": 4.5
     },
     {
+      "id": 9,
+      "name": "Vegetable Stir Fry",
+      "description": "A medley of colorful vegetables sautéed with soy sauce and served over a bed of steamed jasmine rice.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJwfn1qwK_04AZGzQVysy-e86aPikvXW4gfA&s",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 8.99
+        }
+      ],
+      "category": "Healthy",
+      "rating": 4.5
+    },
+    {
       "id": 10,
       "name": "Peking Duck",
       "description": "Crispy, flavorful duck served with hoisin sauce, pancakes, and thinly sliced vegetables.",

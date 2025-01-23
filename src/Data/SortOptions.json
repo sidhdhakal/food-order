@@ -1,0 +1,28 @@
+[
+    {
+      "value": "bestMatch",
+      "label": "Best Match",
+      "icon": "ph:star"
+    },
+    {
+      "value": "priceLowHigh",
+      "label": "Price: Low to High",
+      "icon": "ph:arrow-up"
+    },
+    {
+      "value": "priceHighLow",
+      "label": "Price: High to Low",
+      "icon": "ph:arrow-down"
+    },
+    {
+      "value": "ratingHighLow",
+      "label": "Rating: High to Low",
+      "icon": "ph:star-fill"
+    },
+    {
+      "value": "ratingLowHigh",
+      "label": "Rating: Low to High",
+      "icon": "ph:star-half"
+    }
+  ]
+  
