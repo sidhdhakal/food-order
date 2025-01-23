@@ -1,36 +1,35 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const CurrentOrderCard = ({currentOrder}:any) => (
-    <div className="w-full bg-white rounded-xl p-6 shadow-sm">
-      <div className="flex justify-between items-start mb-6">
+    <div className="w-full bg-white rounded-xl p-6 shadow-sm mt-2 lg:mt-4">
+      <div className="flex justify-between items-start ">
         <div>
-          <div className="flex items-center gap-3">
-            <h2 className="text-xl font-bold">{currentOrder.id}</h2>
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl lg:text-2xl font-bold">{currentOrder.id}</h2>
             <div
-              className={`px-3 py-1 rounded-full text-sm bg-yellow-100 text-yellow-800`}
+              className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg 4xl:text-xl bg-yellow-100 text-yellow-800`}
             >
               {currentOrder.status}
             </div>
           </div>
-          {/* <p className="text-sm text-gray-500 mt-1">Estimated Time: {currentOrder.estimatedTime}</p> */}
+          {/* <p className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500 mt-1">Estimated Time: {currentOrder.estimatedTime}</p> */}
         </div>
         <div className="text-right">
-          <div className="text-sm text-gray-500">{currentOrder.date}</div>
+          <div className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500">{currentOrder.date}</div>
           <div className="font-bold mt-1">${currentOrder.total.toFixed(2)}</div>
         </div>
       </div>
-
       <div className="flex flex-col md:flex-row gap-8">
         {/* Order Items */}
         <div className="flex-1">
-          <h3 className="font-medium mb-3">Order Items</h3>
-          <div className="space-y-2">
+          <h3 className="font-medium mb-3 text-md lg:text-xl 4xl:text-2xl">Order Items</h3>
+          <div className="space-y-2 text-sm md:text-md md:text-md lg:text-lg 4xl:text-xl">
             {currentOrder.items.map((item:any, index:number) => (
               <div key={index} className="flex justify-between items-center">
                 <div>
                   <span className="font-medium">{item.quantity}x</span>{" "}
                   {item.name}
-                  <span className="text-sm text-gray-500 ml-2">
+                  <span className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500 ml-2">
                     ({item.size})
                   </span>
                 </div>
@@ -45,18 +44,18 @@ const CurrentOrderCard = ({currentOrder}:any) => (
                   ? "ph:money"
                   : "duo-icons:credit-card"
               }
-              className="text-primary-600"
+              className="text-primary-600 text-xl lg:text-2xl"
             />
-            <span className="text-sm">{currentOrder.payment}</span>
+            <span className="text-sm md:text-md 4xl:text-xl md:text-md lg:text-lg ">{currentOrder.payment}</span>
           </div>
         </div>
 
         {/* Order Progress */}
         <div className="flex-1">
-          <h3 className="font-medium mb-3">Order Progress</h3>
+          <h3 className="font-medium mb-4 text-md lg:text-xl 4xl:text-2xl">Order Progress</h3>
           <div className="space-y-2">
             {currentOrder.steps.map((step:any, index:number) => (
-              <div key={index} className="flex items-center gap-3">
+              <div key={index} className="flex items-start  gap-3">
                 <div
                   className={`w-6 h-6 rounded-full flex items-center justify-center ${
                     step.status === "completed"
@@ -67,14 +66,14 @@ const CurrentOrderCard = ({currentOrder}:any) => (
                   }`}
                 >
                   {step.status === "completed" && (
-                    <Icon icon="ph:check-bold" className="text-white text-sm" />
+                    <Icon icon="ph:check-bold" className="text-white text-sm md:text-md lg:text-lg 4xl:text-xl" />
                   )}
                   {step.status === "current" && (
-                    <Icon icon="ph:clock" className="text-white text-sm" />
+                    <Icon icon="ph:clock" className="text-white text-sm md:text-md lg:text-lg 4xl:text-xl" />
                   )}
                 </div>
                 <div className="flex-1">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between text-sm md:text-md lg:text-lg 4xl:text-xl">
                     <span
                       className={`${
                         step.status === "completed"
@@ -86,7 +85,7 @@ const CurrentOrderCard = ({currentOrder}:any) => (
                     >
                       {step.name}
                     </span>
-                    <span className="text-sm text-gray-500">{step.time}</span>
+                    <span className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500">{step.time}</span>
                   </div>
                   {index < currentOrder.steps.length - 1 && (
                     <div

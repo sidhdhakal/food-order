@@ -29,7 +29,7 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
         max-w-[25rem]
         w-[calc(100vw-1rem)] sm:w-[calc(100vw-2rem)] 
         md:w-[20rem] lg:w-[20rem] 4xl:w-[25rem] shadow-md
-        p-2 sm:p-3 pt-1 
+        p-2 sm:p-3 pt-1 sm:pt-2
         flex flex-col h-full bg-white text-black rounded-[16px] sm:rounded-[24px]
       ">
         <div className="flex justify-between items-center mb-2">
