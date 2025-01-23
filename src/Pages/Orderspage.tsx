@@ -34,12 +34,12 @@ const OrdersPage = () => {
 
     <div className="flex flex-col   home gap-y-8 min-h-[calc(100vh-5rem)] text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent overflow-y-auto">
       <div className="w-full">
-        <Title className="text-[3rem] leading-[1] mb-4">Current Order Status</Title>
+        <Title>Current Order Status</Title>
         <CurrentOrderCard currentOrder={currentOrder}/>
       </div>
 
       <div className="w-full">
-          <Title className="text-[3rem] leading-[1]">Today's Orders</Title>
+          <Title >Today's Orders</Title>
      
         <div className="grid grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
           {todaysOrders.map((order) => (
@@ -50,7 +50,7 @@ const OrdersPage = () => {
 
       <div className="w-full">
       <div className="flex justify-between items-center">
-          <Title className="text-[3rem] leading-[1]">Previous Orders</Title>
+          <Title >Previous Orders</Title>
           <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-sm">
             <Icon icon="icon-park-twotone:filter" className="text-gray-500 text-2xl" />
             <select 

@@ -20,7 +20,7 @@ const CurrentOrderCard = ({currentOrder}:any) => (
         </div>
       </div>
 
-      <div className="flex gap-8">
+      <div className="flex flex-col md:flex-row gap-8">
         {/* Order Items */}
         <div className="flex-1">
           <h3 className="font-medium mb-3">Order Items</h3>

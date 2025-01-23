@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 
   const OrderListItem = ({ order }: any) => (
     <div className="flex items-center justify-between p-3 bg-white rounded-lg shadow-sm hover:bg-gray-50">
-      <div className="flex gap-4 items-center">
+      <div className="flex flex-col md:flex-row gap-x-4 md:items-center">
         <div className="font-medium">{order.id}</div>
         <div className="text-sm text-gray-500">
           {order.items
