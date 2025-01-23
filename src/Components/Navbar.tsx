@@ -3,7 +3,7 @@ import { Icon } from "@iconify/react";
 
 const Navbar = ({activeComponent}:any) => {
     return (
-        <div className='w-full h-[5rem] shadow-md bg-zinc-50 flex justify-center items-center text-black z-[5]'>
+        <div className='w-full min-h-[5rem] sticky top-0 shadow-md bg-zinc-50 flex justify-center items-center text-black z-[5]'>
             <div className='w-full px-8 flex justify-between items-center'>
 
                 <div className='h-full flex justify-center items-center gap-x-4' >

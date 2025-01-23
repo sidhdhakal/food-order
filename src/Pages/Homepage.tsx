@@ -2,10 +2,9 @@ import { Icon } from "@iconify/react";
 import Categories from "../Data/Categories.json";
 import SpeicalOffers from "../Data/SpeicalOffers.json";
 import ProductCard from "../Components/UI/ProductCard";
-
 const Homepage = ({setIsActiveComponent}:any) => {
   return (
-      <div className=" flex flex-col home gap-y-8 bg-zinc-50  flex-1 rounded-[24px] overflow-y-auto text-black p-4 ">
+      <div className=" flex flex-col home gap-y-8 bg-zinc-100  flex-1  overflow-y-auto text-black p-4 ">
         <div className="w-full h-[40vh]">
           <img onClick={()=>setIsActiveComponent('Menu')} src="https://d1csarkz8obe9u.cloudfront.net/posterpreviews/special-food-menu-design-template-600acda7ee50facbb26ff6e05e3936e7_screen.jpg?ts=1651218525" alt="" 
           className="w-full object-cover h-full object-center cursor-pointer  rounded-[16px] " />
@@ -17,7 +16,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
             {Categories.map((category) => (
               <div
                 key={category.id}
-                className="flex flex-col justify-center items-center bg-zinc-200 p-2 aspect-square h-[7rem] rounded-2xl gap-y-2"
+                className="flex flex-col justify-center items-center bg-white p-2 aspect-square h-[7rem] rounded-2xl gap-y-2"
               >
                 <Icon
                   icon={category.icon}

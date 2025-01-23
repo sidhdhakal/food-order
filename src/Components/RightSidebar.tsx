@@ -19,7 +19,9 @@ const RightSidebar = () => {
   const [isOrderOpen, _] = useState(false);
 
   return (
-    <div className="w-[20rem] 4xl:w-[25rem] p-3 pt-1 flex flex-col h-full bg-white text-black rounded-[24px]">
+      <div className="p-3 pl-0 bg-transparent h-[calc(100vh-5rem)] sticky top-[5rem]">
+    <div className="w-[20rem] 4xl:w-[25rem] p-3 pt-1 flex flex-col h-full bg-white text-black rounded-[24px] ">
+
       <div className="flex justify-between items-center">
         <h1
           // onClick={() => setIsOrderOpen(false)}
@@ -197,6 +199,8 @@ const RightSidebar = () => {
           </button>
         </div>
       </div>
+      </div>
+
     </div>
   );
 };

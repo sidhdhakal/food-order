@@ -53,41 +53,12 @@ const OrdersPage = () => {
   );
 
   return (
-    <div className="rounded-[24px] flex-1 relative overflow-hidden">
 
-    <div className="flex flex-col absolute inset-0  home gap-y-8  text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-zinc-50 overflow-y-auto">
+    <div className="flex flex-col   home gap-y-8  text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent overflow-y-auto">
       <div className="w-full">
         <h1 className="text-[3rem] leading-[1] mb-4">Current Order Status</h1>
         <CurrentOrderCard currentOrder={currentOrder}/>
       </div>
-
-      {/* <div>
-        <h1 className="text-[3rem] leading-[1]">Order History</h1>
-        <div className="flex flex-wrap gap-4 mt-4">
-          <div
-            onClick={() => setSelectedStatus("")}
-            className={`flex flex-col justify-center items-center p-2 aspect-square h-[7rem] rounded-2xl gap-y-2 border ${
-              selectedStatus === ""
-                ? "border-primary-500 bg-primary-100/50"
-                : "border-transparent bg-zinc-100"
-            }`}
-          >
-            <Icon
-              icon="icon-park-twotone:all-application"
-              className="text-[3rem] text-primary-600"
-            />
-            <h1 className="text-md">All Orders</h1>
-          </div>
-          {orderStatuses.slice(1).map((status) => (
-            <CategoryCard
-              key={status.id}
-              category={status}
-              selectedCategory={selectedStatus}
-              setSelectedCategory={setSelectedStatus}
-            />
-          ))}
-        </div>
-      </div> */}
 
       <div className="w-full">
           <h1 className="text-[3rem] leading-[1]">Today's Orders</h1>
@@ -124,8 +95,6 @@ const OrdersPage = () => {
         </div>
       </div>
     </div>
-    </div>
-
   );
 };
 
