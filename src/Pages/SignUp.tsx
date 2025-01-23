@@ -102,12 +102,23 @@ const SignUp = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-zinc-50 text-black">
+    <div className="w-full h-screen flex justify-center items-center bg-zinc-50 text-black relative">
+          <img src="/Login/3.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
+      <img src="/Login/2.png" className="absolute top-0 right-0 w-[30%] aspect-square object-cover object-center"/>
+      <img src="/Login/1.png" className="absolute top-0 left-0  h-full aspect-square object-cover object-center "/>
+      <img src="/Login/4.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
+      <div  className="w-full h-full absolute top-0 left-0 z-[5] bg-black/10"/>
+
       <form
         onSubmit={handleLogin}
-        className="flex flex-col gap-2 border border-zinc-300 p-4 rounded-[16px]"
+        className="flex flex-col gap-2 border border-zinc-300 p-4 bg-white z-[10]  shadow-lg rounded-[16px] 4xl:min-w-[25rem]"
       >
-        <h1 className="self-center uppercase font-semibold text-[1.8rem]">User Signup</h1>
+        <div className="flex flex-col justify-center items-center mb-2">
+          <p className="self-center ">Welcome to</p>
+          <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
+            Food<span className="text-primary-300">Mate</span>
+          </h1>
+        </div>
         <div>
           <label htmlFor="name">Full Name:</label>
           <Input
@@ -146,7 +157,7 @@ const SignUp = () => {
           type="submit"
           className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
         >
-          Login{" "}
+          SignUp{" "}
         </button>
 
         <div className="relative my-2">

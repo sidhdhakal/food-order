@@ -7,7 +7,6 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  
 
   const responseMessage = async (response: any) => {
     const token = response.credential;
@@ -102,19 +101,30 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-zinc-50 text-black">
+    <div className="w-full h-screen flex justify-center items-center bg-zinc-50 text-black relative">
+      <img src="/Login/3.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
+      <img src="/Login/2.png" className="absolute top-0 right-0 w-[30%] aspect-square object-cover object-center"/>
+      <img src="/Login/1.png" className="absolute top-0 left-0  h-full aspect-square object-cover object-center "/>
+      <img src="/Login/4.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
+
+      <div  className="w-full h-full absolute top-0 left-0 z-[5] bg-black/10"/>
       <form
         onSubmit={handleLogin}
-        className="flex flex-col gap-2 border border-zinc-300 p-4 rounded-[16px]"
+        className="flex flex-col gap-2 border border-zinc-200 bg-white shadow-lg p-4 z-[10] rounded-[16px] 4xl:min-w-[22rem]"
       >
-        <h1 className="self-center  uppercase font-semibold text-[1.8rem]">User Login</h1>
+        <div className="flex flex-col justify-center items-center  mb-2">
+          <p className="self-center ">Welcome to</p>
+          <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
+            Food<span className="text-primary-300">Mate</span>
+          </h1>
+        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <Input
             type="email"
             id="email"
             value={email}
-            onChange={(e:any) => setEmail(e.target.value)}
+            onChange={(e: any) => setEmail(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
@@ -125,7 +135,7 @@ const Login = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e:any) => setPassword(e.target.value)}
+            onChange={(e: any) => setPassword(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
@@ -146,15 +156,15 @@ const Login = () => {
             <span className=" bg-zinc-50 ">Or Continue with</span>
           </div>
         </div>
-      <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
 
-      <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-zinc-800">
-                              <div>Don't have an Account?</div>
-                              <a href="/signup" className="underline cursor-pointer">SignUp
-                              </a>
-                        </div>
+        <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-zinc-800">
+          <div>Don't have an Account?</div>
+          <a href="/signup" className="underline cursor-pointer">
+            SignUp
+          </a>
+        </div>
       </form>
-
     </div>
   );
 };
