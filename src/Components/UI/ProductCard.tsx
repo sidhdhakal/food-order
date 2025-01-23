@@ -63,7 +63,7 @@ const ProductCard = ({ item }: any) => {
           src={item.image}
           alt={item.name}
           className="w-1/4 aspect-square object-cover rounded-xl 
-          xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4"
+          xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 bg-orange-50"
         />
         <div className="flex-1">
          <H1>{item.name}</H1>
@@ -91,7 +91,7 @@ const ProductCard = ({ item }: any) => {
 
       <div className="flex justify-between w-full items-center">
         <div className="flex gap-x-2 flex-col">
-          <h1 className="xs:text-sm sm:text-base md:text-lg lg:text-[1.2vw] font-bold">
+          <h1 className="xs:text-md sm:text-md md:text-lg lg:text-[1.2vw] font-bold">
             <span className="text-zinc-600 font-normal xs:text-xs sm:text-xs md:text-sm">Rs</span>{" "}
             {getPriceBySize(item, selectedSizes[item.id] || defaultSize)}
           </h1>

@@ -37,9 +37,9 @@ const CartItem = ({ item }: any) => {
       </div>
 
       <div className="flex flex-col justify-between items-end">
-        <h1 className="xs:text-sm sm:text-base md:text-lg lg:text-[1.2vw]">
+        <h1 className="xs:text-xs md:text-sm">
           Rs{" "}
-          <span className="font-semibold text-black">
+          <span className="font-semibold text-black xs:text-sm sm:text-base md:text-lg lg:text-[1.2vw]">
             {(item.price * item.qty).toFixed(2)}
           </span>
         </h1>
