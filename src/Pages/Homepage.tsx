@@ -57,6 +57,8 @@ const Homepage = ({setIsActiveComponent}:any) => {
             ))}
           </div>
         </div>
+
+        <div className="bg-transparent h-[2rem] md:hidden"/>
       </div>
   );
 };

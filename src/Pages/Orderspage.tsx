@@ -72,6 +72,7 @@ const OrdersPage = () => {
           ))}
         </div>
       </div>
+      <div className="bg-transparent h-[2rem] md:hidden"/>
     </div>
   );
 };
