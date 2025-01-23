@@ -3,7 +3,7 @@ import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import Input from "../Components/UI/Input";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
@@ -107,14 +107,25 @@ const Login = () => {
         onSubmit={handleLogin}
         className="flex flex-col gap-2 border border-zinc-300 p-4 rounded-[16px]"
       >
-        <h1 className="self-center  uppercase font-semibold text-[1.8rem]">User Login</h1>
+        <h1 className="self-center uppercase font-semibold text-[1.8rem]">User Signup</h1>
+        <div>
+          <label htmlFor="name">Full Name:</label>
+          <Input
+            type="text"
+            id="name"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
+          />
+        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <Input
             type="email"
             id="email"
             value={email}
-            onChange={(e:any) => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
@@ -125,7 +136,7 @@ const Login = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e:any) => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
@@ -149,8 +160,8 @@ const Login = () => {
       <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
 
       <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-zinc-800">
-                              <div>Don't have an Account?</div>
-                              <a href="/signup" className="underline cursor-pointer">SignUp
+                              <div>Already have an Account?</div>
+                              <a href="/login" className="underline cursor-pointer">Sign In
                               </a>
                         </div>
       </form>
@@ -159,4 +170,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;
