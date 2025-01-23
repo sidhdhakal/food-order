@@ -54,7 +54,6 @@ const Login = () => {
     console.log("An error occurred");
   };
 
-  // Handle email/password login
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -101,7 +100,7 @@ const Login = () => {
   };
 
   return (
-    <div className="w-full h-screen flex justify-center items-center bg-zinc-50 text-black relative">
+    <div className="w-full h-screen max-h-screen flex justify-center items-center bg-zinc-50 text-black relative">
       <img src="/Login/3.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
       <img src="/Login/2.png" className="absolute top-0 right-0 w-[30%] aspect-square object-cover object-center"/>
       <img src="/Login/1.png" className="absolute top-0 left-0  h-full aspect-square object-cover object-center "/>
