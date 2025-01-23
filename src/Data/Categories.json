@@ -2,31 +2,35 @@
   {
     "id": 1,
     "name": "Beverages",
-    "icon": "mdi-cup"
+    "icon": "/Icons/cocktail.png"
   },
   {
     "id": 2,
     "name": "Fast Food",
-    "icon": "mdi-hamburger"
+    "icon": "/Icons/fast-food.png"
   },
   {
     "id": 3,
     "name": "Main Course",
-    "icon": "mdi-food"
+    "icon": "/Icons/main-course.png"
+
   },
   {
     "id": 4,
     "name": "Snacks",
-    "icon": "mdi-pot-mix"
+    "icon": "/Icons/popcorn.png"
+
   },
   {
     "id": 5,
     "name": "Desserts",
-    "icon": "mdi-cake"
+    "icon": "/Icons/cake.png"
+
   },
   {
     "id": 6,
     "name": "Healthy Options",
-    "icon": "mdi-leaf"
+    "icon": "/Icons/healthy-food.png"
+
   }
 ]

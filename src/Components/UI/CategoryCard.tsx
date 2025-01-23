@@ -1,4 +1,3 @@
-import { Icon } from "@iconify/react/dist/iconify.js";
 
 const CategoryCard = ({category, selectedCategory, setSelectedCategory}:any) => {
   return (
@@ -11,7 +10,8 @@ const CategoryCard = ({category, selectedCategory, setSelectedCategory}:any) => 
           : "border-transparent bg-white "
       }`}
     >
-      <Icon icon={category.icon} className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600" />
+      {/* <Icon icon={category.icon} className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600" /> */}
+      <img src={category.icon} className="w-[1.6rem] mr-1 md:w-[2rem] lg:w-[2.8rem]"/>
       <h1 className="text-md text-center">{category.name}</h1>
     </div>
   );
