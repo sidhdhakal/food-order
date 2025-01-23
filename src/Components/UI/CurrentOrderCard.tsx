@@ -43,7 +43,7 @@ const CurrentOrderCard = ({currentOrder}:any) => (
               icon={
                 currentOrder.payment === "Cash"
                   ? "ph:money"
-                  : "simple-icons:esewa"
+                  : "duo-icons:credit-card"
               }
               className="text-primary-600"
             />

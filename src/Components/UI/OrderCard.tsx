@@ -38,7 +38,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
             <div className="flex items-center gap-1">
               <Icon
                 icon={
-                  order.payment === "Cash" ? "ph:money" : "simple-icons:esewa"
+                  order.payment === "Cash" ? "ph:money" : "duo-icons:credit-card"
                 }
                 className="text-primary-600"
               />

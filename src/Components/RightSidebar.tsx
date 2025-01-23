@@ -117,8 +117,10 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
                     <Icon 
                       icon={
                         method === "esewa" ? "duo-icons:credit-card" :
-                        method === "cash" ? "solar:cash-out-bold-duotone" :
+                        method === "cash" ?
                         "ic:twotone-payments"
+                        :
+                        "solar:cash-out-bold-duotone"
                       } 
                       className="text-base sm:text-[1.5rem]" 
                     />
