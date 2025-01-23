@@ -6,7 +6,7 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
 
   return (
-    <div className='bg-zinc-50  w-[8rem] 4xl:w-[16rem] h-full   flex flex-col justify-between text-zinc-900 border-r border-zinc-300 text-lg z-[10]'>
+    <div className='bg-zinc-50  w-[8rem] 4xl:w-[16rem] h-full fixed top-0  flex flex-col justify-between text-zinc-900 border-r overflow-y-auto home border-zinc-300 text-lg z-[10]'>
       <div className='h-[6rem] flex justify-center items-center'>
         <h1 className='font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1]'>Food<span className='text-primary-300'>Mate</span></h1>
       </div>
@@ -14,8 +14,8 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
       <div className=' flex flex-1  justify-start items-center flex-col gap-y-2  p-4'>
 
         {menuItems.map((item) => (
-          <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`4xl:px-4 py-3 cursor-pointer flex flex-col 4xl:flex-row 4xl:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] aspect-square 4xl:aspect-auto
-           ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
+          <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`4xl:px-4 4xl:py-3  cursor-pointer flex flex-col 4xl:flex-row 4xl:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] font-semibold aspect-square 4xl:aspect-auto
+           ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300/90' : 'text-black'}`}>
             <Icon icon={item.icon} className={`text-3xl 4xl:text-[1.8rem]`} />
             {item.name}
           </div>
@@ -70,7 +70,7 @@ console.log(user?.picture)
         //     <Icon icon="solar:login-2-bold-duotone" className='text-[1.6rem]' />
         //     Log In</a>
         // </div>
-        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center bg-zinc-300  self-center rounded-[32px]'>
+        <div className='w-[90%] mb-4 flex flex-col gap-y-2 justify-between items-center bg-zinc-300  self-center rounded-[24px]'>
           <a href='/login' onClick={logOut} className='py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-2xl gap-x-2 text-white flex justify-center items-center'>
             <Icon icon="solar:login-2-bold-duotone" className='text-[1.6rem]' />
             Log In</a>

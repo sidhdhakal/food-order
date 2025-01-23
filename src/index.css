@@ -42,3 +42,27 @@
     display: none;
   }
 }
+
+ :root{
+  /* Firefox - thinnest possible */
+  scrollbar-width: thin;
+  scrollbar-color: #bdbdbd transparent;
+  /* Webkit browsers - 1px width */
+  &::-webkit-scrollbar {
+    position: absolute;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #bdbdbd;
+    /* Remove border-radius for 1px width to make it more visible */
+    border-radius: 0;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-button:single-button {
+    display: none;
+  }
+}

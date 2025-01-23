@@ -88,5 +88,95 @@
       ],
       "category": "Non-Veg",
       "rating": 4.8
+    },
+    {
+      "id": 6,
+      "name": "Fish Tacos",
+      "description": "Grilled fish fillets with fresh slaw, avocado, and a zesty lime crema in soft corn tortillas.",
+      "image": "https://feelgoodfoodie.net/wp-content/uploads/2019/06/Grilled-Fish-Tacos-14-1.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 9.49
+        },
+        {
+          "name": "Large",
+          "price": 13.49
+        }
+      ],
+      "category": "Main Course",
+      "rating": 4.7
+    },
+    {
+      "id": 7,
+      "name": "Buffalo Wings",
+      "description": "Spicy, crispy wings tossed in a tangy buffalo sauce, served with ranch or blue cheese dressing.",
+      "image": "https://easychickenrecipes.com/wp-content/uploads/2023/08/featured-buffalo-wings-recipe.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 10.99
+        },
+        {
+          "name": "Large",
+          "price": 14.99
+        }
+      ],
+      "category": "Appetizers",
+      "rating": 4.6
+    },
+    {
+      "id": 8,
+      "name": "BBQ Ribs",
+      "description": "Tender, slow-cooked ribs glazed with smoky barbecue sauce, served with coleslaw and fries.",
+      "image": "https://www.allrecipes.com/thmb/I2ENWJQG1mb2b5OSXPqQudzlzJw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/220987-Baked-BBQ-Baby-Back-Ribs-mfs-041-77a42b0ce0f0424e9aeec2b22664f1aa.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 15.99
+        },
+        {
+          "name": "Large",
+          "price": 22.99
+        }
+      ],
+      "category": "Main Course",
+      "rating": 4.8
+    },
+    {
+      "id": 9,
+      "name": "Vegetable Stir Fry",
+      "description": "A medley of colorful vegetables sautéed with soy sauce and served over a bed of steamed jasmine rice.",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTJwfn1qwK_04AZGzQVysy-e86aPikvXW4gfA&s",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 8.99
+        },
+        {
+          "name": "Large",
+          "price": 12.99
+        }
+      ],
+      "category": "Healthy",
+      "rating": 4.5
+    },
+    {
+      "id": 10,
+      "name": "Peking Duck",
+      "description": "Crispy, flavorful duck served with hoisin sauce, pancakes, and thinly sliced vegetables.",
+      "image": "https://www.allrecipes.com/thmb/I7mLbsFOCOSkEIyYgIa1QT89tzQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/AR-31972-peking-duck-DDMFS-4x3-hero-3344139da66141b687e1d7b85b995bf5.jpg",
+      "sizes": [
+        {
+          "name": "Small",
+          "price": 17.99
+        },
+        {
+          "name": "Large",
+          "price": 24.99
+        }
+      ],
+      "category": "Main Course",
+      "rating": 4.9
     }
 ]

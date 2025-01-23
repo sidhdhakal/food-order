@@ -38,7 +38,7 @@ const ProductCard = ({ item }: any) => {
   return (
     <div
       key={item.id}
-      className="flex flex-col select-none bg-zinc-200/70 p-2 w-full rounded-2xl gap-y-2"
+      className="flex flex-col select-none bg-white shadow-md p-2 w-full rounded-2xl gap-y-2"
     >
       <div className="flex gap-x-2 flex-1 justify-center items-start">
         <img
@@ -75,10 +75,10 @@ const ProductCard = ({ item }: any) => {
           <span className="text-zinc-600 font-normal">Rs</span>{" "}
           {getPriceBySize(item, selectedSizes[item.id] || defaultSize)}
         </h1>
-        <div className="w-[7rem] h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full">
+        <div className="w-[7rem] h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full shadow-sm">
           <span
             onClick={() => handleDecreaseQuantity(item.id, item)}
-            className="h-full cursor-pointer aspect-square rounded-full bg-white flex justify-center items-center hover:bg-zinc-300"
+            className="h-full cursor-pointer aspect-square rounded-full bg-white shadow-md flex justify-center items-center hover:bg-zinc-300"
           >
             <Icon icon="ic:round-minus" />
           </span>
@@ -87,7 +87,7 @@ const ProductCard = ({ item }: any) => {
               0}
           </h1>
           <span
-            className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 flex justify-center items-center hover:bg-primary-600"
+            className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 shadow-md flex justify-center items-center hover:bg-primary-600"
             onClick={() => handleAddToCart(item.id, item)}
           >
             <Icon icon="lucide:plus" className="text-white text-[1.3vw]" />

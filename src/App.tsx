@@ -4,6 +4,7 @@ import './App.css'
 import Page from './Pages/Page'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './Pages/Login'
+import SignUp from './Pages/SignUp'
 
 function App() {
   const queryClient = new QueryClient()
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path='/' element={<Page />}/>
             <Route path='/login' element={<Login />}/>
+            <Route path='/signup' element={<SignUp />}/>
           </Routes>
         </BrowserRouter>
       </GoogleOAuthProvider>
