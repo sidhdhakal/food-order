@@ -1,7 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 import Navs from '../Data/Navs.json'
 const MobileSidebar = ({ activeComponent, setIsActiveComponent }: any) => {
-    console.log(activeComponent)
   return (
     <div className='fixed bottom-0 px-4 left-0 w-full md:hidden h-[4rem] bg-zinc-50 z-[100] flex justify-between items-center'>
         {Navs.map((nav:any)=>(

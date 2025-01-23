@@ -1,9 +1,13 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-  const OrderCard = ({ order }: any) => (
+  const OrderCard = ({ order, setOrder, setfeedbackOpen }: any) => (
     <div className="w-full bg-white rounded-xl p-4 shadow-sm">
       <div className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <div className="flex gap-x-2">
         <h1 className="text-xl font-bold">{order.id}</h1>
+
+        <button className="text-zinc-500" onClick={()=>{setOrder(order);setfeedbackOpen(true); }}>Give a Feedback?</button>
+        </div>
         <div
           className={`px-3 py-1 rounded-full text-sm ${
             order.status === "Completed"
@@ -30,7 +34,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
                   ({item.size})
                 </span>
               </div>
-              <div>${item.price.toFixed(2)}</div>
+              <div>Rs {item.price.toFixed(2)}</div>
             </div>
           ))}
           <div className="border-t pt-2 mt-2 flex justify-between items-center">
@@ -47,7 +51,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
           </div>
           <div className="flex justify-between items-center font-bold">
             <div>Total</div>
-            <div>${order.total.toFixed(2)}</div>
+            <div>Rs {order.total.toFixed(2)}</div>
           </div>
         </div>
       </div>

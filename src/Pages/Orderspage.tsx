@@ -6,6 +6,7 @@ import OrderCard from "../Components/UI/OrderCard";
 import CurrentOrderCard from "../Components/UI/CurrentOrderCard";
 import Title from "../Components/UI/Title";
 import OrderListItem from "../Components/UI/OrderListItem";
+import FeedbackForm from "../Components/UI/FeedbackForm";
 const filterOptions = [
   { value: 'orderPlaced', label: 'Order Placed', icon: 'ph:clock' },
   { value: 'orderConfirmed', label: 'Order Confirmed', icon: 'ph:check-circle' },
@@ -28,11 +29,16 @@ const OrdersPage = () => {
     (order) => order.date !== new Date().toISOString().split("T")[0]
   );
 
-
+const [feedbackOpen, setfeedbackOpen]=useState(false)
+const [order, setOrder]=useState(null)
 
   return (
 
     <div className="flex flex-col   home gap-y-8 min-h-[calc(100vh-5rem)] text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent overflow-y-auto">
+
+    {feedbackOpen && 
+      <FeedbackForm order={order} setfeedbackOpen={setfeedbackOpen}/>
+    }
       <div className="w-full">
         <Title>Current Order Status</Title>
         <CurrentOrderCard currentOrder={currentOrder}/>
@@ -43,7 +49,7 @@ const OrdersPage = () => {
      
         <div className="grid grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
           {todaysOrders.map((order) => (
-            <OrderCard key={order.id} order={order} />
+            <OrderCard key={order.id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen}/>
           ))}
         </div>
       </div>

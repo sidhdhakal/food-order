@@ -18,7 +18,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
           />
           <span className="text-sm">{order.payment}</span>
         </div>
-        <div className="font-medium">${order.total.toFixed(2)}</div>
+        <div className="font-medium">Rs {order.total.toFixed(2)}</div>
       </div>
     </div>
   );

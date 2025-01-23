@@ -7,15 +7,15 @@ const CurrentOrderCard = ({currentOrder}:any) => (
           <div className="flex items-center gap-2">
             <h2 className="text-xl lg:text-2xl font-bold">{currentOrder.id}</h2>
             <div
-              className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg 4xl:text-xl bg-yellow-100 text-yellow-800`}
+              className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg  bg-yellow-100 text-yellow-800`}
             >
               {currentOrder.status}
             </div>
           </div>
-          {/* <p className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500 mt-1">Estimated Time: {currentOrder.estimatedTime}</p> */}
+          {/* <p className="text-sm md:text-md lg:text-lg  text-gray-500 mt-1">Estimated Time: {currentOrder.estimatedTime}</p> */}
         </div>
         <div className="text-right">
-          <div className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500">{currentOrder.date}</div>
+          <div className="text-sm md:text-md lg:text-lg  text-gray-500">{currentOrder.date}</div>
           <div className="font-bold mt-1">${currentOrder.total.toFixed(2)}</div>
         </div>
       </div>
@@ -23,17 +23,17 @@ const CurrentOrderCard = ({currentOrder}:any) => (
         {/* Order Items */}
         <div className="flex-1">
           <h3 className="font-medium mb-3 text-md lg:text-xl 4xl:text-2xl">Order Items</h3>
-          <div className="space-y-2 text-sm md:text-md md:text-md lg:text-lg 4xl:text-xl">
+          <div className="space-y-2 text-sm md:text-md md:text-md lg:text-lg ">
             {currentOrder.items.map((item:any, index:number) => (
               <div key={index} className="flex justify-between items-center">
                 <div>
                   <span className="font-medium">{item.quantity}x</span>{" "}
                   {item.name}
-                  <span className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500 ml-2">
+                  <span className="text-sm md:text-md lg:text-lg  text-gray-500 ml-2">
                     ({item.size})
                   </span>
                 </div>
-                <div>${item.price.toFixed(2)}</div>
+                <div>Rs {item.price.toFixed(2)}</div>
               </div>
             ))}
           </div>
@@ -46,7 +46,7 @@ const CurrentOrderCard = ({currentOrder}:any) => (
               }
               className="text-primary-600 text-xl lg:text-2xl"
             />
-            <span className="text-sm md:text-md 4xl:text-xl md:text-md lg:text-lg ">{currentOrder.payment}</span>
+            <span className="text-sm md:text-md  md:text-md lg:text-lg ">{currentOrder.payment}</span>
           </div>
         </div>
 
@@ -66,14 +66,14 @@ const CurrentOrderCard = ({currentOrder}:any) => (
                   }`}
                 >
                   {step.status === "completed" && (
-                    <Icon icon="ph:check-bold" className="text-white text-sm md:text-md lg:text-lg 4xl:text-xl" />
+                    <Icon icon="ph:check-bold" className="text-white text-sm md:text-md lg:text-lg " />
                   )}
                   {step.status === "current" && (
-                    <Icon icon="ph:clock" className="text-white text-sm md:text-md lg:text-lg 4xl:text-xl" />
+                    <Icon icon="ph:clock" className="text-white text-sm md:text-md lg:text-lg " />
                   )}
                 </div>
                 <div className="flex-1">
-                  <div className="flex justify-between text-sm md:text-md lg:text-lg 4xl:text-xl">
+                  <div className="flex justify-between text-sm md:text-md lg:text-lg ">
                     <span
                       className={`${
                         step.status === "completed"
@@ -85,7 +85,7 @@ const CurrentOrderCard = ({currentOrder}:any) => (
                     >
                       {step.name}
                     </span>
-                    <span className="text-sm md:text-md lg:text-lg 4xl:text-xl text-gray-500">{step.time}</span>
+                    <span className="text-sm md:text-md lg:text-lg  text-gray-500">{step.time}</span>
                   </div>
                   {index < currentOrder.steps.length - 1 && (
                     <div

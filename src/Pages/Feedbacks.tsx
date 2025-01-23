@@ -38,8 +38,7 @@ const Feedbacks = () => {
       <h1 className="text-md text-center">All Feedbacks</h1>
     </div>
           {categories.slice(1).map((category) => (
-           
-           <CategoryCard category={category} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+           <CategoryCard key={category.id} category={category} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
           ))}
         </div>
       </div>
