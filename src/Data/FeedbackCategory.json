@@ -7,18 +7,18 @@
     {
       "id": 2,
       "name": "Food Quality",
-      "icon": "icon-park-twotone:cooking"
+      "icon": "/Icons/best.png"
     },
     {
       "id": 3,
       "name": "Service",
-      "icon": "icon-park-twotone:people"
+      "icon": "/Icons/customer-service.png"
     },
 
     {
       "id": 5,
       "name": "Delivery",
-      "icon": "icon-park-twotone:delivery"
+      "icon": "/Icons/serving-dish.png"
     }
   ]
   

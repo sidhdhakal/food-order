@@ -35,7 +35,7 @@ const Feedbacks = () => {
       }`}
     >
       <Icon icon="icon-park-twotone:all-application" className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600" />
-      <h1 className="text-md">All Feedbacks</h1>
+      <h1 className="text-md text-center">All Feedbacks</h1>
     </div>
           {categories.slice(1).map((category) => (
            
