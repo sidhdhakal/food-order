@@ -5,7 +5,6 @@ import products from '../../Data/foodmenu.json'
 import categories from '../../Data/Categories.json'
 import DialogLayout from '../AdminComponents/DialogLayout'
 import AddProductForm from '../AdminComponents/AddProductForm'
-import DialogModal from '../AdminComponents/DialogModal'
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
