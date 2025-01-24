@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Icon } from "@iconify/react/dist/iconify.js";
-import feedbacks from '../Data/Feedbacks.json'
-import categories from '../Data/FeedbackCategory.json'
-import FeedbackCard from '../Components/UI/FeedbackCard';
-import CategoryCard from '../Components/UI/CategoryCard';
-import Title from '../Components/UI/Title';
+import feedbacks from '../../Data/Feedbacks.json'
+import categories from '../../Data/FeedbackCategory.json'
+import FeedbackCard from '../../Components/Feedbackpage/FeedbackCard';
+import CategoryCard from '../../Components/UI/CategoryCard';
+import Title from '../../Components/UI/Title';
 const Feedbacks = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Feedbacks');
   

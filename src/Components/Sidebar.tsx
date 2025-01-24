@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react";
 import { useQuery } from '@tanstack/react-query';
-import CheckLogin from '../Utils/CheckLogin';
+import CheckLogin from '../CustomerFacing/Utils/CheckLogin';
 import menuItems from '../Data/Navs.json'
 import UserDetailDiv from "./UI/UserDetailDiv";
 const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {

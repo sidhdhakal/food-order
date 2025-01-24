@@ -1,7 +1,7 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
-import Input from "../Components/UI/Input";
+import Input from "../../Components/UI/Input";
 
 const Login = () => {
   const [email, setEmail] = useState("");

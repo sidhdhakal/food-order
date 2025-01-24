@@ -1,14 +1,14 @@
 import { useState } from "react";
 import Homepage from "./Homepage";
 import Menupage from "./Menupage";
-import Sidebar from "../Components/Sidebar";
+import Sidebar from "../../Components/Sidebar";
 import Feedbacks from "./Feedbacks";
-import Navbar from "../Components/Navbar";
-import RightSidebar from "../Components/RightSidebar";
+import Navbar from "../../Components/Navbar";
+import RightSidebar from "../../Components/RightSidebar";
 import { CartProvider } from "../Utils/CartContext";
 import OrdersPage from "./Orderspage";
 import Notifications from "./Notifications";
-import MobileSidebar from "../Components/MobileSidebar";
+import MobileSidebar from "../../Components/MobileSidebar";
 
 const Page = () => {
   const [activeComponent, setIsActiveComponent] = useState("Home");

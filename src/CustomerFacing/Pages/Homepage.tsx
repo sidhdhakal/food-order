@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
-import SpeicalOffers from "../Data/SpeicalOffers.json";
-import ProductCard from "../Components/UI/ProductCard";
-import Title from "../Components/UI/Title";
+import SpeicalOffers from "../../Data/SpeicalOffers.json";
+import ProductCard from "../../Components/UI/ProductCard";
+import Title from "../../Components/UI/Title";
 const Homepage = ({setIsActiveComponent}:any) => {
   return (
       <div className=" flex flex-col home gap-y-8 bg-zinc-100  flex-1 min-h-[calc(100vh-5rem)] overflow-y-auto text-black p-4 ">

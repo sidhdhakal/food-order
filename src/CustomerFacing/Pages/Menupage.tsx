@@ -1,10 +1,10 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import Categories from "../Data/Categories.json";
-import MenuData from "../Data/foodmenu.json";
-import ProductCard from "../Components/UI/ProductCard";
+import Categories from "../../Data/Categories.json";
+import MenuData from "../../Data/foodmenu.json";
+import ProductCard from "../../Components/UI/ProductCard";
 import { useState } from "react";
-import CategoryCard from "../Components/UI/CategoryCard";
-import sortOptions from '../Data/SortOptions.json'
+import CategoryCard from "../../Components/UI/CategoryCard";
+import sortOptions from '../../Data/SortOptions.json'
 const Menupage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [sortOption, setSortOption] = useState("bestMatch");

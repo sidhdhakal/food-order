@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import currentOrder from '../Data/CurrentOrder.json'
-import orders from '../Data/PreviousOrders.json'
-import OrderCard from "../Components/UI/OrderCard";
-import CurrentOrderCard from "../Components/UI/CurrentOrderCard";
-import Title from "../Components/UI/Title";
-import OrderListItem from "../Components/UI/OrderListItem";
-import FeedbackForm from "../Components/UI/FeedbackForm";
+import currentOrder from '../../Data/CurrentOrder.json'
+import orders from '../../Data/PreviousOrders.json'
+import OrderCard from "../../Components/Orderpage/OrderCard";
+import CurrentOrderCard from "../../Components/Orderpage/CurrentOrderCard";
+import Title from "../../Components/UI/Title";
+import OrderListItem from "../../Components/Orderpage/OrderListItem";
+import FeedbackForm from "../../Components/Feedbackpage/FeedbackForm";
 const filterOptions = [
   { value: 'orderPlaced', label: 'Order Placed', icon: 'ph:clock' },
   { value: 'orderConfirmed', label: 'Order Confirmed', icon: 'ph:check-circle' },

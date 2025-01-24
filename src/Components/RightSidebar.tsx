@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
-import { useCart } from "../Utils/CartContext";
+import { useCart } from "../CustomerFacing/Utils/CartContext";
 import CartItem from "./UI/CartItem";
 
 const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {

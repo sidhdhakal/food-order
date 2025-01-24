@@ -1,8 +1,8 @@
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
-import CheckLogin from "../Utils/CheckLogin";
+import CheckLogin from "../CustomerFacing/Utils/CheckLogin";
 import { useState } from "react";
-import { useCart } from "../Utils/CartContext";
+import { useCart } from "../CustomerFacing/Utils/CartContext";
 
 const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
   const { cart } = useCart(); // Get cart items from CartContext
