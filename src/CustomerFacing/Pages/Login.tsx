@@ -2,6 +2,7 @@ import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import Input from "../../Components/UI/Input";
+import Background from "../../Components/UI/Background";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -101,12 +102,7 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen max-h-screen flex justify-center items-center bg-zinc-50 text-black relative">
-      <img src="/Login/3.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
-      <img src="/Login/2.png" className="absolute top-0 right-0 w-[30%] aspect-square object-cover object-center"/>
-      <img src="/Login/1.png" className="absolute top-0 left-0  h-full aspect-square object-cover object-center "/>
-      <img src="/Login/4.png" className="absolute bottom-0 left-0 w-full object-contain object-center"/>
-
-      <div  className="w-full h-full absolute top-0 left-0 z-[5] bg-black/10"/>
+      <Background />
       <form
         onSubmit={handleLogin}
         className="flex flex-col gap-2 border border-zinc-200 bg-white shadow-lg p-4 z-[10] rounded-[16px] 4xl:min-w-[22rem]"

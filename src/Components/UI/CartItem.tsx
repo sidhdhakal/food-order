@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useCart } from "../../CustomerFacing/Utils/CartContext";
+import { useCart } from "../../Utils/CartContext";
 
 const CartItem = ({ item }: any) => {
   const { addToCart, removeFromCart, decreaseQuantity } = useCart();

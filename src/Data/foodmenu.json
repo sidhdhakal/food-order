@@ -15,7 +15,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.5
+	  "rating": 4.5,
+	  "available": false
 	},
 	{
 	  "id": 102,
@@ -33,7 +34,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.7
+	  "rating": 4.7,
+	  "available": true
 	},
 	{
 	  "id": 103,
@@ -51,7 +53,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.8
+	  "rating": 4.8,
+	  "available": true
 	},
 	{
 	  "id": 104,
@@ -69,7 +72,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 105,
@@ -87,7 +91,8 @@
 		}
 	  ],
 	  "category": "Fast Food",
-	  "rating": 4.7
+	  "rating": 4.7,
+	  "available": true
 	},
 	{
 	  "id": 106,
@@ -105,7 +110,8 @@
 		}
 	  ],
 	  "category": "Fast Food",
-	  "rating": 4.4
+	  "rating": 4.4,
+	  "available": true
 	},
 	{
 	  "id": 107,
@@ -119,7 +125,8 @@
 		}
 	  ],
 	  "category": "Main Course",
-	  "rating": 4.9
+	  "rating": 4.9,
+	  "available": true
 	},
 	{
 	  "id": 108,
@@ -133,7 +140,8 @@
 		}
 	  ],
 	  "category": "Main Course",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 109,
@@ -151,7 +159,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.7
+	  "rating": 4.7,
+	  "available": true
 	},
 	{
 	  "id": 110,
@@ -169,7 +178,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.5
+	  "rating": 4.5,
+	  "available": true
 	},
 	{
 	  "id": 111,
@@ -187,7 +197,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.8
+	  "rating": 4.8,
+	  "available": true
 	},
 	{
 	  "id": 112,
@@ -205,7 +216,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.4
+	  "rating": 4.4,
+	  "available": true
 	},
 	{
 	  "id": 113,
@@ -219,7 +231,8 @@
 		}
 	  ],
 	  "category": "Desserts",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 114,
@@ -237,7 +250,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.5
+	  "rating": 4.5,
+	  "available": true
 	},
 	{
 	  "id": 115,
@@ -255,7 +269,8 @@
 		}
 	  ],
 	  "category": "Main Course",
-	  "rating": 4.8
+	  "rating": 4.8,
+	  "available": true
 	},
 	{
 	  "id": 116,
@@ -269,7 +284,8 @@
 		}
 	  ],
 	  "category": "Healthy Options",
-	  "rating": 4.7
+	  "rating": 4.7,
+	  "available": true
 	},
 	{
 	  "id": 117,
@@ -283,7 +299,8 @@
 		}
 	  ],
 	  "category": "Healthy Options",
-	  "rating": 4.5
+	  "rating": 4.5,
+	  "available": true
 	},
 	{
 	  "id": 118,
@@ -297,7 +314,8 @@
 		}
 	  ],
 	  "category": "Breakfast",
-	  "rating": 4.4
+	  "rating": 4.4,
+	  "available": true
 	},
 	{
 	  "id": 119,
@@ -311,7 +329,8 @@
 		}
 	  ],
 	  "category": "Main Course",
-	  "rating": 4.3
+	  "rating": 4.3,
+	  "available": true
 	},
 	{
 	  "id": 120,
@@ -325,7 +344,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 121,
@@ -339,7 +359,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.5
+	  "rating": 4.5,
+	  "available": true
 	},
 	{
 	  "id": 122,
@@ -353,7 +374,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.3
+	  "rating": 4.3,
+	  "available": true
 	},
 	{
 	  "id": 123,
@@ -367,7 +389,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.8
+	  "rating": 4.8,
+	  "available": true
 	},
 	{
 	  "id": 124,
@@ -381,7 +404,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 125,
@@ -395,7 +419,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.3
+	  "rating": 4.3,
+	  "available": true
 	},
 	{
 	  "id": 126,
@@ -409,7 +434,8 @@
 		}
 	  ],
 	  "category": "Beverages",
-	  "rating": 4.6
+	  "rating": 4.6,
+	  "available": true
 	},
 	{
 	  "id": 127,
@@ -423,7 +449,8 @@
 		}
 	  ],
 	  "category": "Snacks",
-	  "rating": 4.2
+	  "rating": 4.2,
+	  "available": true
 	}
   ]
   
