@@ -3,6 +3,9 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 import SearchInput from "../../Components/UI/SearchInput"
 import products from '../../Data/foodmenu.json'
 import categories from '../../Data/Categories.json'
+import DialogLayout from '../AdminComponents/DialogLayout'
+import AddProductForm from '../AdminComponents/AddProductForm'
+import DialogModal from '../AdminComponents/DialogModal'
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -21,12 +24,18 @@ const Menu = () => {
     return filtered;
   }, [selectedCategory]);
 
+  const [addProductFormOpen, setAddProductFormOpen]=useState(false)
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      {/* {<DialogModal productName='Nothing'/>} */}
+      {/* <div className={`fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-[50] transition-all duration-200 delay-200 ${addProductFormOpen?'opacity-1 block':'opacity-0 hidden'}`}/> */}
+      <DialogLayout title='Add Product' isOpen={addProductFormOpen} onClose={()=>setAddProductFormOpen(false)}>
+        <AddProductForm onClose={()=>setAddProductFormOpen(false)} />
+      </DialogLayout>
       <div className="auto w-full flex justify-between items-start">
         <SearchInput className="flex"/>
 
-        <button className="w-fit px-6 py-3 rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] border border=primary-300" >
+        <button onClick={()=>setAddProductFormOpen(true)} className="w-fit px-6 py-3 rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] border border=primary-300" >
           <Icon icon='akar-icons:plus' className="text-2xl text-black"/>
           Add Product
         </button>
@@ -104,6 +113,7 @@ const Menu = () => {
                       <Icon icon="cuida:edit-outline" className="text-2xl" />
                     </button>
                     <button 
+                    
                       className="text-red-600 hover:text-red-800"
                       onClick={() => console.log(`Delete product ${product.id}`)}
                     >
