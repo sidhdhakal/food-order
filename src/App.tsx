@@ -5,7 +5,8 @@ import Page from './CustomerFacing/Pages/Page'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './CustomerFacing/Pages/Login'
 import SignUp from './CustomerFacing/Pages/SignUp'
-import Dashboard from './Admin/Pages/Dashboard'
+import AdminPage from './Admin/Pages/AdminMain'
+import AdminLogin from './Admin/Pages/AdminLogin'
 
 function App() {
   const queryClient = new QueryClient()
@@ -21,7 +22,8 @@ function App() {
             <Route path='/signup' element={<SignUp />}/>
 
             <Route path='/admin'>
-                <Route path='' element={<Dashboard />}/>
+              <Route path=''  element={<AdminPage />}/>
+              <Route path='login'  element={<AdminLogin/>}/>
             </Route>
           </Routes>
         </BrowserRouter>
