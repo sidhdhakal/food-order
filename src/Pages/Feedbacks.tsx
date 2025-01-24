@@ -10,7 +10,6 @@ const Feedbacks = () => {
   
   const userId = "John Doe"; // Replace with actual logged-in user info (e.g., context or prop)
 
-  // Filter feedback by the logged-in user's reviews
   const userFeedbacks = feedbacks.filter(feedback => feedback.customerName === userId);
 
   const filteredFeedbacks = selectedCategory === '' || selectedCategory === 'All Feedbacks'
@@ -34,7 +33,9 @@ const Feedbacks = () => {
           : "border-transparent bg-white "
       }`}
     >
-      <Icon icon="icon-park-twotone:all-application" className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600" />
+      {/* <Icon icon="icon-park-twotone:all-application" className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600" /> */}
+      <img src='/Icons/feedbacks.png' className="w-[1.6rem] mr-1 md:w-[2rem] lg:w-[2.8rem]"/>
+
       <h1 className="text-md text-center">All Feedbacks</h1>
     </div>
           {categories.slice(1).map((category) => (

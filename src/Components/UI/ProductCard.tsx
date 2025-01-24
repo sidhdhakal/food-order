@@ -75,7 +75,7 @@ const ProductCard = ({ item }: any) => {
                 <div
                   key={size.name}
                   onClick={() => handleSizeChange(item.id, size.name)}
-                  className={`xs:text-xs sm:text-xs md:text-sm lg:text-sm px-2 py-1 rounded-full border cursor-pointer ${
+                  className={`text-[0.9rem] sm:text-xs md:text-sm lg:text-sm px-2 py-1 rounded-full border cursor-pointer ${
                     selectedSizes[item.id] === size.name
                       ? "bg-primary-300/30 border-primary-400"
                       : "border-zinc-200"

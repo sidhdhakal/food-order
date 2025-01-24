@@ -4,7 +4,7 @@ import CheckLogin from "../Utils/CheckLogin";
 import { useState } from "react";
 import { useCart } from "../Utils/CartContext";
 
-const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen }: any) => {
+const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
   const { cart } = useCart(); // Get cart items from CartContext
   return (
     <div className=" min-h-[5rem] h-[5rem] w-full md:w-[calc(100vw-8rem)] 4xl:w-[calc(100vw-16rem)] fixed top-0 shadow-md bg-zinc-50 flex justify-center items-center text-black z-[5]">
@@ -13,14 +13,14 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen }: any) => {
           <Icon
             onClick={() => window.history.back()}
             icon="mynaui:arrow-long-left-solid"
-            className="text-[3rem] px-3 rounded-2xl bg-zinc-200/70 hover:bg-zinc-300"
+            className="text-[3rem] px-3 rounded-2xl bg-zinc-200/70 hover:bg-zinc-300 cursor-pointer"
           />
 
           <p className="hidden md:block">{activeComponent} </p>
         </div>
 
         <div className="h-fit flex justify-center items-center md:hidden">
-          <h1 className="font-bold text-[2rem]  4xl:text-[2.6rem] text-primary-600 leading-[1] flex-row">
+          <h1 onClick={()=>setIsActiveComponent('Home')} className="font-bold text-[2rem] select-none cursor-pointer 4xl:text-[2.6rem] text-primary-600 leading-[1] flex-row">
             Food
             <span className="text-primary-300">Mate</span>
           </h1>

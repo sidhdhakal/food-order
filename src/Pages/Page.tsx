@@ -43,7 +43,7 @@ const Page = () => {
           />
         </div>
         <div className="flex-1 h-screen flex flex-col">
-          <Navbar activeComponent={activeComponent}  sidebarOpen={sidebarOpen}
+          <Navbar activeComponent={activeComponent}  sidebarOpen={sidebarOpen} setIsActiveComponent={setIsActiveComponent}
          setIsSidebarOpen={setIsSidebarOpen}/>
           <div className="bg-zinc-100 w-full pt-[5rem] flex justify-between">
               {renderActiveComponent()}
