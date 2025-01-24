@@ -1,8 +1,10 @@
 import { Icon } from "@iconify/react";
 import { useQuery } from "@tanstack/react-query";
-import CheckLogin from "../CustomerFacing/Utils/CheckLogin";
+import CheckLogin from "../Utils/CheckLogin";
 import { useState } from "react";
-import { useCart } from "../CustomerFacing/Utils/CartContext";
+import { useCart } from "../Utils/CartContext";
+import Logo from "./UI/Logo";
+import SearchInput from "./UI/SearchInput";
 
 const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
   const { cart } = useCart(); // Get cart items from CartContext
@@ -19,14 +21,12 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
           <p className="hidden md:block">{activeComponent} </p>
         </div>
 
-        <div className="h-fit flex justify-center items-center md:hidden">
-          <h1 onClick={()=>setIsActiveComponent('Home')} className="font-bold text-[2rem] select-none cursor-pointer 4xl:text-[2.6rem] text-primary-600 leading-[1] flex-row">
-            Food
-            <span className="text-primary-300">Mate</span>
-          </h1>
+        <div onClick={()=>setIsActiveComponent('Home')} className="md:hidden">
+        <Logo />
         </div>
 
-        <div className="w-auto md:w-[25rem] relative flex  justify-center items-center">
+          <div className="flex justify-center items-center">
+
           <div className="flex select-none justify-center items-center lg:hidden">
             <div className="relative mr-4">
               <Icon
@@ -40,18 +40,9 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
             </div>
             <UserDetail />
           </div>
-          <input
-            type="text"
-            placeholder="Search Food"
-            className=" px-3 md:px-6 py-3 w-full hidden md:block placeholder:text-zinc-600 bg-zinc-200/50 border border-zinc-300 rounded-2xl text-black active:outline-none focus:outline-none"
-          />
-          <button className="ml-2 bg-primary-300 hidden md:flex hover:bg-primary-400 transition-all duration-200 px-4 md:px-6 rounded-2xl text-black py-2 h-full absolute right-0  justify-center items-center gap-x-1 ">
-            <Icon
-              icon="flowbite:search-outline"
-              className="text-[1.2rem] md:text-[1.5rem]"
-            />
-            <span className="hidden md:block">Search</span>
-          </button>
+
+          <SearchInput />
+      
         </div>
       </div>
     </div>

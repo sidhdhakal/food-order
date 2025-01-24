@@ -1,23 +1,21 @@
 import { Icon } from "@iconify/react";
 import { useQuery } from '@tanstack/react-query';
-import CheckLogin from '../CustomerFacing/Utils/CheckLogin';
+import CheckLogin from '../Utils/CheckLogin';
 import menuItems from '../Data/Navs.json'
 import UserDetailDiv from "./UI/UserDetailDiv";
+import LogoSidebar from "./UI/LogoSidebar";
 const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
 
   return (
     <div className='bg-zinc-50 flex  w-[8rem] 4xl:w-[16rem] h-full fixed top-0  flex-col justify-between text-zinc-900 border-r overflow-y-auto home border-zinc-300 text-lg z-[10]'>
-      <div className='h-[6rem] flex justify-center items-center'>
-        <h1 className='font-bold text-[1.8rem] pt-4 4xl:text-[2.6rem] text-primary-600 leading-[1] flex flex-col 4xl:flex-row'>Food
-          <span className='text-primary-300'>Mate</span></h1>
-      </div>
+      <LogoSidebar />
 
       <div className=' flex flex-1  justify-start items-center flex-col gap-y-2  p-4'>
 
         {menuItems.map((item) => (
           <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`4xl:px-4 py-3  cursor-pointer flex flex-col 4xl:flex-row 4xl:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] font-semibold aspect-auto
-           ${activeComponent === item.name ? 'text-zinc-900 bg-primary-300/90' : 'text-black'}`}>
+           ${activeComponent === item.name ? 'text-white bg-gradient-to-r from-primary-500 to-primary-300 shadow-lg' : 'text-black'}`}>
             <Icon icon={item.icon} className={`text-2xl lg:text-3xl 4xl:text-[1.8rem]`} />
             {item.name}
           </div>
