@@ -43,7 +43,7 @@
   }
 }
 
- :root{
+ :root, .dialog{
   /* Firefox - thinnest possible */
   scrollbar-width: thin;
   scrollbar-color: #bdbdbd transparent;
