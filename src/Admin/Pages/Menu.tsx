@@ -5,37 +5,94 @@ import products from '../../Data/foodmenu.json'
 import categories from '../../Data/Categories.json'
 import DialogLayout from '../AdminComponents/DialogLayout'
 import AddProductForm from '../AdminComponents/AddProductForm'
+import DialogModal from '../AdminComponents/DialogModal'
+import EditProductForm from '../AdminComponents/EditProductForm'
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
+  // const [addProductFormOpen, setAddProductFormOpen] = useState(false)
+  // const [deleteDialogOpen, setDeleteDialogOpen]=useState(false)
+  const [searchValue, setSearchValue] = useState('')
 
-  // Filtering products based on selected category
+  const [isDialogOpen, setIsDialogOpen] = useState({
+    addProductForm: false,
+    DeleteDialog: false
+  })
+
+  const [editProductForm, setEditProductForm]=useState<{status:boolean, id:any}>({
+    status:false,
+    id:undefined
+  })
+
   const filteredProducts = useMemo(() => {
-    let filtered = [...products];
-    
-    // Category filtering
-    if (selectedCategory) {
-      filtered = filtered.filter(
-        product => product.category === selectedCategory
-      );
-    }
+    return products.filter(product => {
+      const matchesSearch = !searchValue ||
+        product.name.toLowerCase().includes(searchValue.toLowerCase());
 
-    return filtered;
-  }, [selectedCategory]);
+      const matchesCategory = !selectedCategory ||
+        product.category === selectedCategory;
 
-  const [addProductFormOpen, setAddProductFormOpen]=useState(false)
+      return matchesSearch && matchesCategory;
+    });
+  }, [selectedCategory, searchValue, products]);
+
+
   return (
     <div className="w-full relative">
-      {/* {<DialogModal productName='Nothing'/>} */}
-      {/* <div className={`fixed top-0 left-0 w-full h-screen backdrop-blur-sm z-[50] transition-all duration-200 delay-200 ${addProductFormOpen?'opacity-1 block':'opacity-0 hidden'}`}/> */}
-      <DialogLayout title='Add Product' isOpen={addProductFormOpen} onClose={()=>setAddProductFormOpen(false)}>
-        <AddProductForm onClose={()=>setAddProductFormOpen(false)} />
+      <DialogLayout
+        title='Add Product'
+        isOpen={isDialogOpen.addProductForm}
+        onClose={() => setIsDialogOpen((prevState) => ({
+          ...prevState, 
+          addProductForm: false,
+        }))}
+      >
+        <AddProductForm onClose={() => setIsDialogOpen((prevState) => ({
+          ...prevState, 
+          addProductForm: false,
+        }))} />
       </DialogLayout>
-      <div className="auto w-full flex justify-between items-start">
-        <SearchInput className="flex"/>
 
-        <button onClick={()=>setAddProductFormOpen(true)} className="w-fit px-6 py-3 rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] border border=primary-300" >
-          <Icon icon='akar-icons:plus' className="text-2xl text-black"/>
+
+      <DialogLayout
+        title='Edit Product'
+        isOpen={editProductForm.status}
+        onClose={() => setEditProductForm(() => ({
+          id:null,
+          status:false,
+
+        }))}
+      >
+        <EditProductForm onClose={() => setEditProductForm(() => ({
+          id:null,
+          status: false,
+        }))} product={editProductForm.id} />
+      </DialogLayout>
+
+      {isDialogOpen.DeleteDialog &&
+        <DialogModal productName='Nothing' onConfirm={() => console.log('Confirm')} onCancel={() => setIsDialogOpen((prevState) => ({
+          ...prevState, 
+          DeleteDialog: false, 
+        }))} />
+      }
+
+      <div className="auto w-full flex justify-between items-start">
+        <SearchInput
+          className="flex"
+          value={searchValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(e.target.value)
+          }
+        />
+
+        <button
+          onClick={() => setIsDialogOpen((prevState) => ({
+            ...prevState, 
+            addProductForm: true, 
+          }))}
+          className="w-fit px-6 py-3 rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] border border=primary-300"
+        >
+          <Icon icon='akar-icons:plus' className="text-2xl text-black" />
           Add Product
         </button>
       </div>
@@ -46,7 +103,7 @@ const Menu = () => {
             All Products ({filteredProducts.length})
           </h1>
 
-          <select 
+          <select
             value={selectedCategory}
             onChange={(e) => setSelectedCategory(e.target.value)}
             className="px-4 py-2 border rounded-md bg-white"
@@ -73,12 +130,12 @@ const Menu = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product:any) => (
+            {filteredProducts.map((product) => (
               <tr key={product.id} className="border-b hover:bg-gray-50">
                 <td className="p-2 ">
-                  <img 
-                    src={product.image} 
-                    alt={product.name} 
+                  <img
+                    src={product.image}
+                    alt={product.name}
                     className="w-16 h-16 object-cover rounded"
                   />
                 </td>
@@ -86,35 +143,41 @@ const Menu = () => {
                 <td className="p-2 ">{product.description}</td>
                 <td className="p-2 ">{product.category}</td>
                 <td className="p-2 ">
-                  {product.sizes.map((size:any) => (
+                  {product.sizes.map((size) => (
                     <div key={size.name}>
                       {size.name}: ${size.price}
                     </div>
                   ))}
                 </td>
                 <td className="p-2">
-                  <span 
-                    className={`px-2 py-1 rounded text-sm ${
-                      product.available 
-                        ? 'bg-green-100 text-green-800' 
+                  <span
+                    className={`px-2 py-1 rounded text-sm ${product.available
+                        ? 'bg-green-100 text-green-800'
                         : 'bg-red-100 text-red-800'
-                    }`}
+                      }`}
                   >
                     {product.available ? 'Available' : 'Unavailable'}
                   </span>
                 </td>
                 <td className="p-2 border-b">
                   <div className="flex gap-2 justify-around">
-                    <button 
+                    <button
                       className="text-blue-600 hover:text-blue-800"
-                      onClick={() => console.log(`Edit product ${product.id}`)}
+                      onClick={() => setEditProductForm(() => ({
+                        id:product,
+                        status: true, 
+                      }))}
+
                     >
                       <Icon icon="cuida:edit-outline" className="text-2xl" />
                     </button>
-                    <button 
-                    
+                    <button
+
                       className="text-red-600 hover:text-red-800"
-                      onClick={() => console.log(`Delete product ${product.id}`)}
+                      onClick={() => setIsDialogOpen((prevState) => ({
+                        ...prevState, 
+                        DeleteDialog: true, 
+                      }))}
                     >
                       <Icon icon="fluent:delete-32-regular" className="text-2xl" />
                     </button>

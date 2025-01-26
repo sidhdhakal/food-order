@@ -4,12 +4,14 @@ interface DialogModalProps {
     productName: string;
     onConfirm?: () => void;
     onCancel?: () => void;
+    // outsideClick?:()=>void
 }
 
 const DialogModal = ({ productName, onConfirm, onCancel }: DialogModalProps) => {
+    console.log('Delete Dialog Rendered')
     return (
-        <div className='fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
-            <div className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>
+        <div onClick={onCancel} className='fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
+            <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>
 
                     <Icon
                         icon='maki:cross'
