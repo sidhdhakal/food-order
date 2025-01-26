@@ -7,14 +7,15 @@ import Login from './CustomerFacing/Pages/Login'
 import SignUp from './CustomerFacing/Pages/SignUp'
 import AdminPage from './Admin/Pages/AdminMain'
 import AdminLogin from './Admin/Pages/AdminLogin'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const queryClient = new QueryClient()
 
   return (
     <QueryClientProvider client={queryClient}>
-        {/* <Page /> */}
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
+      <Toaster />
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Page />}/>
