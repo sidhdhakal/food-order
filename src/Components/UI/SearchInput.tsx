@@ -1,6 +1,6 @@
 import { Icon } from '@iconify/react/dist/iconify.js'
 
-const SearchInput = ({className='hidden md:flex', onSearch, placeholder='Search Food', value, onChange}:{className?:string, value:string, onChange:(e:any)=>void, placeholder?:string, onSearch?:()=>void}) => {
+const SearchInput = ({className='hidden md:flex', onSearch, placeholder='Search Food', value, onChange}:{className?:string, value?:string, onChange?:(e:any)=>void, placeholder?:string, onSearch?:()=>void}) => {
   return (
     <div className={`w-auto md:w-[25rem] relative    justify-center items-center ${className}`}>
     <input

@@ -28,7 +28,7 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
           <div className="flex justify-center items-center">
 
           <div className="flex select-none justify-center items-center lg:hidden">
-            <div className="relative mr-4">
+            <div className="relative mr-4 cursor-pointer">
               <Icon
                 onClick={() => setIsSidebarOpen(!sidebarOpen)}
                 icon="solar:cart-bold-duotone"

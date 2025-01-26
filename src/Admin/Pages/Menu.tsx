@@ -10,8 +10,7 @@ import EditProductForm from '../AdminComponents/EditProductForm'
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState('');
-  // const [addProductFormOpen, setAddProductFormOpen] = useState(false)
-  // const [deleteDialogOpen, setDeleteDialogOpen]=useState(false)
+
   const [searchValue, setSearchValue] = useState('')
 
   const [isDialogOpen, setIsDialogOpen] = useState({
@@ -136,7 +135,7 @@ const Menu = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-16 h-16 object-cover rounded"
+                    className="w-16 h-16 min-w-16 object-cover rounded"
                   />
                 </td>
                 <td className="p-2 ">{product.name}</td>
