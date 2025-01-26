@@ -1,103 +1,24 @@
-import { GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import { useState } from "react";
 import Input from "../../Components/UI/Input";
 import Background from "../../Components/UI/Background";
+import GoogleLogin from "../Features/GoogleLogin";
+import { useLogin } from "../../Queries/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const responseMessage = async (response: any) => {
-    const token = response.credential;
-    const decoded: any = jwtDecode(token);
-
-    const userData = {
-      email: decoded.email,
-      name: decoded.name,
-      picture: decoded.picture,
-    };
-
-    document.cookie = `user=${JSON.stringify(
-      userData
-    )}; path=/; expires=${new Date(
-      Date.now() + 7 * 24 * 60 * 60 * 1000
-    ).toUTCString()}`;
-
-    try {
-      const res = await fetch("http://localhost:3000/api/users", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify(userData),
-      });
-
-      const data = await res.json(); // Parse the JSON response
-
-      if (res.ok) {
-        // Successful user creation
-        console.log(data.message || "User data stored successfully");
-      } else {
-        // If the server returns an error message, log it
-        console.error(data.message || "Error storing user data");
-      }
-    } catch (error) {
-      console.error("Error sending user data to the server:", error);
-    }
-
-    window.location.href = "/";
-  };
-
-  const errorMessage = () => {
-    console.log("An error occurred");
-  };
+  const {login, isPending}=useLogin()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Check for empty email or password
     if (!email || !password) {
       setLoginError("Please fill out both fields");
       return;
     }
-
-    try {
-      const res = await fetch("http://localhost:3000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "cors",
-        body: JSON.stringify({ email, password }),
-      });
-
-      const data = await res.json();
-
-      if (res.ok) {
-        const userData = {
-          email: data.email,
-          name: data.name,
-          picture: data.picture,
-        };
-        document.cookie = `user=${JSON.stringify(
-          userData
-        )}; path=/; expires=${new Date(
-          Date.now() + 7 * 24 * 60 * 60 * 1000
-        ).toUTCString()}`;
-
-        console.log("Login successful:", data);
-
-        window.location.href = "/";
-      } else {
-        setLoginError(data.message || "Invalid credentials");
-      }
-    } catch (error) {
-      console.error("Error during email/password login:", error);
-      setLoginError("An error occurred. Please try again later.");
-    }
+    login({email, password})
   };
 
   return (
@@ -138,6 +59,7 @@ const Login = () => {
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
         <button
           type="submit"
+          disabled={isPending}
           className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
         >
           Login{" "}
@@ -151,7 +73,8 @@ const Login = () => {
             <span className=" bg-zinc-50 ">Or Continue with</span>
           </div>
         </div>
-        <GoogleLogin onSuccess={responseMessage} onError={errorMessage} />
+
+        <GoogleLogin />
 
         <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-zinc-800">
           <div>Don't have an Account?</div>
@@ -163,5 +86,4 @@ const Login = () => {
     </div>
   );
 };
-
-export default Login;
+export default Login
