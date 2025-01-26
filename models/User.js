@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     },
     picture: {
         type: String,
+        required:false
     },
     password: {
         type: String,
@@ -20,6 +21,9 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         required:false
+    },
+    isActive:{
+        type:Boolean
     }
 });
 

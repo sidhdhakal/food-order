@@ -1,8 +1,11 @@
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const foodSchema = new Schema({
+  id: {
+    type: Number,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -13,23 +16,33 @@ const foodSchema = new Schema({
     required: true,
     trim: true,
   },
-  price: {
-    type: Number,
-    required: true,
-    min: [0, 'Price must be a positive number'],
+  image: {
+    type: String,
+    required: false,
   },
+  sizes: [{
+    name: {
+      type: String,
+      required: true,
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+  }],
   category: {
     type: String,
-    // enum: ['breakfast', 'lunch', 'dinner', 'snacks', 'beverages'],
     required: true,
+  },
+  rating: {
+    type: Number,
+    required: false,
+    min: 0,
+    max: 5,
   },
   available: {
     type: Boolean,
     default: true,
-  },
-  image: {
-    type: String,
-    required: false,
   },
   createdAt: {
     type: Date,
