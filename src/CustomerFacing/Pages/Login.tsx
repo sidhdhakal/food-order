@@ -20,7 +20,6 @@ const Login = () => {
     }
     login({email, password})
   };
-
   return (
     <div className="w-full h-screen max-h-screen flex justify-center items-center bg-zinc-50 text-black relative">
       <Background />
@@ -40,6 +39,7 @@ const Login = () => {
             type="email"
             id="email"
             value={email}
+            disabled={isPending}
             onChange={(e: any) => setEmail(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
@@ -51,6 +51,7 @@ const Login = () => {
             type="password"
             id="password"
             value={password}
+            disabled={isPending}
             onChange={(e: any) => setPassword(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
@@ -60,9 +61,9 @@ const Login = () => {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
+          className="w-full px-4 py-2 disabled:bg-orange-400 bg-orange-500 self-center text-white rounded-md mt-4"
         >
-          Login{" "}
+          {isPending?'Loggin in...':'Login'}
         </button>
 
         <div className="relative my-2">

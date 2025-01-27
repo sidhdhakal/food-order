@@ -1,3 +1,5 @@
+import setCookie from "../Utils/setCookie";
+
 export async function signUpApi({
   name,
   email,
@@ -78,14 +80,14 @@ export async function loginApi({
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "cors",
       body: JSON.stringify({ email, password }),
     });
 
     const data = await res.json();
     console.log(data);
     if (data.success) {
-      console.log(data.message || "Signed In successfully");
+      setCookie({name:data.user.name, email})
+
       return data;
     } else {
       throw new Error(data.message || "Error storing data");
