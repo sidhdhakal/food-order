@@ -16,53 +16,6 @@ router.get('/',(req, res)=>{
 router.post('/signup',signup)
 
 router.post('/login',login)
-// router.post('/signup', [
-//   body('password').isLength({ min: 6 }),
-//   body('email').isEmail()
-// ], async (req, res) => {
-//   const errors = validationResult(req);
-
-//   if (!errors.isEmpty())
-//     return console.log('Validation failed');
-
-//   const user = await User.findOne({ email: req.body.email });
-//   if (user) {
-//     return res.json({status:false, message:'User Already Exists!'})
-//   }
-//   const salt = await bc.genSalt(10);
-//   const pass = await bc.hash(req.body.password, salt);
-//   let newuser = await User.create({
-//     name: req.body.name,
-//     password: pass,
-//     email: req.body.email,
-//   });
-
-//   newuser.save();
-//   return res.json({ success:true, message:'User Signup Successfully' })
-// });
-
-
-// router.post('/login', async (req, res) => {
-//     let loginstatus=false;
-  
-//     const password = req.body.password;
-//     const email = req.body.email;
-//     let user = await User.findOne({ email });
-//     if (!user)
-//       return res.json({loginstatus})
-//     const passcmp = await bc.compare(password, user.password);
-//     if(!passcmp)
-//     return res.json({loginstatus}) 
-//     const data = {
-//       user: {
-//         id: user.id
-//       }
-//     }
-//     const authtoken = jwt.sign(data, jwtsec);
-  
-//     loginstatus=true
-//     return res.json({authtoken, loginstatus, data})
-//   })
 
 
   router.get('/getUsers',protect,restrictTo('admin'),async(req, res)=>{

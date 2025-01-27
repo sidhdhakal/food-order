@@ -4,14 +4,22 @@ const Food = require('../models/Food');  // Make sure to import the Food model
 const cloudinary = require('../Utils/CloudinaryConfig');
 const multer = require('multer');
 const { body, validationResult } = require('express-validator');
+const categoryController = require('../controllers/CategoryController')
+const { protect } = require('../Utils/Protect');
+const { restrictTo } = require('../Utils/RestrictTo');
 
-// Multer setup to handle file uploads
+
 const storage = multer.memoryStorage();  // Store file in memory (buffer)
 const upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
   res.send("This is Food page");
 });
+
+router.get('/category/',categoryController.getCategories)
+router.post('/category/addcategory',protect,restrictTo('admin'),categoryController.addCategory)
+router.put('/category/upatecategory',protect,restrictTo('admin'),categoryController.updateCategory)
+router.put('/category/deletecategory',protect,restrictTo('admin'),categoryController.deleteCategory)
 
 router.post('/uploadphoto', (req, res) => {
   console.log(req.body); // Log form data
@@ -67,7 +75,6 @@ router.post('/createFood', upload.single('image'), [
   }
 
   try {
-    // Handle image upload to Cloudinary if an image is provided
     let imageUrl = '';
     if (req.file) {
       const result = await cloudinary.uploader.upload(req.file.buffer, {
