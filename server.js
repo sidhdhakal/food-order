@@ -26,7 +26,7 @@ app.use(
 
 // CORS configuration to allow localhost:5173
 const corsOptions = {
-    origin: ['http://localhost:5173','https://food-mate-v1.vercel.app/'], // Adjust as needed for production
+    origin: ['http://localhost:5173','https://food-mate-v1.vercel.app'], // Adjust as needed for production
     methods: ['GET', 'POST'],
     allowedHeaders: ['Content-Type'],
 };
