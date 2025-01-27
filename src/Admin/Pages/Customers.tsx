@@ -3,8 +3,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import SearchInput from "../../Components/UI/SearchInput";
 import DialogModal from "../AdminComponents/DialogModal";
 import customers from '../../Data/Users.json'
-// Mock customer data (replace with actual data source)
-
 
 const Customers = () => {
   const [searchValue, setSearchValue] = useState("");

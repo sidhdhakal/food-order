@@ -8,7 +8,7 @@ export async function signUpApi({
   password: string;
 }) {
   try {
-    const res = await fetch("http://localhost:3000/api/auth/signup", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +42,7 @@ export async function signUpGoogleApi({
 }) {
   console.log(picture);
   try {
-    await fetch("http://localhost:3000/api/auth/signup", {
+    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export async function loginApi({
   password: string;
 }) {
   try {
-    const res = await fetch("http://localhost:3000/api/auth/login", {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
