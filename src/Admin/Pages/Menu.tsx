@@ -1,82 +1,124 @@
-import { useState, useMemo } from 'react'
-import { Icon } from "@iconify/react/dist/iconify.js"
-import SearchInput from "../../Components/UI/SearchInput"
-import products from '../../Data/foodmenu.json'
-import categories from '../../Data/Categories.json'
-import DialogLayout from '../AdminComponents/DialogLayout'
-import AddProductForm from '../AdminComponents/AddProductForm'
-import DialogModal from '../../Components/DialogModal'
-import EditProductForm from '../AdminComponents/EditProductForm'
+import { useState, useMemo } from "react";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import SearchInput from "../../Components/UI/SearchInput";
+import products from "../../Data/foodmenu.json";
+import categories from "../../Data/Categories.json";
+import DialogLayout from "../AdminComponents/DialogLayout";
+import AddProductForm from "../AdminComponents/AddProductForm";
+import DialogModal from "../../Components/DialogModal";
+import EditProductForm from "../AdminComponents/EditProductForm";
+import Button from "../../Components/UI/Button";
+import EditCategoriesForm from "../AdminComponents/EditCategoriesForm";
 
 const Menu = () => {
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  const [searchValue, setSearchValue] = useState('')
+  const [searchValue, setSearchValue] = useState("");
 
   const [isDialogOpen, setIsDialogOpen] = useState({
     addProductForm: false,
-    DeleteDialog: false
-  })
+    DeleteDialog: false,
+    editCatgory: false,
+  });
 
-  const [editProductForm, setEditProductForm]=useState<{status:boolean, id:any}>({
-    status:false,
-    id:undefined
-  })
+  const [editProductForm, setEditProductForm] = useState<{
+    status: boolean;
+    id: any;
+  }>({
+    status: false,
+    id: undefined,
+  });
 
   const filteredProducts = useMemo(() => {
-    return products.filter(product => {
-      const matchesSearch = !searchValue ||
+    return products.filter((product) => {
+      const matchesSearch =
+        !searchValue ||
         product.name.toLowerCase().includes(searchValue.toLowerCase());
 
-      const matchesCategory = !selectedCategory ||
-        product.category === selectedCategory;
+      const matchesCategory =
+        !selectedCategory || product.category === selectedCategory;
 
       return matchesSearch && matchesCategory;
     });
   }, [selectedCategory, searchValue, products]);
 
-
   return (
     <div className="w-full relative">
       <DialogLayout
-        title='Add Product'
+        title="Add Product"
         isOpen={isDialogOpen.addProductForm}
-        onClose={() => setIsDialogOpen((prevState) => ({
-          ...prevState, 
-          addProductForm: false,
-        }))}
+        onClose={() =>
+          setIsDialogOpen((prevState) => ({
+            ...prevState,
+            addProductForm: false,
+          }))
+        }
       >
-        <AddProductForm onClose={() => setIsDialogOpen((prevState) => ({
-          ...prevState, 
-          addProductForm: false,
-        }))} />
+        <AddProductForm
+          onClose={() =>
+            setIsDialogOpen((prevState) => ({
+              ...prevState,
+              addProductForm: false,
+            }))
+          }
+        />
       </DialogLayout>
-
 
       <DialogLayout
-        title='Edit Product'
-        isOpen={editProductForm.status}
-        onClose={() => setEditProductForm(() => ({
-          id:null,
-          status:false,
-
-        }))}
+        title="Edit Categories"
+        isOpen={isDialogOpen.editCatgory}
+        onClose={() =>
+          setIsDialogOpen((prevState) => ({
+            ...prevState,
+            editCatgory: false,
+          }))
+        }
       >
-        <EditProductForm onClose={() => setEditProductForm(() => ({
-          id:null,
-          status: false,
-        }))} product={editProductForm.id} />
+        <EditCategoriesForm
+          categories={categories}
+          onClose={() =>
+            setIsDialogOpen((prevState) => ({
+              ...prevState,
+              editCatgory: false,
+            }))
+          }
+        />
       </DialogLayout>
 
-      {isDialogOpen.DeleteDialog &&
+      <DialogLayout
+        title="Edit Product"
+        isOpen={editProductForm.status}
+        onClose={() =>
+          setEditProductForm(() => ({
+            id: null,
+            status: false,
+          }))
+        }
+      >
+        <EditProductForm
+          onClose={() =>
+            setEditProductForm(() => ({
+              id: null,
+              status: false,
+            }))
+          }
+          product={editProductForm.id}
+        />
+      </DialogLayout>
+
+      {isDialogOpen.DeleteDialog && (
         <DialogModal
-        message={`Do you really want to delete the product ${'Nothing'}?`}
-        btntext='Delete'
-        onConfirm={() => console.log('Confirm')} onCancel={() => setIsDialogOpen((prevState) => ({
-          ...prevState, 
-          DeleteDialog: false, 
-        }))} />
-      }
+          message={`Do you really want to delete the product ${"Nothing"}?`}
+          btntext="Delete"
+          onConfirm={() => console.log("Confirm")}
+          onCancel={() =>
+            setIsDialogOpen((prevState) => ({
+              ...prevState,
+              DeleteDialog: false,
+            }))
+          }
+        />
+      )}
 
       <div className="auto w-full flex justify-between items-start">
         <SearchInput
@@ -87,16 +129,32 @@ const Menu = () => {
           }
         />
 
-        <button
-          onClick={() => setIsDialogOpen((prevState) => ({
-            ...prevState, 
-            addProductForm: true, 
-          }))}
-          className="w-fit px-6 py-3 rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] border border=primary-300"
-        >
-          <Icon icon='akar-icons:plus' className="text-2xl text-black" />
-          Add Product
-        </button>
+        <div className=" flex gap-x-2">
+          <Button
+            onClick={() =>
+              setIsDialogOpen((prevState) => ({
+                ...prevState,
+                editCatgory: true,
+              }))
+            }
+            className="!text-black text-nowrap px-6 py-3 bg-zinc-100 border border-zinc-300 hover:bg-zinc-200"
+          >
+            Edit Categories
+          </Button>
+
+          <Button
+            onClick={() =>
+              setIsDialogOpen((prevState) => ({
+                ...prevState,
+                addProductForm: true,
+              }))
+            }
+            className="w-fit px-6 py-3 text-nowrap rounded-xl bg-primary-300 flex gap-x-1 text-[1rem] !text-black border border=primary-300"
+          >
+            <Icon icon="akar-icons:plus" className="text-2xl text-black" />
+            Add Product
+          </Button>
+        </div>
       </div>
 
       <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
@@ -153,35 +211,41 @@ const Menu = () => {
                 </td>
                 <td className="p-2">
                   <span
-                    className={`px-2 py-1 rounded text-sm ${product.available
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
-                      }`}
+                    className={`px-2 py-1 rounded text-sm ${
+                      product.available
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
                   >
-                    {product.available ? 'Available' : 'Unavailable'}
+                    {product.available ? "Available" : "Unavailable"}
                   </span>
                 </td>
                 <td className="p-2 border-b">
                   <div className="flex gap-2 justify-around">
                     <button
                       className="text-blue-600 hover:text-blue-800"
-                      onClick={() => setEditProductForm(() => ({
-                        id:product,
-                        status: true, 
-                      }))}
-
+                      onClick={() =>
+                        setEditProductForm(() => ({
+                          id: product,
+                          status: true,
+                        }))
+                      }
                     >
                       <Icon icon="cuida:edit-outline" className="text-2xl" />
                     </button>
                     <button
-
                       className="text-red-600 hover:text-red-800"
-                      onClick={() => setIsDialogOpen((prevState) => ({
-                        ...prevState, 
-                        DeleteDialog: true, 
-                      }))}
+                      onClick={() =>
+                        setIsDialogOpen((prevState) => ({
+                          ...prevState,
+                          DeleteDialog: true,
+                        }))
+                      }
                     >
-                      <Icon icon="fluent:delete-32-regular" className="text-2xl" />
+                      <Icon
+                        icon="fluent:delete-32-regular"
+                        className="text-2xl"
+                      />
                     </button>
                   </div>
                 </td>
@@ -191,7 +255,7 @@ const Menu = () => {
         </table>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Menu
+export default Menu;

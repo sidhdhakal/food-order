@@ -6,7 +6,7 @@ const Button = ({onClick,type, disabled, className, children}:{onClick?:()=>void
     type={type}
     disabled={disabled}
     onClick={onClick}
-    className={`w-full transition-colors duration-200 px-4 py-2 disabled:bg-orange-400 bg-orange-500 self-center text-white rounded-md hover:bg-orange-600 mt-4 ${className}`}
+    className={`w-full transition-colors duration-200 px-4 py-2 disabled:bg-orange-400 bg-orange-500 self-center text-white rounded-md hover:bg-orange-600  ${className}`}
       >
         {children}
   </button>
