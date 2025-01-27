@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import SearchInput from "../../Components/UI/SearchInput";
-import DialogModal from "../AdminComponents/DialogModal";
+import DialogModal from "../../Components/DialogModal";
 import customers from '../../Data/Users.json'
 
 const Customers = () => {
@@ -39,9 +39,8 @@ const Customers = () => {
     <div className="w-full relative">
       {deleteDialogOpen !== null && (
         <DialogModal
-          productName={
-            customerList.find((c) => c.id === deleteDialogOpen)?.name || "User"
-          }
+          message={`Do you really want to delete ${customers[0].name}?`}
+          btntext="Delete"
           onConfirm={handleDeleteUser}
           onCancel={() => {
             setDeleteDialogOpen(null);

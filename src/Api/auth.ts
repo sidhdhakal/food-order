@@ -15,7 +15,6 @@ export async function signUpApi({
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "cors",
       body: JSON.stringify({ name, email, password }),
     });
 
@@ -49,7 +48,6 @@ export async function signUpGoogleApi({
       headers: {
         "Content-Type": "application/json",
       },
-      mode: "cors",
       body: JSON.stringify({ name, email, picture }),
     });
 

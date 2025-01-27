@@ -5,7 +5,7 @@ import products from '../../Data/foodmenu.json'
 import categories from '../../Data/Categories.json'
 import DialogLayout from '../AdminComponents/DialogLayout'
 import AddProductForm from '../AdminComponents/AddProductForm'
-import DialogModal from '../AdminComponents/DialogModal'
+import DialogModal from '../../Components/DialogModal'
 import EditProductForm from '../AdminComponents/EditProductForm'
 
 const Menu = () => {
@@ -69,7 +69,10 @@ const Menu = () => {
       </DialogLayout>
 
       {isDialogOpen.DeleteDialog &&
-        <DialogModal productName='Nothing' onConfirm={() => console.log('Confirm')} onCancel={() => setIsDialogOpen((prevState) => ({
+        <DialogModal
+        message={`Do you really want to delete the product ${'Nothing'}?`}
+        btntext='Delete'
+        onConfirm={() => console.log('Confirm')} onCancel={() => setIsDialogOpen((prevState) => ({
           ...prevState, 
           DeleteDialog: false, 
         }))} />

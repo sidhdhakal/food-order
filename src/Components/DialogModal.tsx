@@ -1,13 +1,15 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 
 interface DialogModalProps {
-    productName: string;
+    // productName?: string;
     onConfirm?: () => void;
     onCancel?: () => void;
     // outsideClick?:()=>void
+    message:string,
+    btntext:string
 }
 
-const DialogModal = ({ productName, onConfirm, onCancel }: DialogModalProps) => {
+const DialogModal = ({  onConfirm, onCancel, message, btntext }: DialogModalProps) => {
     console.log('Delete Dialog Rendered')
     return (
         <div onClick={onCancel} className='fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
@@ -28,8 +30,9 @@ const DialogModal = ({ productName, onConfirm, onCancel }: DialogModalProps) => 
                     <h1 className='text-xl font-semibold'>Are you sure?</h1>
 
                     <p className='text-gray-600'>
-                        Do you really want to delete the product <strong>{productName}</strong>?
-                        This process cannot be undone.
+                        {/* Do you really want to delete the product <strong>{productName}</strong>?
+                        This process cannot be undone. */}
+                        {message}
                     </p>
 
                     <div className='flex justify-center space-x-4 pt-4'>
@@ -44,7 +47,7 @@ const DialogModal = ({ productName, onConfirm, onCancel }: DialogModalProps) => 
                             onClick={onConfirm}
                             className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
                         >
-                            Delete
+                            {btntext}
                         </button>
                     </div>
                 </div>

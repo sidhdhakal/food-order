@@ -1,4 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
+import DialogModal from "../DialogModal";
+import { useState } from "react";
 
 const UserDetailDiv = ({ user }: any) => {
   const logOut = () => {
@@ -7,8 +9,11 @@ const UserDetailDiv = ({ user }: any) => {
     ).toUTCString()}`;
     window.location.reload();
   };
+
+  const [deleteDialogModal, setDeleteDialogModal]=useState(false)
   return (
     <div className=" w-full  flex flex-col gap-y-2 justify-between items-center  aspect-square self-center rounded-[24px]">
+      { deleteDialogModal && <DialogModal message="Do you really want to Logout?" btntext="Logout" onCancel={()=>setDeleteDialogModal(false)} onConfirm={()=>{logOut(); setDeleteDialogModal(false)}}/>}
       <div className="flex flex-col justify-center items-center p-2">
         <img
           src={
@@ -26,7 +31,7 @@ const UserDetailDiv = ({ user }: any) => {
         </h3>
       </div>
       <button
-        onClick={logOut}
+        onClick={()=>setDeleteDialogModal(true)}
         className="py-2 4xl:py-3 text-center bg-red-500 hover:bg-red-600 w-full rounded-[20px] gap-x-2 text-white flex flex-col 4xl:flex-row justify-center items-center text-md"
       >
         <Icon

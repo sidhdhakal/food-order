@@ -14,7 +14,11 @@ export function useLogin() {
     mutationFn: loginApi,
     onSuccess: (data) => {
       console.log("Signed In successfully:", data);
+      if(data.user.isVerified)
       toast.success("Signed In Successfully");
+      else 
+      toast.success("Signed In Successfully! Please Verify your Email to Place order");
+
       setTimeout(() => {
         window.location.href = "/";
       }, 2000);
