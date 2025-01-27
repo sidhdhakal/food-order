@@ -63,7 +63,7 @@ const ProductCard = ({ item }: any) => {
           src={item.image}
           alt={item.name}
           className="w-1/4 aspect-square object-cover rounded-xl 
-          xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 bg-orange-50"
+          xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 "
         />
         <div className="flex-1">
          <H1>{item.name}</H1>

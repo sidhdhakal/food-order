@@ -13,13 +13,13 @@ export function useSignUpGoogle() {
       console.log("Account created successfully:", data);
       setTimeout(() => {
         window.location.href = "/";
-      }, 2000);
+      }, );
     },
     onError: (error) => {
       console.error("Error creating account:", error);
       setTimeout(() => {
         window.location.href = "/";
-      }, 2000);
+      });
     },
   });
 
