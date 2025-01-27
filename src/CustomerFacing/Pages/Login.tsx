@@ -3,6 +3,7 @@ import Input from "../../Components/UI/Input";
 import Background from "../../Components/UI/Background";
 import GoogleLogin from "../Features/GoogleLogin";
 import { useLogin } from "../../Queries/useLogin";
+import Button from "../../Components/UI/Button";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -58,13 +59,19 @@ const Login = () => {
           />
         </div>
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
-        <button
+        {/* <button
           type="submit"
           disabled={isPending}
           className="w-full px-4 py-2 disabled:bg-orange-400 bg-orange-500 self-center text-white rounded-md mt-4"
         >
           {isPending?'Loggin in...':'Login'}
-        </button>
+        </button> */}
+        <Button 
+        type='submit'
+        disabled={isPending}
+        >
+        {isPending?'Loggin in...':'Login'}
+        </Button>
 
         <div className="relative my-2">
           <div className="absolute inset-0 flex items-center">

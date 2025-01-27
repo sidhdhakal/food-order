@@ -2,6 +2,7 @@ import { useState } from "react";
 import Input from "../../Components/UI/Input";
 import { useSignUp } from "../../Queries/useSignUp";
 import GoogleLogin from "../Features/GoogleLogin";
+import Button from "../../Components/UI/Button";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -84,13 +85,13 @@ const SignUp = () => {
           />
         </div>
         {/* {loginError && <p style={{ color: "red" }}>{loginError}</p>} */}
-        <button
-          type="submit"
-          disabled={isPending}
-          className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
+
+        <Button 
+         type="submit"
+         disabled={isPending}
         >
-          SignUp{" "}
-        </button>
+        {isPending?'Signing Up...':'Signup'}
+        </Button>
 
         <div className="relative my-2">
           <div className="absolute inset-0 flex items-center">

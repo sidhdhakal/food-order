@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
 import { useCart } from "../Utils/CartContext";
 import CartItem from "./UI/CartItem";
+import Button from "./UI/Button";
 
 const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
   const { cart } = useCart();
@@ -129,18 +130,18 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
                 ))}
               </div>
             </div>
-
-            <button className="
-              py-3 lg:py-3 text-center 
-              bg-primary-300 hover:bg-primary-500 
-              w-full rounded-xl sm:rounded-2xl 
-              gap-x-1 sm:gap-x-2 text-black 
-              flex justify-center items-center 
-               text-sm sm:text-md lg:text-md 4xl:text-[1rem]
-            ">
-              <Icon icon="icon-park-twotone:buy" className="text-base sm:text-[1.6rem]" />
-              Place Order
-            </button>
+            <Button
+            className="
+            py-3 lg:py-3 text-center 
+            bg-primary-300 hover:bg-primary-500 
+            w-full rounded-xl sm:rounded-2xl 
+            gap-x-1 sm:gap-x-2 !text-black 
+            flex justify-center items-center 
+             text-sm sm:text-md lg:text-md 4xl:text-[1rem]
+          ">
+            <Icon icon="icon-park-twotone:buy" className="text-base sm:text-[1.6rem]" />
+            Place Order
+            </Button>
           </div>
         </div>
       </div>
