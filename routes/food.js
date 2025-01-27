@@ -19,7 +19,7 @@ router.get('/', (req, res) => {
 router.get('/category/',categoryController.getCategories)
 router.post('/category/addcategory',protect,restrictTo('admin'),categoryController.addCategory)
 router.put('/category/upatecategory',protect,restrictTo('admin'),categoryController.updateCategory)
-router.put('/category/deletecategory',protect,restrictTo('admin'),categoryController.deleteCategory)
+router.delete('/category/deletecategory',protect,restrictTo('admin'),categoryController.deleteCategory)
 
 router.post('/uploadphoto', (req, res) => {
   console.log(req.body); // Log form data
