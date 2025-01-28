@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Button = ({onClick,type, disabled, className, children}:{onClick?:()=>void, disabled?:boolean, className?:string, children:React.ReactNode, type?:any}) => {
+const Button = ({onClick,type='button', disabled, className, children}:{onClick?:()=>void, disabled?:boolean, className?:string, children:React.ReactNode, type?:any}) => {
   return (
     <button
     type={type}
