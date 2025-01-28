@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from "react";
-import Input from "../../Components/UI/Input";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import Button from "../../Components/UI/Button";
+import  { useState, useEffect } from "react";
 import AddCategoryForm from "./AddCategoryForm";
 import CategoryCard from "./UI/CategoryCard";
 
@@ -26,51 +23,8 @@ const EditCategoriesForm = ({
     }
   }, [categories]);
 
-  const handleImageChange = (
-    index: number,
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const files = e.target.files;
-    if (files && files[0]) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const newCategories = [...categoryList];
-        newCategories[index] = {
-          ...newCategories[index],
-          icon: event.target?.result as string,
-        };
-        setCategoryList(newCategories);
-      };
-      reader.readAsDataURL(files[0]);
-    }
-  };
-
-
-
-  const updateCategory = (
-    index: number,
-    field: keyof Category,
-    value: string | number
-  ) => {
-    const newCategories = [...categoryList];
-    newCategories[index] = {
-      ...newCategories[index],
-      [field]: value,
-    };
-    setCategoryList(newCategories);
-  };
-
-  const removeCategory = (index: number) => {
-    const newCategories = categoryList.filter((_, i) => i !== index);
-    setCategoryList(newCategories);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mt-6 dialog">
+    <div  className="space-y-4 mt-6 dialog">
       {categoryList.map((category, index) => (
       <CategoryCard category={category} index={index}/>
       ))}
@@ -92,7 +46,7 @@ const EditCategoriesForm = ({
           Save Changes
         </button>
       </div>
-    </form>
+    </div>
   );
 };
 
