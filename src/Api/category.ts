@@ -31,3 +31,27 @@ export async function AddCategoryApi({
       throw error;
     }
   }
+
+export async function DeleteCategoryApi(id:any){
+  try{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/category/deletecategory/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+    });
+
+    const data = await res.json();
+    console.log(data);
+    if (data.success) {
+      console.log(data.message || "Category Deleted successfully");
+      return data;
+    } else {
+      throw new Error(data.message || "Error deleting data");
+    }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+}

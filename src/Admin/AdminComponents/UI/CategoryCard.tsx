@@ -2,6 +2,7 @@ import Input from '../../../Components/UI/Input'
 import Button from '../../../Components/UI/Button'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useState } from 'react';
+import { useDeleteCategory } from '../../../Queries/category/useDeleteCategory';
 
 const CategoryCard = ({category:c, index}:any) => {
       const [category, setCategory] = useState<any>({
@@ -15,6 +16,14 @@ const CategoryCard = ({category:c, index}:any) => {
         }
     }
     console.log(category)
+
+
+    const {deleteCategory}=useDeleteCategory()
+
+    const handleDelete=(id:any)=>{
+        deleteCategory(id)
+    }
+
   return (
     <div
     key={category.id}
@@ -28,7 +37,6 @@ const CategoryCard = ({category:c, index}:any) => {
         <Input
           type="text"
           value={category.name}
-        //   onChange={(e) => updateCategory(index, "name", e.target.value)}
         onChange={(e:any)=>setCategory((c:any)=>({...c, name:e.target.value}))}
           required
         />
@@ -75,6 +83,7 @@ const CategoryCard = ({category:c, index}:any) => {
       </div>
 
       <button
+      onClick={()=>handleDelete(category.id)}
         type="button"
         // onClick={() => removeCategory(index)}
         className="text-red-500 hover:text-red-700 p-1"
