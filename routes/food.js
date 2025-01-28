@@ -16,17 +16,23 @@ router.get('/', (req, res) => {
   res.send("This is Food page");
 });
 
-router.get('/category/',categoryController.getCategories)
-router.post('/category/addcategory',protect,restrictTo('admin'),categoryController.addCategory)
-router.put('/category/upatecategory',protect,restrictTo('admin'),categoryController.updateCategory)
-router.delete('/category/deletecategory',protect,restrictTo('admin'),categoryController.deleteCategory)
+router.get('/category',categoryController.getCategories)
+router.post('/category/addcategory',
+  // protect,restrictTo('admin'),
+  categoryController.addCategory)
+router.put('/category/updatecategory/:id',
+  // protect,restrictTo('admin'),
+  categoryController.updateCategory)
+router.delete('/category/deletecategory/:id',
+  // protect,restrictTo('admin'),
+  categoryController.deleteCategory)
 
 router.post('/uploadphoto', (req, res) => {
   console.log(req.body); // Log form data
 
-  const imagePath = req.body.image; // Get the uploaded image path
+  const iamge = req.body.image; // Get the uploaded image path
 
-  cloudinary.uploader.upload(imagePath, { resource_type: 'auto', folder: 'Foods' }, (error, result) => {
+  cloudinary.uploader.upload(iamge, { resource_type: 'auto', folder: 'Foods' }, (error, result) => {
     if (error) {
       console.log(error.message)
       return res.status(500).json({ error: error.message });

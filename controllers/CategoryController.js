@@ -1,5 +1,7 @@
 const Category = require("../models/Category");
 const User = require("../models/User");
+const { uploadToCloudinary } = require("../Utils/cloudinary");
+const cloudinary= require('../Utils/CloudinaryConfig')
 
 exports.addCategory = async (req, res) => {
   try {
@@ -9,7 +11,11 @@ exports.addCategory = async (req, res) => {
         success: false,
         message: "Category Already Exists",
       });
-    const newCategory = await Category.create(req.body);
+      console.log(req.body)
+
+    const url = await uploadToCloudinary(req.body.icon, "Category");
+    
+    const newCategory = await Category.create({...req.body, icon:url});
     if (newCategory) {
       return res.status(200).json({
         success: true,
@@ -18,6 +24,7 @@ exports.addCategory = async (req, res) => {
       });
     }
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       success: false,
       message: "Internal Server Error!",
@@ -46,7 +53,7 @@ exports.getCategories = async (req, res) => {
 
 exports.deleteCategory = async (req, res) => {
     try {
-      const category = await Category.findByIdAndDelete(req.body.id); 
+      const category = await Category.findByIdAndDelete(req.params.id); 
       if (category) {
           return res.status(200).json({
               success: true,
@@ -71,9 +78,10 @@ exports.deleteCategory = async (req, res) => {
 
 
 exports.updateCategory = async (req, res) => {
+  console.log(req.params.id)
     try {
-      const categoryToUpdate = await Category.findOne({ id: req.params.id });
-      
+      const categoryToUpdate = await Category.findById(req.params.id);
+      console.log(categoryToUpdate)
       if (!categoryToUpdate) {
         return res.status(404).json({
           success: false,
@@ -93,17 +101,27 @@ exports.updateCategory = async (req, res) => {
       }
   
       const updatedCategory = await Category.findOneAndUpdate(
-        { id: req.params.id },
+        { _id: req.params.id },
         {
           ...req.body,
           updatedAt: Date.now()
         },
         { new: true } // Returns the updated document
       );
+
+      console.log(updatedCategory)
+
+      if(updatedCategory){
+        return res.status(200).json({
+          success: true,
+          message: "Category updated successfully",
+          doc: updatedCategory,
+        });
+      }
   
-      return res.status(200).json({
-        success: true,
-        message: "Category updated successfully",
+      return res.status(400).json({
+        success: false,
+        message: "Failed to update category",
         doc: updatedCategory,
       });
   
