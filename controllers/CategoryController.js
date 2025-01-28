@@ -1,7 +1,6 @@
 const Category = require("../models/Category");
 const User = require("../models/User");
-const { uploadToCloudinary } = require("../Utils/cloudinary");
-const cloudinary= require('../Utils/CloudinaryConfig')
+const { uploadToCloudinary, deleteImageFromCloudinary } = require("../Utils/cloudinary");
 
 exports.addCategory = async (req, res) => {
   try {
@@ -54,12 +53,22 @@ exports.getCategories = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
     try {
       const category = await Category.findByIdAndDelete(req.params.id); 
+      console.log(category)
       if (category) {
+        const result = await deleteImageFromCloudinary(category.icon, 'Category')
+        if(result.success)
           return res.status(200).json({
               success: true,
               message: "Category Deleted successfully",
               doc: category,
           });
+
+          return res.status(400).json({
+            success: true,
+            message: "Failed to Delete Image From Cloudinary",
+            doc: category,
+        });
+
       } else {
           return res.status(404).json({
               success: false,
