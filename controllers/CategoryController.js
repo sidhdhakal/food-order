@@ -1,6 +1,7 @@
 const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadToCloudinary, deleteImageFromCloudinary } = require("../Utils/cloudinary");
+const { optimizeBase64Image } = require("../Utils/optimizeImage");
 
 exports.addCategory = async (req, res) => {
   try {
@@ -10,9 +11,9 @@ exports.addCategory = async (req, res) => {
         success: false,
         message: "Category Already Exists",
       });
-      console.log(req.body)
+    const optimizedUrl=await optimizeBase64Image(req.body.icon)
 
-    const url = await uploadToCloudinary(req.body.icon, "Category");
+    const url = await uploadToCloudinary(optimizedUrl, "Category");
     
     const newCategory = await Category.create({...req.body, icon:url});
     if (newCategory) {
@@ -53,7 +54,6 @@ exports.getCategories = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
     try {
       const category = await Category.findByIdAndDelete(req.params.id); 
-      console.log(category)
       if (category) {
         const result = await deleteImageFromCloudinary(category.icon, 'Category')
         if(result.success)
@@ -87,18 +87,21 @@ exports.deleteCategory = async (req, res) => {
 
 
 exports.updateCategory = async (req, res) => {
-  console.log(req.params.id)
     try {
       const categoryToUpdate = await Category.findById(req.params.id);
-      console.log(categoryToUpdate)
       if (!categoryToUpdate) {
         return res.status(404).json({
           success: false,
           message: "Category not found",
         });
       }
+
+      if(categoryToUpdate.name==req.body.name && categoryToUpdate.icon==req.body.icon)
+        return res.status(404).json({
+          success: false,
+          message: "No Data to Change",
+        });
   
-      // Check if new name conflicts with existing category (if name is being updated)
       if (req.body.name && req.body.name !== categoryToUpdate.name) {
         const existingCategory = await Category.findOne({ name: req.body.name });
         if (existingCategory) {
@@ -108,17 +111,27 @@ exports.updateCategory = async (req, res) => {
           });
         }
       }
-  
+      let url=''
+
+      if(!req.body.icon.startsWith('https://res.cloudinary.com/'))
+      {
+        await deleteImageFromCloudinary(categoryToUpdate.icon)
+        url=await uploadToCloudinary(req.body.icon)
+      }
+      else{
+        url=req.body.icon
+      }
+
       const updatedCategory = await Category.findOneAndUpdate(
         { _id: req.params.id },
         {
           ...req.body,
+          icon:url,
           updatedAt: Date.now()
         },
         { new: true } // Returns the updated document
       );
 
-      console.log(updatedCategory)
 
       if(updatedCategory){
         return res.status(200).json({
