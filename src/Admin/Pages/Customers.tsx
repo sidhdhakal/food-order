@@ -71,13 +71,14 @@ const Customers = () => {
               <th className="p-4 pl-2 text-left w-[10%]"></th>
               <th className="p-4 pl-2 text-left w-[25%]">Name</th>
               <th className="p-4 pl-2 text-left w-[25%]">Email</th>
-              <th className="p-4 pl-2 text-left w-[15%]">Status</th>
-              <th className="p-4 pl-2 text-left w-[25%]">Actions</th>
+              <th className="p-4 pl-2 text-left w-[10%]">isVerfied</th>
+              <th className="p-4 pl-2 text-left w-[10%]">Status</th>
+              <th className="p-4 pl-2 text-left w-[20%]">Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredCustomers.map((customer) => (
-              <tr key={customer.id} className="border-b hover:bg-gray-50">
+              <tr key={customer.id} className="border-b w-full hover:bg-gray-50">
                 <td className="p-2 w-[10%] ">
                   <img
                     src={customer.picture}
@@ -87,7 +88,11 @@ const Customers = () => {
                 </td>
                 <td className="p-2 w-[25%]">{customer.name}</td>
                 <td className="p-2 w-[25%]">{customer.email}</td>
-                <td className="p-2 w-[15%]">
+
+                <td className="p-2 w-[10%]">
+                  <Icon icon='icon-park-twotone:check-one' className="text-center text-2xl text-orange-400" />
+                </td>
+                <td className="p-2 w-[10%]">
                   <span
                     className={`px-2 py-1 rounded text-sm ${
                       customer.isActive
@@ -98,8 +103,10 @@ const Customers = () => {
                     {customer.isActive ? "Active" : "Blocked"}
                   </span>
                 </td>
-                <td className="p-2 w-[25%]">
-                  <div className="flex items-center justify-between gap-2 max-w-[10rem]">
+
+               
+                <td className="p-2 w-[20%]">
+                  <div className="flex items-center justify-between gap-2 max-w-[12rem]">
                     <button
                       onClick={() => toggleUserStatus(customer.id)}
                       className={`px-3 py-1 rounded text-sm ${

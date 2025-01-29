@@ -3,6 +3,7 @@ import Input from "../../Components/UI/Input";
 import { useSignUp } from "../../Queries/useSignUp";
 import GoogleLogin from "../Features/GoogleLogin";
 import Button from "../../Components/UI/Button";
+import toast from "react-hot-toast";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -11,10 +12,16 @@ const SignUp = () => {
 
   const { signup, isPending } = useSignUp(); 
 
-
-
   const handleSignup = async (e: any) => {
     e.preventDefault();
+    const nameRegex=/^[A-Za-z\s]+$/
+    if(!nameRegex.test(name))
+      return toast.error("Name should not contain numbers or special characters")
+
+    const passwordRegex = /^(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+      return toast.error("Password must be at least 8 characters long and contain at least one number.");
+    }
     signup({ name, email, password });
   };
 

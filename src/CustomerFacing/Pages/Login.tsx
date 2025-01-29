@@ -61,7 +61,7 @@ const Login = () => {
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
 
 
-      <span className="hover:text-primary-500 self-end mb-2">Forgot password?</span>
+      <span className="hover:text-primary-500 self-end mb-2 cursor-pointer">Forgot password?</span>
 
         <Button 
         type='submit'

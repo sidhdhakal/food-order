@@ -22,17 +22,10 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
                         {item.name}
                     </div>
                 ))}
-                {/* <div className='border-t border-zinc-400 pt-2 w-full'>
-  <div onClick={() => setIsActiveComponent('Notifications')} className={`px-4 py-3 cursor-pointer flex  justify- items-center gap-x-2 w-full rounded-2xl ${activeComponent === 'Notifications' ? 'text-zinc-900 bg-primary-300' : 'text-black'}`}>
-    <Icon icon='solar:notification-unread-bold-duotone' className={` 
-             text-[1.8rem]`} />
-    Notifications
-  </div>
-</div> */}
             </div>
 
             <div className='px-4 w-full mb-4 flex flex-col cursor-pointer gap-y-2 justify-between items-center bg-transparent self-center rounded-[24px]'>
-          <a  onClick={logOut} className='py-3 text-center bg-zinc-200 hover:bg-zinc-300 w-full rounded-2xl gap-x-2 text-black flex justify-center items-center'>
+          <a  onClick={logOut} className='py-3 text-center bg-zinc-200 hover:bg-zinc-300 w-full rounded-2xl gap-x-2 text-black flex justify-center items-center flex-col lg:flex-row'>
             <Icon icon="solar:logout-2-bold-duotone" className='text-[1.6rem]' />
             Log Out</a>
         </div>
