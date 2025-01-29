@@ -12,9 +12,8 @@ export function useSignUp() {
     isSuccess,
   } = useMutation({
     mutationFn: signUpApi,
-    onSuccess: (data) => {
-      console.log("Account created successfully:", data);
-      toast.success("Account Created Successfully");
+    onSuccess: () => {
+      toast.success("Account Created Successfully! Please Check your email to verify it!");
       setTimeout(() => {
         window.location.href = "/login";
       }, 2000);

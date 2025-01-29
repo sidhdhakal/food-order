@@ -8,6 +8,7 @@ import SignUp from './CustomerFacing/Pages/SignUp'
 import AdminPage from './Admin/Pages/AdminMain'
 import AdminLogin from './Admin/Pages/AdminLogin'
 import { Toaster } from 'react-hot-toast'
+import VerifyEmail from './CustomerFacing/Pages/VerifyEmail'
 
 function App() {
   const queryClient = new QueryClient()
@@ -21,6 +22,7 @@ function App() {
             <Route path='/' element={<Page />}/>
             <Route path='/login' element={<Login />}/>
             <Route path='/signup' element={<SignUp />}/>
+            <Route path='/verifyemail' element={<VerifyEmail />}/>
 
             <Route path='/admin'>
               <Route path=''  element={<AdminPage />}/>

@@ -59,13 +59,10 @@ const Login = () => {
           />
         </div>
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
-        {/* <button
-          type="submit"
-          disabled={isPending}
-          className="w-full px-4 py-2 disabled:bg-orange-400 bg-orange-500 self-center text-white rounded-md mt-4"
-        >
-          {isPending?'Loggin in...':'Login'}
-        </button> */}
+
+
+      <span className="hover:text-primary-500 self-end mb-2">Forgot password?</span>
+
         <Button 
         type='submit'
         disabled={isPending}
