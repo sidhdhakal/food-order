@@ -1,7 +1,10 @@
 // import User from "../models/User";
 const User = require("../models/User");
 const bc = require("bcryptjs");
+const sendEmail = require("../Utils/Mailer");
+const { generateVerificationToken } = require("../Utils/VerificationToken");
 exports.signup = async (req, res) => {
+  console.log(req.body)
   try {
     const oldUser = await User.findOne({ email: req.body.email });
     if (oldUser)
@@ -14,9 +17,23 @@ exports.signup = async (req, res) => {
     if (req.body.password) {
       const salt = await bc.genSalt(10);
       const pass = await bc.hash(req.body.password, salt);
-      newUser = await User.create({ ...req.body, password: pass });
-    } else newUser = await User.create(req.body);
 
+      const verifyToken=generateVerificationToken()
+      console.log(verifyToken)
+
+      newUser = await User.create({ ...req.body,
+        password: pass,
+        verifyToken,
+        verifyTokenExpiry:new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+      });
+
+
+      const link=`{${process.env.URL}}/verifyemail/?id=${newUser._id}&token=${verifyToken}`
+      await sendEmail({email:newUser.email,link, userName:newUser.name, subject:'Welcome to FoodMate!'})
+
+
+    } else newUser = await User.create(req.body);
+  
     if (newUser) {
       return res.status(200).json({
         success: true,
@@ -24,7 +41,9 @@ exports.signup = async (req, res) => {
         user: newUser,
       });
     }
+
   } catch (err) {
+    console.log(err)
     res.status(400).json({
       success: false,
       message: "Internal Server Error!",
@@ -55,3 +74,51 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+exports.verifyemail=async(req,res)=>{
+  try{
+    console.log(req.body)
+
+    const user=await User.findById(req.body.id)
+    if(!user){
+      return res.status(400).json({
+        success: false,
+        message: "User does not exists",
+      });
+    }
+
+    if(user.verifyToken===req.body.verifyToken){
+      if(user.verifyTokenExpiry< new Date()){
+        return res.status(400).json({
+          success: false,
+          message: "Token is Expired",
+        });
+      }
+      const updatedUser=await User.findByIdAndUpdate(req.body.id,{
+        isVerified:true,
+        verifyToken:null,
+        verifyTokenExpiry:null
+      },{new:true})
+      
+      if(updatedUser){
+        return res.status(200).json({
+          success: true,
+          message: "Email Verified successfully",
+          user: user,
+        });
+      }
+    }
+
+    return res.status(400).json({
+      success: false,
+      message: "Invalid Token",
+    });
+
+
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+}

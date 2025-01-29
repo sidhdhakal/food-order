@@ -1,7 +1,6 @@
 const nodemailer = require('nodemailer');
 require('dotenv').config();
-const pug=require('pug')
-const { convert} = require('html-to-text'); // Import htmlToText properly
+// const { convert} = require('html-to-text'); // Import htmlToText properly
 
 
 const transporter = nodemailer.createTransport({
@@ -16,10 +15,57 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendEmail = async options => {
-  const html = '<h1>Hello From Nodemailer</h1>'
-  const convertOptions = {
-    wordwrap: 130,
-  };
+    const html = `
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                color: #333;
+                margin: 0;
+                padding: 0;
+                background-color: #f9f9f9;
+            }
+            .container {
+                max-width: 600px;
+                margin: 20px auto;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            }
+            h1 {
+                color: #FF5722; /* Orange */
+                font-size: 24px;
+            }
+            p {
+                font-size: 16px;
+                line-height: 1.5;
+            }
+            a {
+                color: #FF5722; /* Orange */
+                text-decoration: none;
+                font-weight: bold;
+            }
+            .link-container {
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Welcome to Foodmate, ${options.userName}!</h1>
+            <p>We are excited to have you with us. To get started, please verify your email address by clicking the link below:</p>
+            <div class="link-container">
+                <a href="${options.link}" target="_blank">Click here to verify your email</a>
+            </div>
+            <p>If you have trouble clicking the link, copy and paste the following URL into your browser:</p>
+            <p><a href="${options.link}" target="_blank">${options.link}</a></p>
+        </div>
+    </body>
+    </html>
+  `;
+
 
     const mailOptions = {
         from: {
@@ -28,14 +74,17 @@ const sendEmail = async options => {
         },
         to:  [`${options.email}`],
         subject: options.subject,
-        text: convert(html, convertOptions)
+        html: html
         // text: options.text
     }
     try{
-        await transporter.sendMail(mailOptions);
+        const response = await transporter.sendMail(mailOptions);
         console.log('Email sent Successfully')
+        return response
+
     } catch (err){
         console.error('Error sending email:', err);
+        return err
     }
 }
 module.exports = sendEmail;

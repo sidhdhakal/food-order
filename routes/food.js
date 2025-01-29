@@ -28,7 +28,6 @@ router.delete('/category/deletecategory/:id',
   categoryController.deleteCategory)
 
 router.post('/uploadphoto', (req, res) => {
-  console.log(req.body); // Log form data
 
   const iamge = req.body.image; // Get the uploaded image path
 
@@ -37,7 +36,6 @@ router.post('/uploadphoto', (req, res) => {
       console.log(error.message)
       return res.status(500).json({ error: error.message });
     }
-    console.log(result.secure_url)
     res.status(200).json({
       message: 'Image uploaded successfully',
       url: result.secure_url, // URL of the uploaded image
@@ -47,7 +45,6 @@ router.post('/uploadphoto', (req, res) => {
 });
 
 router.post('/deletephoto', async (req, res) => {
-  console.log(req.body); // Log form data
 
   const imageUrl = req.body.imageUrl; // Get the uploaded image path
 

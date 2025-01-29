@@ -17,7 +17,6 @@ exports.deleteImageFromCloudinary = (imageUrl, folder) => {
     return new Promise((resolve, reject) => {
       try {
         const publicId = imageUrl.split('/').slice(-1)[0].split('.')[0];
-        console.log(publicId)
         cloudinary.uploader.destroy(`${folder}/${publicId}`, (error, result) => {
           if (error) {
             reject({success:false, message: "Error deleting image from Cloudinary", error: error.message });

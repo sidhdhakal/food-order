@@ -7,15 +7,18 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const {signup, login} = require('../controllers/AuthController')
+const {signup, login, verifyemail} = require('../controllers/AuthController')
 
 router.get('/',(req, res)=>{
   res.send("This is auth page");
 })
 
+router.post('/verifyemail', verifyemail )
+
 router.post('/signup',signup)
 
 router.post('/login',login)
+
 
 
   router.get('/getUsers',protect,restrictTo('admin'),async(req, res)=>{
