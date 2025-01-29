@@ -15,7 +15,7 @@ const SearchInput = ({className='hidden md:flex', onSearch, placeholder='Search 
         icon="flowbite:search-outline"
         className="text-[1.2rem] md:text-[1.5rem]"
       />
-      <span className="hidden md:block">Search</span>
+      <span className="hidden sm:block">Search</span>
     </button>
     </div>
   )

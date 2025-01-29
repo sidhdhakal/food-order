@@ -8,7 +8,7 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
         window.location.reload();
       };
     return (
-        <div className="bg-white z-[100] flex  w-[8rem] lg:w-[16rem] shadow-xl  sticky  h-screen top-0  flex-col justify-between text-zinc-900 border-r overflow-y-auto home border-zinc-300 text-lg ">
+        <div className="bg-white z-[100] flex min-w-[8rem]  w-[8rem] lg:w-[16rem] shadow-xl  sticky  h-screen top-0  flex-col justify-between text-zinc-900 border-r overflow-y-auto home border-zinc-300 text-lg ">
 
             <LogoSidebar className='lg:flex-row lg:text-[2.4rem] 4xl:text-[2.5rem] mt-0' />
 

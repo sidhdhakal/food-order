@@ -5,6 +5,7 @@ import ProductCard from "../../Components/UI/ProductCard";
 import { useState } from "react";
 import CategoryCard from "../../Components/UI/CategoryCard";
 import sortOptions from '../../Data/SortOptions.json'
+import SearchInput from "../../Components/UI/SearchInput";
 const Menupage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [sortOption, setSortOption] = useState("bestMatch");
@@ -47,10 +48,7 @@ const Menupage = () => {
                 : "border-transparent bg-white "
             }`}
           >
-            {/* <Icon
-              icon='icon-park-twotone:overall-reduction'
-              className="text-3xl lg:text-[2.6rem] 4xl:text-[3rem] text-primary-600"
-            /> */}
+          
       <img src='/Icons/diet.png' className="w-[1.6rem] mr-1 md:w-[2rem] lg:w-[2.8rem]"/>
 
             <h1 className="text-md">{'All Products'}</h1>
@@ -65,6 +63,7 @@ const Menupage = () => {
           ))}
         </div>
       </div>
+      <SearchInput className="flex md:hidden w-full" />
 
       <div className="w-full">
         <div className="flex justify-between items-center">

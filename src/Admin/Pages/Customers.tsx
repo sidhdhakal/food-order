@@ -3,6 +3,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import SearchInput from "../../Components/UI/SearchInput";
 import DialogModal from "../../Components/DialogModal";
 import customers from '../../Data/Users.json'
+import toast from "react-hot-toast";
 
 const Customers = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -57,7 +58,7 @@ const Customers = () => {
           }
         />
       </div>
-
+        <button onClick={()=>toast.success('Hello! I am Toast')}>TriggerToast</button>
       <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
           <h1 className="text-[1.5rem] font-semibold">

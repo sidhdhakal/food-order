@@ -16,7 +16,12 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_ID}>
-      <Toaster />
+      <Toaster toastOptions={{
+        style:{
+          
+        },
+        
+      }} />
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Page />}/>
