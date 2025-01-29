@@ -21,7 +21,6 @@ export async function signUpApi({
     const data = await res.json();
     console.log(data);
     if (data.success) {
-      console.log(data.message || "Account created successfully");
       return data;
     } else {
       throw new Error(data.message || "Error storing data");

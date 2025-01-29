@@ -1,11 +1,13 @@
 import Input from '../../../Components/UI/Input'
 import Button from '../../../Components/UI/Button'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useState } from 'react';
+import { useEffect,  useState } from 'react';
 import { useDeleteCategory } from '../../../Queries/category/useDeleteCategory';
+import { useUpdateCategory } from '../../../Queries/category/useUpdateCategory';
 
-const CategoryCard = ({category:c, index}:any) => {
+const CategoryCard = ({category:c, index, refetch}:any) => {
       const [category, setCategory] = useState<any>({
+        _id:c._id,
         name:c.name,
         icon:c.icon
       });
@@ -15,18 +17,29 @@ const CategoryCard = ({category:c, index}:any) => {
           setCategory((category:any) => ({ ...category, icon: files[0] }));
         }
     }
-    console.log(category)
 
+    const { deleteCategory, isPending:isDeletePending, isSuccess:isDeleteSuccess } = useDeleteCategory();
 
-    const {deleteCategory}=useDeleteCategory()
+    const onDelete = async (id: string) => {
+      console.log("id", id);
+      deleteCategory(id);
+    };
 
-    const handleDelete=(id:any)=>{
-        deleteCategory(id)
+    const {updateCategory,isPending:isUpatePending, isSuccess:isUpdateSuccess}=useUpdateCategory()
+    const handleUpdate=async()=>{
+      console.log('Category', category)
+        updateCategory(category)
     }
 
+    useEffect(() => {
+      if (isDeleteSuccess || isUpdateSuccess) {
+        console.log(category._id)
+        refetch();
+      }
+    }, [isDeleteSuccess, isUpdateSuccess]); 
   return (
     <div
-    key={category.id}
+    key={category._id}
     className="p-4 border rounded-lg mb-4 bg-gray-50"
   >
     <div className="flex gap-4 items-start">
@@ -36,12 +49,18 @@ const CategoryCard = ({category:c, index}:any) => {
         </label>
         <Input
           type="text"
+        disabled={isDeletePending || isUpatePending}
+
           value={category.name}
         onChange={(e:any)=>setCategory((c:any)=>({...c, name:e.target.value}))}
           required
         />
 
-        <Button className="mt-4 bg-zinc-200 !text-black hover:bg-zinc-300">Edit</Button>
+        <Button
+        disabled={isDeletePending || isUpatePending}
+         onClick={handleUpdate} className="mt-4 bg-zinc-200 !text-black hover:bg-zinc-300 disabled:bg-zinc-100">
+          {isUpatePending?"Editing..":"Edit"}
+         </Button>
       </div>
 
       <div className="w-32">
@@ -51,7 +70,8 @@ const CategoryCard = ({category:c, index}:any) => {
         <div className="relative border-2 border-dashed rounded-lg p-2 transition-colors">
           <Input
             type="file"
-            // onChange={(e) => handleImageChange(index, e)}
+        disabled={isDeletePending || isUpatePending}
+
             onChange={(e)=>handleImageChange(e)}
             id={`icon-change-${index}`}
             className="hidden"
@@ -83,14 +103,15 @@ const CategoryCard = ({category:c, index}:any) => {
       </div>
 
       <button
-      onClick={()=>handleDelete(category.id)}
+      onClick={()=>onDelete(category._id)}
         type="button"
-        // onClick={() => removeCategory(index)}
-        className="text-red-500 hover:text-red-700 p-1"
+        disabled={isDeletePending || isUpatePending}
+        className={` p-1 ${isDeletePending?'text-zinc-400':'text-red-500 hover:text-red-700'}`}
       >
         <Icon icon="fluent:delete-32-regular" className="text-xl" />
       </button>
     </div>
+
   </div>
   )
 }

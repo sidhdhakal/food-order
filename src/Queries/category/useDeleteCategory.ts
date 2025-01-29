@@ -12,10 +12,8 @@ export function useDeleteCategory() {
     isSuccess,
   } = useMutation({
     mutationFn: DeleteCategoryApi,
-    onSuccess: (data) => {
-      console.log("Category Deleted successfully:", data);
+    onSuccess: () => {
       toast.success("Category Deleted Successfully");
-
     },
     onError: (error) => {
       console.error("Error deleting Category:", error);

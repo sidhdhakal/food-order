@@ -1,51 +1,26 @@
-import  { useState, useEffect } from "react";
 import AddCategoryForm from "./AddCategoryForm";
 import CategoryCard from "./UI/CategoryCard";
+import { useGetCategory } from "../../Queries/category/useGetCategories";
 
-interface Category {
-  id: number;
-  name: string;
-  icon: string;
-}
 
-const EditCategoriesForm = ({
-  onClose,
-  categories,
-}: {
-  onClose: () => void;
-  categories: Category[];
-}) => {
-  const [categoryList, setCategoryList] = useState<Category[]>([]);
+const EditCategoriesForm = () => {
+  const { data, isLoading, error, isError, refetch } = useGetCategory();
+  // console.log(data);
 
-  useEffect(() => {
-    if (categories) {
-      setCategoryList(categories);
-    }
-  }, [categories]);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error: {error?.message}</div>;
+  }
 
   return (
-    <div  className="space-y-4 mt-6 dialog">
-      {categoryList.map((category, index) => (
-      <CategoryCard category={category} index={index}/>
+    <div className="space-y-4 mt-4 dialog relative">
+      {data.doc.map((category: any, index: any) => (
+        <CategoryCard key={index} category={category} index={index} refetch={refetch} />
       ))}
-
-      <AddCategoryForm />
-
-      <div className="flex justify-end space-x-4 mt-6">
-        <button
-          type="button"
-          onClick={onClose}
-          className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
-        >
-          Cancel
-        </button>
-        <button
-          type="submit"
-          className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
-        >
-          Save Changes
-        </button>
-      </div>
+      <AddCategoryForm refetch={refetch} />
     </div>
   );
 };
