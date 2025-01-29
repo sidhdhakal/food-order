@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../Components/UI/Button";
 import Input from "../../Components/UI/Input";
 import { useAddCategory } from "../../Queries/category/useAddCategory";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const AddCategoryForm = () => {
+const AddCategoryForm = ({refetch}:any) => {
   const [newCategory, setNewCategory] = useState<{ name: string; icon: any }>({
     name: "",
     icon: null,
@@ -17,15 +17,23 @@ const AddCategoryForm = () => {
     }
   };
 
-  const { addCategory , isPending} = useAddCategory();
-  const handleAddNewCategory = () => {
-    console.log("Add", newCategory);
-    if (newCategory.name == "") return;
-    addCategory(newCategory);
-  };
-  console.log(newCategory);
+  const { addCategory , isPending, isSuccess} = useAddCategory();
+  const handleAddNewCategory = async () => {
+    addCategory(newCategory)
+
+    };
+
+  
+
+    useEffect(()=>{
+        if(isSuccess){
+      refetch()
+      setNewCategory({name:'', icon:null})
+    }
+    }, [isSuccess])
+
   return (
-    <div className="p-4 border rounded-lg mb-4 bg-gray-50">
+    <div className="p-4 border rounded-lg  bg-gray-50">
       <h1 className="text-2xl mb-4">Add Category</h1>
       <div className="flex gap-4 items-start">
         <div className="flex-1">
@@ -34,6 +42,7 @@ const AddCategoryForm = () => {
           </label>
           <Input
             type="text"
+            id='newCategoryText'
             value={newCategory.name}
             disabled={isPending}
             onChange={(e) =>
@@ -56,11 +65,11 @@ const AddCategoryForm = () => {
               type="file"
               disabled={isPending}
               onChange={(e) => handleNewImage(e)}
-              id={`icon-new`}
+              id='newCategoryIcon'
               className="hidden"
             />
             <label
-              htmlFor={`icon-new`}
+              htmlFor='newCategoryIcon'
               className="flex flex-col items-center justify-center gap-2 cursor-pointer"
             >
               {newCategory.icon ? (
@@ -71,7 +80,7 @@ const AddCategoryForm = () => {
                       : ""
                   }
                   alt="Category icon"
-                  className="w-16 h-16 object-contain rounded-lg"
+                  className="w-20 h-20 object-contain rounded-lg"
                 />
               ) : (
                 <div className="p-2 rounded-full bg-blue-50">

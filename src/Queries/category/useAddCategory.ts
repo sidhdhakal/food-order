@@ -3,6 +3,7 @@ import toast from "react-hot-toast";
 import { AddCategoryApi } from "../../Api/category";
 
 export function useAddCategory() {
+  let success=false;
   const {
     mutate: addCategory,
     isError,
@@ -12,12 +13,9 @@ export function useAddCategory() {
     isSuccess,
   } = useMutation({
     mutationFn: AddCategoryApi,
-    onSuccess: (data) => {
-      console.log("New Category Added successfully:", data);
+    onSuccess: () => {
       toast.success("New Category Added Successfully");
-    //   setTimeout(() => {
-    //     window.location.href = "/login";
-    //   }, 2000);
+      success=true
     },
     onError: (error) => {
       console.error("Error adding Category:", error);
@@ -25,5 +23,5 @@ export function useAddCategory() {
     },
   });
 
-  return { addCategory, isError, data, error, isSuccess, isPending };
+  return { addCategory, isError, data, error, isSuccess,success, isPending };
 }

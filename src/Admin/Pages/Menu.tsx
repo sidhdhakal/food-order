@@ -75,13 +75,12 @@ const Menu = () => {
         }
       >
         <EditCategoriesForm
-          categories={categories}
-          onClose={() =>
-            setIsDialogOpen((prevState) => ({
-              ...prevState,
-              editCatgory: false,
-            }))
-          }
+          // onClose={() =>
+          //   setIsDialogOpen((prevState) => ({
+          //     ...prevState,
+          //     editCatgory: false,
+          //   }))
+          // }
         />
       </DialogLayout>
 
