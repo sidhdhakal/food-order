@@ -28,7 +28,7 @@ exports.signup = async (req, res) => {
       });
 
 
-      const link=`{${process.env.URL}}/verifyemail/?id=${newUser._id}&token=${verifyToken}`
+      const link=`${process.env.URL}/verifyemail/?id=${newUser._id}&token=${verifyToken}`
       await sendEmail({email:newUser.email,link, userName:newUser.name, subject:'Welcome to FoodMate!'})
 
 
