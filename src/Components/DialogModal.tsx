@@ -10,7 +10,6 @@ interface DialogModalProps {
 }
 
 const DialogModal = ({  onConfirm, onCancel, message, btntext }: DialogModalProps) => {
-    console.log('Delete Dialog Rendered')
     return (
         <div onClick={onCancel} className='fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
             <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>

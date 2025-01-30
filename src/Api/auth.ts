@@ -19,7 +19,6 @@ export async function signUpApi({
     });
 
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       return data;
     } else {
@@ -40,7 +39,6 @@ export async function signUpGoogleApi({
   email: string;
   picture: string;
 }) {
-  console.log(picture);
   try {
     await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
       method: "POST",
@@ -81,7 +79,6 @@ export async function loginApi({
     });
 
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       setCookie({name:data.user.name, email})
 
