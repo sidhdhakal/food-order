@@ -4,7 +4,7 @@ import { useGetCategory } from "../../Queries/category/useGetCategories";
 
 
 const EditCategoriesForm = () => {
-  const { data, isLoading, error, isError, refetch } = useGetCategory();
+  const { data, isLoading, error, isError} = useGetCategory();
   // console.log(data);
 
   if (isLoading) {
@@ -18,9 +18,9 @@ const EditCategoriesForm = () => {
   return (
     <div className="space-y-4 mt-4 dialog relative">
       {data.doc.map((category: any, index: any) => (
-        <CategoryCard key={index} category={category} index={index} refetch={refetch} />
+        <CategoryCard key={index} category={category} index={index}  />
       ))}
-      <AddCategoryForm refetch={refetch} />
+      <AddCategoryForm  />
     </div>
   );
 };

@@ -42,7 +42,6 @@ export async function AddCategoryApi({
       });
   
       const data = await res.json();
-      console.log(data);
       if (data.success) {
         console.log(data.message || "New Category created successfully");
         return data;
@@ -66,7 +65,6 @@ export async function DeleteCategoryApi(id:any){
     });
 
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       return data;
     } else {
@@ -87,7 +85,6 @@ export async function UpdateCategoryApi({
   name: string | null;
   icon:any
 }) {
-  console.log(_id)
   let iconBase64=undefined
   if(icon instanceof File || icon instanceof FileList)
     iconBase64=await convertBase64(icon)
@@ -104,7 +101,6 @@ export async function UpdateCategoryApi({
     });
 
     const data = await res.json();
-    console.log(data);
     if (data.success) {
       return data;
     } else {

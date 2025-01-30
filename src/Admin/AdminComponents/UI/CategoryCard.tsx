@@ -1,11 +1,11 @@
 import Input from '../../../Components/UI/Input'
 import Button from '../../../Components/UI/Button'
 import { Icon } from '@iconify/react/dist/iconify.js'
-import { useEffect,  useState } from 'react';
+import { useState } from 'react';
 import { useDeleteCategory } from '../../../Queries/category/useDeleteCategory';
 import { useUpdateCategory } from '../../../Queries/category/useUpdateCategory';
 
-const CategoryCard = ({category:c, index, refetch}:any) => {
+const CategoryCard = ({category:c, index}:any) => {
       const [category, setCategory] = useState<any>({
         _id:c._id,
         name:c.name,
@@ -18,25 +18,18 @@ const CategoryCard = ({category:c, index, refetch}:any) => {
         }
     }
 
-    const { deleteCategory, isPending:isDeletePending, isSuccess:isDeleteSuccess } = useDeleteCategory();
+    const { deleteCategory, isPending:isDeletePending} = useDeleteCategory();
 
     const onDelete = async (id: string) => {
-      console.log("id", id);
       deleteCategory(id);
     };
 
-    const {updateCategory,isPending:isUpatePending, isSuccess:isUpdateSuccess}=useUpdateCategory()
+    const {updateCategory,isPending:isUpatePending} = useUpdateCategory()
     const handleUpdate=async()=>{
-      console.log('Category', category)
         updateCategory(category)
     }
 
-    useEffect(() => {
-      if (isDeleteSuccess || isUpdateSuccess) {
-        console.log(category._id)
-        refetch();
-      }
-    }, [isDeleteSuccess, isUpdateSuccess]); 
+   
   return (
     <div
     key={category._id}
