@@ -7,6 +7,8 @@ const { body, validationResult } = require('express-validator');
 const categoryController = require('../controllers/CategoryController')
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
+const { getAll } = require('../controllers/handlerFactory');
+const Category = require('../models/Category');
 
 
 const storage = multer.memoryStorage();  // Store file in memory (buffer)
@@ -16,7 +18,7 @@ router.get('/', (req, res) => {
   res.send("This is Food page");
 });
 
-router.get('/category',categoryController.getCategories)
+router.get('/category',getAll(Category))
 router.post('/category/addcategory',
   // protect,restrictTo('admin'),
   categoryController.addCategory)

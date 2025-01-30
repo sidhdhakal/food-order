@@ -32,24 +32,24 @@ exports.addCategory = async (req, res) => {
   }
 };
 
-exports.getCategories = async (req, res) => {
-  try {
-    const categories=await Category.find()
-    if(categories){
-        return res.status(200).json({
-            success: true,
-            message: "Category fetched successfully",
-            doc: categories,
-          });
-    }
+// exports.getCategories = async (req, res) => {
+//   try {
+//     const categories=await Category.find()
+//     if(categories){
+//         return res.status(200).json({
+//             success: true,
+//             message: "Category fetched successfully",
+//             doc: categories,
+//           });
+//     }
 
-  } catch (err) {
-    res.status(400).json({
-      success: false,
-      message: "Internal Server Error!",
-    });
-  }
-};
+//   } catch (err) {
+//     res.status(400).json({
+//       success: false,
+//       message: "Internal Server Error!",
+//     });
+//   }
+// };
 
 exports.deleteCategory = async (req, res) => {
     try {
