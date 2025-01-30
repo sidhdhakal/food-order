@@ -1,7 +1,6 @@
 import { useState, useMemo } from "react";
 import SearchInput from "../../Components/UI/SearchInput";
 import DialogModal from "../../Components/DialogModal";
-import toast from "react-hot-toast";
 import CustomerCard from "../AdminComponents/CustomerCard";
 import { useGetCustomers } from "../../Queries/useGetCustomers";
 import { useDeleteCustomer } from "../../Queries/useDeleteCustomer";
