@@ -9,6 +9,7 @@ import AdminPage from './Admin/Pages/AdminMain'
 import AdminLogin from './Admin/Pages/AdminLogin'
 import { Toaster } from 'react-hot-toast'
 import VerifyEmail from './CustomerFacing/Pages/VerifyEmail'
+import ResetPassword from './CustomerFacing/Pages/ResetPassword'
 
 function App() {
   const queryClient = new QueryClient()
@@ -28,6 +29,7 @@ function App() {
             <Route path='/login' element={<Login />}/>
             <Route path='/signup' element={<SignUp />}/>
             <Route path='/verifyemail' element={<VerifyEmail />}/>
+            <Route path='/resetpassword' element={<ResetPassword />}/>
 
             <Route path='/admin'>
               <Route path=''  element={<AdminPage />}/>
