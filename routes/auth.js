@@ -7,7 +7,9 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const {signup, login, verifyemail} = require('../controllers/AuthController')
+const {signup, login, verifyemail} = require('../controllers/AuthController');
+const { getCustomers } = require('../controllers/CustomerController');
+const { getAll, deleteOne, updateOne } = require('../controllers/handlerFactory');
 
 router.get('/',(req, res)=>{
   res.send("This is auth page");
@@ -18,6 +20,12 @@ router.post('/verifyemail', verifyemail )
 router.post('/signup',signup)
 
 router.post('/login',login)
+
+router.get('/getcustomers',getAll(User))
+
+router.delete('/deletecustomer/:id',deleteOne(User))
+
+router.put('/updatecustomer/:id',updateOne(User))
 
 
 
@@ -32,7 +40,9 @@ router.post('/login',login)
 
 module.exports = router;
 
-router.get('/getUser/:id', protect, restrictTo('admin'), async (req, res) => {
+router.get('/getcustomer/:id',
+   protect, restrictTo('admin'), 
+   async (req, res) => {
   try {
     const userId = req.params.id;
 

@@ -4,7 +4,6 @@ const bc = require("bcryptjs");
 const sendEmail = require("../Utils/Mailer");
 const { generateVerificationToken } = require("../Utils/VerificationToken");
 exports.signup = async (req, res) => {
-  console.log(req.body)
   try {
     const oldUser = await User.findOne({ email: req.body.email });
     if (oldUser)
@@ -19,10 +18,10 @@ exports.signup = async (req, res) => {
       const pass = await bc.hash(req.body.password, salt);
 
       const verifyToken=generateVerificationToken()
-      console.log(verifyToken)
 
       newUser = await User.create({ ...req.body,
         password: pass,
+        isVerified:false,
         verifyToken,
         verifyTokenExpiry:new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       });
@@ -32,7 +31,7 @@ exports.signup = async (req, res) => {
       await sendEmail({email:newUser.email,link, userName:newUser.name, subject:'Welcome to FoodMate!'})
 
 
-    } else newUser = await User.create(req.body);
+    } else newUser = await User.create({...req.body, isVerified:true});
   
     if (newUser) {
       return res.status(200).json({
@@ -55,13 +54,14 @@ exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user) {
-      const passcmp = await bc.compare(req.body.password, user.password);
+      const passcmp =  bc.compare(req.body.password, user.password);
       if(passcmp)
         return res.status(200).json({
           success: true,
           message: "Signed In successfully",
           user: user,
         });
+
     }
     res.status(400).json({
       success: false,
@@ -77,7 +77,6 @@ exports.login = async (req, res) => {
 
 exports.verifyemail=async(req,res)=>{
   try{
-    console.log(req.body)
 
     const user=await User.findById(req.body.id)
     if(!user){
