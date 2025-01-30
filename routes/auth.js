@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const {signup, login, verifyemail} = require('../controllers/AuthController');
+const {signup, login, verifyemail, sendPasswordResetLink, resetPassword} = require('../controllers/AuthController');
 const { getCustomers } = require('../controllers/CustomerController');
 const { getAll, deleteOne, updateOne } = require('../controllers/handlerFactory');
 
@@ -27,6 +27,9 @@ router.delete('/deletecustomer/:id',deleteOne(User))
 
 router.put('/updatecustomer/:id',updateOne(User))
 
+router.post('/sendpasswordresetlink', sendPasswordResetLink )
+
+router.post('/resetpassword', resetPassword)
 
 
   router.get('/getUsers',protect,restrictTo('admin'),async(req, res)=>{

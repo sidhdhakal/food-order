@@ -7,7 +7,7 @@ const { body, validationResult } = require('express-validator');
 const categoryController = require('../controllers/CategoryController')
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const { getAll } = require('../controllers/handlerFactory');
+const { getAll, deleteOne, updateOne, createOne } = require('../controllers/handlerFactory');
 const Category = require('../models/Category');
 
 
@@ -21,10 +21,10 @@ router.get('/', (req, res) => {
 router.get('/category',getAll(Category))
 router.post('/category/addcategory',
   // protect,restrictTo('admin'),
-  categoryController.addCategory)
+  createOne(Category))
 router.put('/category/updatecategory/:id',
   // protect,restrictTo('admin'),
-  categoryController.updateCategory)
+  updateOne(Category))
 router.delete('/category/deletecategory/:id',
   // protect,restrictTo('admin'),
   categoryController.deleteCategory)

@@ -10,6 +10,7 @@ exports.deleteOne = Model => async (req, res) => {
 
     res.status(204).json({
       success: true,
+      message:"Deleted Successfully",
       doc
     });
   } catch (err) {
@@ -30,6 +31,7 @@ exports.updateOne = Model => async (req, res) => {
     if (!doc) {
       res.status(400).json({
         success: false,
+        
         message: "No Doc found"
       });
     }
@@ -51,6 +53,7 @@ exports.createOne = Model => async (req, res) => {
     const doc = await Model.create(req.body);
     res.status(201).json({
       success: true,
+      message:"Created Successfully",
       doc
     });
   } catch (err) {
@@ -101,6 +104,7 @@ exports.getAll = Model => async (req, res) => {
     res.status(200).json({
       success: true,
       results: doc.length,
+      message:'Data Fetched Successfully',
       doc
     });
   } catch (err) {
