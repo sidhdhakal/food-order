@@ -69,9 +69,9 @@ const Customers = () => {
         />
       </div>
       
-      <button onClick={() => toast.success('Hello! I am Toast')}>
+      {/* <button onClick={() => toast.success('Hello! I am Toast')}>
         TriggerToast
-      </button>
+      </button> */}
 
       <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
