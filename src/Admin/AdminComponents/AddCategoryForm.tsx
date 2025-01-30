@@ -4,7 +4,7 @@ import Input from "../../Components/UI/Input";
 import { useAddCategory } from "../../Queries/category/useAddCategory";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
-const AddCategoryForm = ({refetch}:any) => {
+const AddCategoryForm = () => {
   const [newCategory, setNewCategory] = useState<{ name: string; icon: any }>({
     name: "",
     icon: null,
@@ -23,11 +23,9 @@ const AddCategoryForm = ({refetch}:any) => {
 
     };
 
-  
 
     useEffect(()=>{
         if(isSuccess){
-      refetch()
       setNewCategory({name:'', icon:null})
     }
     }, [isSuccess])
