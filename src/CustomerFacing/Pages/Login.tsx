@@ -4,6 +4,8 @@ import Background from "../../Components/UI/Background";
 import GoogleLogin from "../Features/GoogleLogin";
 import { useLogin } from "../../Queries/useLogin";
 import Button from "../../Components/UI/Button";
+import toast from "react-hot-toast";
+import { usePasswordResetEmail } from "../../Queries/usePasswordResetEmail";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -21,6 +23,16 @@ const Login = () => {
     }
     login({email, password})
   };
+
+  const {passwordResetEmail, isPending:isEmailPending}=usePasswordResetEmail()
+
+  const handleForgotPassword=()=>{
+    if(email=="")
+       return toast.error("Email Cannot be Empty")
+    passwordResetEmail({email})
+
+  }
+
   return (
     <div className="w-full h-screen max-h-screen flex justify-center items-center bg-zinc-50 text-black relative">
       <Background />
@@ -40,7 +52,7 @@ const Login = () => {
             type="email"
             id="email"
             value={email}
-            disabled={isPending}
+            disabled={isPending || isEmailPending}
             onChange={(e: any) => setEmail(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
@@ -52,7 +64,7 @@ const Login = () => {
             type="password"
             id="password"
             value={password}
-            disabled={isPending}
+            disabled={isPending || isEmailPending}
             onChange={(e: any) => setPassword(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
@@ -61,11 +73,11 @@ const Login = () => {
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
 
 
-      <span className="hover:text-primary-500 self-end mb-2 cursor-pointer">Forgot password?</span>
+      <span onClick={handleForgotPassword} className="hover:text-primary-500 self-end mb-2 cursor-pointer">Forgot password?</span>
 
         <Button 
         type='submit'
-        disabled={isPending}
+        disabled={isPending || isEmailPending}
         >
         {isPending?'Loggin in...':'Login'}
         </Button>

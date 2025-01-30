@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { deleteCustomerApi } from "../Api/customers";
 
 export function useDeleteCustomer() {
+  const queryClient=useQueryClient()
+
   const {
     mutate: deleteCustomer,
     isError,
@@ -14,6 +16,8 @@ export function useDeleteCustomer() {
     mutationFn: deleteCustomerApi,
     onSuccess: () => {
       toast.success("Customer Deleted Successfully");
+      queryClient.invalidateQueries({queryKey:['customer']})
+
     },
     onError: (error) => {
       console.error("Error Customer Category:", error);
