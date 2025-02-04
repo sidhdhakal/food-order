@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
-const bc = require('bcryptjs');
-const jwtsec = "babishisagoodboy";
-const jwt = require('jsonwebtoken');
-const { body, validationResult } = require('express-validator');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 const {signup, login, verifyemail, sendPasswordResetLink, resetPassword} = require('../controllers/AuthController');
-const { getCustomers } = require('../controllers/CustomerController');
 const { getAll, deleteOne, updateOne } = require('../controllers/handlerFactory');
 
 router.get('/',(req, res)=>{
