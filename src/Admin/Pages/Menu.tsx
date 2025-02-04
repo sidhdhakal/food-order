@@ -42,6 +42,12 @@ const Menu = () => {
     });
   }, [selectedCategory, searchValue, products]);
 
+
+
+  const handleMenuAvailableStatus=(id:any, value:boolean)=>{
+    console.log(id, value)
+  }
+
   return (
     <div className="w-full relative">
       <DialogLayout
@@ -209,7 +215,7 @@ const Menu = () => {
                   ))}
                 </td>
                 <td className="p-2">
-                  <span
+                  {/* <span
                     className={`px-2 py-1 rounded text-sm ${
                       product.available
                         ? "bg-green-100 text-green-800"
@@ -217,7 +223,19 @@ const Menu = () => {
                     }`}
                   >
                     {product.available ? "Available" : "Unavailable"}
-                  </span>
+                  </span> */}
+
+<button
+                        // disabled={isupdateCustomerPending}
+                          onClick={() => handleMenuAvailableStatus(product.id, !product.available)}
+                          className={`px-3 py-1 rounded text-sm disabled:text-zinc-400 ${
+                            product.available
+                              ? "bg-red-100 text-red-800 hover:bg-red-200"
+                              : "bg-green-100 text-green-800 hover:bg-green-200"
+                          }`}
+                        >
+                          {product.available ? "Available" : "Unavailable"}
+                        </button>
                 </td>
                 <td className="p-2 border-b">
                   <div className="flex gap-2 justify-around">
