@@ -9,7 +9,7 @@ import Button from "../../Components/UI/Button";
 import EditCategoriesForm from "../AdminComponents/EditCategoriesForm";
 import { useGetFoods } from "../../Queries/food/useGetFoods";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
-import { Food} from "../../Utils/Interfaces";
+import { Food} from "../../Utils/types";
 import ProductCard from "../AdminComponents/ProductCard";
 
 const Menu = () => {

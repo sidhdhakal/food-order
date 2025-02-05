@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { Food, FoodSize } from "../../Utils/Interfaces";
+import { Food, FoodSize } from "../../Utils/types";
 import { useUpdateFoodAvailability } from "../../Queries/food/useUpdateFoodAvailability";
 
 const ProductCard = ({ product }: { product: Food }) => {

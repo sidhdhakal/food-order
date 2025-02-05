@@ -1,7 +1,5 @@
 import convertBase64 from "../Utils/ConvertBase64";
 
-
-
 export async function getCategoriesApi(){
   try{
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/category`, {

@@ -1,5 +1,5 @@
 import convertBase64 from "../Utils/ConvertBase64";
-import { Food } from "../Utils/Interfaces";
+import { Food } from "../Utils/types";
 
 export async function addFoodApi(food:Food) {
 
