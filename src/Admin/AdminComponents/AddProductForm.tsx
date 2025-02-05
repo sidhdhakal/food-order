@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import categories from '../../Data/Categories.json'
+import React, { useEffect, useState } from 'react'
 import Input from '../../Components/UI/Input';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import ToggleSwitch from '../../Components/UI/ToggleSwitch';
-
+import { useAddFood } from '../../Queries/food/useAddFood';
+import { useGetCategory } from '../../Queries/category/useGetCategories';
 
 interface Size {
     name: string;
@@ -12,7 +12,10 @@ interface Size {
 
 const AddProductForm = ({ onClose }: { onClose: () => void }) => {
 
-    const [productName, setProductName] = useState('');
+    const { data} = useGetCategory();
+    console.log(data)
+
+    const [productName, setProductName] = useState<string>('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState<any>();
@@ -35,21 +38,21 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
         setSizes(newSizes);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const newProduct = {
-            id: Date.now(),
-            name: productName,
-            description,
-            image,
-            sizes,
-            category,
-            rating: 0,
-            available
+     const { addFood , isPending, isSuccess} = useAddFood();
+
+      const handleSubmit = async (e:any) => {
+        e.preventDefault()
+        addFood({name:productName, description,sizes,image, category, available})
+    
         };
-        console.log('New Product:', newProduct);
-        // Add your save logic here
-    };
+    
+    
+        useEffect(()=>{
+            if(isSuccess){
+        }
+        }, [isSuccess])
+
+   
 
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +62,8 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
           }
       
     };
+
+
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 mt-6 dialog">
@@ -91,7 +96,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     className="mt-1 block w-full border border-gray-300 bg-gray-100 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-300 focus:border-primary-300"
                 >
                     <option  selected hidden>Select Category</option>
-                    {categories.map((cat) => (
+                    {data?.doc?.map((cat:any) => (
                         <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
                 </select>
@@ -201,6 +206,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
 
             <div className="flex justify-end space-x-4 mt-6">
                 <button
+                    disabled={isPending}
                     type="button"
                     onClick={onClose}
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
@@ -208,8 +214,9 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     Cancel
                 </button>
                 <button
+                    disabled={isPending}
                     type="submit"
-                    className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+                    className="px-4 py-2 bg-primary-500 disabled:bg-zinc-300 text-white rounded-md hover:bg-primary-600"
                 >
                     Add Product
                 </button>

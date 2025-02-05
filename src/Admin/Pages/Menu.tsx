@@ -1,17 +1,24 @@
 import { useState, useMemo } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import SearchInput from "../../Components/UI/SearchInput";
-import products from "../../Data/foodmenu.json";
-import categories from "../../Data/Categories.json";
 import DialogLayout from "../AdminComponents/DialogLayout";
 import AddProductForm from "../AdminComponents/AddProductForm";
 import DialogModal from "../../Components/DialogModal";
 import EditProductForm from "../AdminComponents/EditProductForm";
 import Button from "../../Components/UI/Button";
 import EditCategoriesForm from "../AdminComponents/EditCategoriesForm";
+import { useGetFoods } from "../../Queries/food/useGetFoods";
+import { useGetCategory } from "../../Queries/category/useGetCategories";
+import { Food} from "../../Utils/Interfaces";
+import ProductCard from "../AdminComponents/ProductCard";
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
+
+  const { data: products } = useGetFoods();
+  const { data: categories } = useGetCategory();
+
+  console.log(products);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -30,7 +37,7 @@ const Menu = () => {
   });
 
   const filteredProducts = useMemo(() => {
-    return products.filter((product) => {
+    return products?.doc?.filter((product: Food) => {
       const matchesSearch =
         !searchValue ||
         product.name.toLowerCase().includes(searchValue.toLowerCase());
@@ -42,11 +49,6 @@ const Menu = () => {
     });
   }, [selectedCategory, searchValue, products]);
 
-
-
-  const handleMenuAvailableStatus=(id:any, value:boolean)=>{
-    console.log(id, value)
-  }
 
   return (
     <div className="w-full relative">
@@ -81,12 +83,12 @@ const Menu = () => {
         }
       >
         <EditCategoriesForm
-          // onClose={() =>
-          //   setIsDialogOpen((prevState) => ({
-          //     ...prevState,
-          //     editCatgory: false,
-          //   }))
-          // }
+        // onClose={() =>
+        //   setIsDialogOpen((prevState) => ({
+        //     ...prevState,
+        //     editCatgory: false,
+        //   }))
+        // }
         />
       </DialogLayout>
 
@@ -165,7 +167,7 @@ const Menu = () => {
       <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4 flex justify-between">
           <h1 className="text-[1.5rem] font-semibold">
-            All Products ({filteredProducts.length})
+            All Products ({filteredProducts?.length})
           </h1>
 
           <select
@@ -174,7 +176,7 @@ const Menu = () => {
             className="px-4 py-2 border rounded-md bg-white"
           >
             <option value="">All Categories</option>
-            {categories.map((category) => (
+            {categories?.doc?.map((category: any) => (
               <option key={category.id} value={category.name}>
                 {category.name}
               </option>
@@ -195,78 +197,8 @@ const Menu = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product) => (
-              <tr key={product.id} className="border-b hover:bg-gray-50">
-                <td className="p-2 ">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-16 h-16 min-w-16 object-cover rounded"
-                  />
-                </td>
-                <td className="p-2 ">{product.name}</td>
-                <td className="p-2 ">{product.description}</td>
-                <td className="p-2 ">{product.category}</td>
-                <td className="p-2 ">
-                  {product.sizes.map((size) => (
-                    <div key={size.name}>
-                      {size.name}: ${size.price}
-                    </div>
-                  ))}
-                </td>
-                <td className="p-2">
-                  {/* <span
-                    className={`px-2 py-1 rounded text-sm ${
-                      product.available
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {product.available ? "Available" : "Unavailable"}
-                  </span> */}
-
-<button
-                        // disabled={isupdateCustomerPending}
-                          onClick={() => handleMenuAvailableStatus(product.id, !product.available)}
-                          className={`px-3 py-1 rounded text-sm disabled:text-zinc-400 ${
-                            product.available
-                              ? "bg-red-100 text-red-800 hover:bg-red-200"
-                              : "bg-green-100 text-green-800 hover:bg-green-200"
-                          }`}
-                        >
-                          {product.available ? "Available" : "Unavailable"}
-                        </button>
-                </td>
-                <td className="p-2 border-b">
-                  <div className="flex gap-2 justify-around">
-                    <button
-                      className="text-blue-600 hover:text-blue-800"
-                      onClick={() =>
-                        setEditProductForm(() => ({
-                          id: product,
-                          status: true,
-                        }))
-                      }
-                    >
-                      <Icon icon="cuida:edit-outline" className="text-2xl" />
-                    </button>
-                    <button
-                      className="text-red-600 hover:text-red-800"
-                      onClick={() =>
-                        setIsDialogOpen((prevState) => ({
-                          ...prevState,
-                          DeleteDialog: true,
-                        }))
-                      }
-                    >
-                      <Icon
-                        icon="fluent:delete-32-regular"
-                        className="text-2xl"
-                      />
-                    </button>
-                  </div>
-                </td>
-              </tr>
+            {filteredProducts?.map((product: Food) => (
+              <ProductCard product={product}/>
             ))}
           </tbody>
         </table>
