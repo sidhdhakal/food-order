@@ -9,6 +9,7 @@ const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 const { getAll, deleteOne, updateOne, createOne } = require('../controllers/handlerFactory');
 const Category = require('../models/Category');
+const {createFood} =require('../controllers/foodController')
 
 
 const storage = multer.memoryStorage();  // Store file in memory (buffer)
@@ -18,6 +19,7 @@ router.get('/', (req, res) => {
   res.send("This is Food page");
 });
 
+//category
 router.get('/category',getAll(Category))
 router.post('/category/addcategory',
   // protect,restrictTo('admin'),
@@ -28,6 +30,13 @@ router.put('/category/updatecategory/:id',
 router.delete('/category/deletecategory/:id',
   // protect,restrictTo('admin'),
   categoryController.deleteCategory)
+
+
+  router.get('/getfoods',getAll(Food))
+
+router.post('/createfood',createFood)
+
+router.put('/updatefoodavailability/:id', updateOne(Food))
 
 router.post('/uploadphoto', (req, res) => {
 
@@ -64,58 +73,5 @@ router.post('/deletephoto', async (req, res) => {
   }
 });
 
-
-
-
-router.post('/createFood', upload.single('image'), [
-  // Validate incoming data
-  body('name').notEmpty().withMessage('Name is required'),
-  body('price').isNumeric().withMessage('Price must be a number'),
-  body('category').notEmpty().withMessage('Category is required'),
-], async (req, res) => {
-  // Check for validation errors
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ success: false, errors: errors.array() });
-  }
-
-  try {
-    let imageUrl = '';
-    if (req.file) {
-      const result = await cloudinary.uploader.upload(req.file.buffer, {
-        folder: 'foodMate_foods', // Optional: specify a folder in Cloudinary
-        public_id: `food_${Date.now()}`, // Use a timestamp to avoid duplicate public IDs
-        resource_type: 'image', // The type of the file (image)
-      });
-      imageUrl = result.secure_url; // The URL of the uploaded image in Cloudinary
-    }
-
-    // Collect food data from req.body (form-data)
-    const foodData = {
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price,
-      category: req.body.category,
-      available: req.body.available === 'true', // Convert string "true"/"false" to boolean
-      image: imageUrl, // Add the image URL to the food data
-    };
-
-    // Create a new Food document with the food data
-    const newFood = new Food(foodData);
-
-    // Save the food item to the database
-    await newFood.save();
-
-    // Respond with success
-    return res.status(201).json({
-      success: true,
-      message: 'Food item created successfully!',
-      food: newFood,
-    });
-  } catch (e) {
-    console.error(e);
-    return res.status(500).json({ success: false, message: e.message });
-  }
-});
 
 module.exports = router;
