@@ -92,6 +92,42 @@ export async function loginApi({
   }
 }
 
+export async function adminLoginApi({
+  email,
+  password,
+}: {
+  email: string;
+  password: string;
+}) {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/adminlogin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      document.cookie = `jwt=${JSON.stringify(
+        data.token
+      )}; path=/; expires=${new Date(
+        Date.now() + 7 * 24 * 60 * 60 * 1000
+      ).toUTCString()}`;
+
+      setCookie({name:data.user.name, email})
+
+      return data;
+    } else {
+      throw new Error(data.message || "Error storing data");
+    }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
+
 
 export async function passwordResetEmailApi({
   email,

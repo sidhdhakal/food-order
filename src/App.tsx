@@ -5,11 +5,11 @@ import Page from './CustomerFacing/Pages/Page'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Login from './CustomerFacing/Pages/Login'
 import SignUp from './CustomerFacing/Pages/SignUp'
-import AdminPage from './Admin/Pages/AdminMain'
 import AdminLogin from './Admin/Pages/AdminLogin'
 import { Toaster } from 'react-hot-toast'
 import VerifyEmail from './CustomerFacing/Pages/VerifyEmail'
 import ResetPassword from './CustomerFacing/Pages/ResetPassword'
+import ProtectedRoute from './Admin/Pages/Main'
 
 function App() {
   const queryClient = new QueryClient()
@@ -32,7 +32,8 @@ function App() {
             <Route path='/resetpassword' element={<ResetPassword />}/>
 
             <Route path='/admin'>
-              <Route path=''  element={<AdminPage />}/>
+            <Route path='' element={<ProtectedRoute />}/>
+              {/* <Route path=''  element={<AdminPage />}/> */}
               <Route path='login'  element={<AdminLogin/>}/>
             </Route>
           </Routes>

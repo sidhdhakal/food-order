@@ -4,7 +4,7 @@ import menuItems from '../../Data/AdminNavs.json'
 const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
     const logOut = () => {
-        document.cookie = `user=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
+        document.cookie = `jwt=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
         window.location.reload();
       };
     return (
@@ -23,7 +23,6 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
                     </div>
                 ))}
             </div>
-
             <div className='px-4 w-full mb-4 flex flex-col cursor-pointer gap-y-2 justify-between items-center bg-transparent self-center rounded-[24px]'>
           <a  onClick={logOut} className='py-3 text-center bg-zinc-200 hover:bg-zinc-300 w-full rounded-2xl gap-x-2 text-black flex justify-center items-center flex-col lg:flex-row'>
             <Icon icon="solar:logout-2-bold-duotone" className='text-[1.6rem]' />

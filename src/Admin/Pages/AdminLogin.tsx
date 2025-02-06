@@ -1,12 +1,25 @@
 import { useState } from "react";
 import Background from "../../Components/UI/Background"
 import Input from "../../Components/UI/Input";
+import { useAdminLogin } from "../../Queries/useAdminLogin";
 
 const AdminLogin = () => {
 
      const [email, setEmail] = useState("");
       const [password, setPassword] = useState("");
-    //   const [loginError, setLoginError] = useState("");
+  const [loginError, setLoginError] = useState("");
+
+  const {adminLogin}=useAdminLogin()
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      setLoginError("Please fill out both fields");
+      return;
+    }
+    adminLogin({email, password})
+  };
   return (
     <div className="w-full h-screen max-h-screen flex justify-center items-center bg-zinc-50 text-black relative">
         <Background />
@@ -42,9 +55,10 @@ const AdminLogin = () => {
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
         </div>
-        {/* {loginError && <p style={{ color: "red" }}>{loginError}</p>} */}
+        {loginError && <p style={{ color: "red" }}>{loginError}</p>}
         <button
           type="submit"
+          onClick={handleLogin}
           className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
         >
           Login{" "}
