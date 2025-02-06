@@ -53,6 +53,8 @@ const Customers = () => {
         <DialogModal
           message={`Do you really want to delete ${customerToDelete?.name || 'this customer'}?`}
           btntext="Delete"
+          isPending={isPending}
+          pendingText="Deleting..."
           onConfirm={handleDeleteUser}
           onCancel={() => setDeleteDialogOpen(null)}
         />

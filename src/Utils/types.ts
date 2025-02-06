@@ -18,6 +18,7 @@ export interface Food {
   }
 
   export interface Category{
+    _id?:string
     name: string;
     icon?: string;
     createdAt: Date;

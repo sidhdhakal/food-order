@@ -1,29 +1,29 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { updateFoodApi } from "../../Api/food";
+import { deleteFoodApi } from "../../Api/food";
 
-export function useUpdateFood() {
+export function useDeleteFood() {
   const queryClient=useQueryClient()
 
   const {
-    mutate: updateFood,
+    mutate: deleteFood,
     isError,
     isPending,
     data,
     error,
     isSuccess,
   } = useMutation({
-    mutationFn: updateFoodApi,
+    mutationFn: deleteFoodApi,
     onSuccess: () => {
-      toast.success("Food Updated Successfully");
+      toast.success("Food Deleted Successfully");
       queryClient.invalidateQueries({queryKey:['food']})
-  
+
     },
     onError: (error) => {
-      console.error("Error updating Food:", error);
+      console.error("Error deleting Food:", error);
       toast.error(`Error: ${error.message}`);
     },
   });
 
-  return { updateFood, isError, data, error, isSuccess, isPending };
+  return { deleteFood, isError, data, error, isSuccess, isPending };
 }

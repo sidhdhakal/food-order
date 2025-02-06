@@ -6,10 +6,12 @@ interface DialogModalProps {
     onCancel?: () => void;
     // outsideClick?:()=>void
     message:string,
-    btntext:string
+    btntext:string,
+    isPending?:boolean
+    pendingText:string
 }
 
-const DialogModal = ({  onConfirm, onCancel, message, btntext }: DialogModalProps) => {
+const DialogModal = ({  onConfirm, onCancel, message, btntext, isPending, pendingText }: DialogModalProps) => {
     return (
         <div onClick={onCancel} className='fixed top-0 left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
             <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>
@@ -36,6 +38,8 @@ const DialogModal = ({  onConfirm, onCancel, message, btntext }: DialogModalProp
 
                     <div className='flex justify-center space-x-4 pt-4'>
                         <button
+                        disabled={isPending}
+
                             onClick={onCancel}
                             className='px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50'
                         >
@@ -43,10 +47,11 @@ const DialogModal = ({  onConfirm, onCancel, message, btntext }: DialogModalProp
                         </button>
 
                         <button
+                        disabled={isPending}
                             onClick={onConfirm}
-                            className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600'
+                            className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 disabled:bg-zinc-400'
                         >
-                            {btntext}
+                            {isPending?pendingText:btntext}
                         </button>
                     </div>
                 </div>

@@ -13,7 +13,7 @@ const UserDetailDiv = ({ user }: any) => {
   const [deleteDialogModal, setDeleteDialogModal]=useState(false)
   return (
     <div className=" w-full  flex flex-col gap-y-2 justify-between items-center  aspect-square self-center rounded-[24px]">
-      { deleteDialogModal && <DialogModal message="Do you really want to Logout?" btntext="Logout" onCancel={()=>setDeleteDialogModal(false)} onConfirm={()=>{logOut(); setDeleteDialogModal(false)}}/>}
+      { deleteDialogModal && <DialogModal pendingText="Logging Out..." message="Do you really want to Logout?"  btntext="Logout" onCancel={()=>setDeleteDialogModal(false)} onConfirm={()=>{logOut(); setDeleteDialogModal(false)}}/>}
       <div className="flex flex-col justify-center items-center p-2">
         <img
           src={
