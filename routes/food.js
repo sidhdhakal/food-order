@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Food = require('../models/Food');  // Make sure to import the Food model
-const cloudinary = require('../Utils/CloudinaryConfig');
+const Food = require('../models/Food');  
 const multer = require('multer');
-const { body, validationResult } = require('express-validator');
 const categoryController = require('../controllers/CategoryController')
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
@@ -12,7 +10,7 @@ const Category = require('../models/Category');
 const {createFood, updateFood, deleteFood} =require('../controllers/foodController')
 
 
-const storage = multer.memoryStorage();  // Store file in memory (buffer)
+const storage = multer.memoryStorage();  
 const upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
@@ -22,24 +20,32 @@ router.get('/', (req, res) => {
 //category
 router.get('/category',getAll(Category))
 router.post('/category/addcategory',
-  // protect,restrictTo('admin'),
+  protect,restrictTo('admin'),
   createOne(Category))
 router.put('/category/updatecategory/:id',
-  // protect,restrictTo('admin'),
+  protect,restrictTo('admin'),
   updateOne(Category))
 router.delete('/category/deletecategory/:id',
-  // protect,restrictTo('admin'),
+  protect,restrictTo('admin'),
   categoryController.deleteCategory)
 
 
 router.get('/getfoods',getAll(Food))
 
-router.post('/createfood',createFood)
+router.post('/createfood',
+  protect,restrictTo('admin'),
+  createFood)
 
-router.put('/updatefoodavailability/:id', updateOne(Food))
+router.put('/updatefoodavailability/:id', 
+  protect,restrictTo('admin'),
+  updateOne(Food))
 
-router.put('/updateFood/:id', updateFood)
+router.put('/updateFood/:id',
+  protect,restrictTo('admin'),
+  updateFood)
 
-router.delete('/deletefood/:id',deleteFood)
+router.delete('/deletefood/:id',
+  protect,restrictTo('admin'),
+  deleteFood)
 
 module.exports = router;

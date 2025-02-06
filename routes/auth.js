@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const {signup, login, verifyemail, sendPasswordResetLink, resetPassword} = require('../controllers/AuthController');
+const {signup, login, verifyemail, sendPasswordResetLink, resetPassword, adminLogin} = require('../controllers/AuthController');
 const { getAll, deleteOne, updateOne } = require('../controllers/handlerFactory');
 
 router.get('/',(req, res)=>{
@@ -25,6 +25,8 @@ router.put('/updatecustomer/:id',updateOne(User))
 router.post('/sendpasswordresetlink', sendPasswordResetLink )
 
 router.post('/resetpassword', resetPassword)
+
+router.post('/adminlogin', adminLogin)
 
 
   router.get('/getUsers',protect,restrictTo('admin'),async(req, res)=>{
