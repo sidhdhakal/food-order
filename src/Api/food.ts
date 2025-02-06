@@ -1,6 +1,9 @@
 import convertBase64 from "../Utils/ConvertBase64";
+import { getCookie } from "../Utils/getCookie";
+import { removeQuotes } from "../Utils/removeQuotes";
 import { Food } from "../Utils/types";
-
+const token=getCookie('jwt')
+console.log(token)
 export async function addFoodApi(food:Food) {
 
     const image=await convertBase64(food.image)
@@ -9,6 +12,8 @@ export async function addFoodApi(food:Food) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(token)}`
+
         },
         body: JSON.stringify({ ...food,image:image}),
       });
@@ -59,6 +64,8 @@ export async function updateFoodApi({_id, name, description, category, sizes, av
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
+
       },
       body: JSON.stringify({ name,image:imageBase64, description, category, sizes, available}),
     });
@@ -89,6 +96,8 @@ export async function updateFoodAvailabilityApi({
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
+
       },
       body: JSON.stringify({ available}),
     });
@@ -111,6 +120,7 @@ export async function deleteFoodApi(id:any){
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
       },
 
     });

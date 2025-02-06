@@ -1,4 +1,7 @@
 import convertBase64 from "../Utils/ConvertBase64";
+import { getCookie } from "../Utils/getCookie";
+import { removeQuotes } from "../Utils/removeQuotes";
+const token=getCookie('jwt')
 
 export async function getCategoriesApi(){
   try{
@@ -30,11 +33,14 @@ export async function AddCategoryApi({
   }) {
 
     const iconBase64=await convertBase64(icon)
+
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/category/addcategory`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
+
         },
         body: JSON.stringify({ name,icon:iconBase64}),
       });
@@ -51,13 +57,14 @@ export async function AddCategoryApi({
       throw error;
     }
   }
-
 export async function DeleteCategoryApi(id:any){
   try{
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/category/deletecategory/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
+
       },
 
     });
@@ -94,6 +101,8 @@ export async function UpdateCategoryApi({
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        'Authorization':`Bearer ${removeQuotes(token)}`
+
       },
       body: JSON.stringify({ name,icon:iconBase64}),
     });
