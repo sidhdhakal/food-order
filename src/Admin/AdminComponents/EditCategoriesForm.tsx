@@ -3,7 +3,7 @@ import CategoryCard from "./UI/CategoryCard";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
 
 
-const EditCategoriesForm = () => {
+const EditCategoriesForm = ({}) => {
   const { data, isLoading, error, isError} = useGetCategory();
   // console.log(data);
 

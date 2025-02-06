@@ -16,7 +16,7 @@ import { useDeleteFood } from "../../Queries/food/useDeleteFood";
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const { data: products } = useGetFoods();
+  const { data: products, isLoading, isError } = useGetFoods();
   const { data: categories } = useGetCategory();
   const {deleteFood, isPending:isDeletePending, isSuccess}=useDeleteFood()
 
@@ -207,7 +207,13 @@ const Menu = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts?.map((product: Food) => (
+            {isLoading && 
+            <div className="w-full flex justify-center items-center">Loading...</div>
+            }
+            {isError && 
+            <div className="w-full flex justify-center items-center">Failed to Fetch Foods</div>
+            }
+            {!isLoading && !isError && filteredProducts?.map((product: Food) => (
               <ProductCard product={product} setIsDialogOpen={setIsDialogOpen} isDeletePending={isDeletePending}  setEditProductForm={setEditProductForm} />
             ))}
           </tbody>

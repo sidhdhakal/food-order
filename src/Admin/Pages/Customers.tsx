@@ -93,7 +93,13 @@ const Customers = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredCustomers.map((customer:any) => (
+          {isLoading && 
+            <div className="w-full flex justify-center items-center">Loading...</div>
+            }
+            {isError && 
+            <div className="w-full flex justify-center items-center">Failed to Fetch Foods</div>
+            }
+            {!isLoading && !isError && filteredCustomers.map((customer:any) => (
               <CustomerCard 
                 key={customer._id}
                 customer={customer} 
