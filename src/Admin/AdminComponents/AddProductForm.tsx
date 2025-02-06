@@ -49,6 +49,12 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
     
         useEffect(()=>{
             if(isSuccess){
+                setProductName('')
+                setDescription('')
+                setCategory('')
+                setImage(null)
+                setAvailable(false)
+                setSizes([{name:'', price:0}])
         }
         }, [isSuccess])
 
@@ -216,9 +222,10 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                 <button
                     disabled={isPending}
                     type="submit"
-                    className="px-4 py-2 bg-primary-500 disabled:bg-zinc-300 text-white rounded-md hover:bg-primary-600"
+                    className="px-4 py-2 bg-primary-500 disabled:bg-zinc-400 text-white rounded-md hover:bg-primary-600"
                 >
-                    Add Product
+                                        {isPending? 'Adding...':'Add Product'}
+
                 </button>
             </div>
         </form>

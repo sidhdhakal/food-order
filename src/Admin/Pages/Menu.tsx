@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import SearchInput from "../../Components/UI/SearchInput";
 import DialogLayout from "../AdminComponents/DialogLayout";
@@ -11,12 +11,14 @@ import { useGetFoods } from "../../Queries/food/useGetFoods";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
 import { Food} from "../../Utils/types";
 import ProductCard from "../AdminComponents/ProductCard";
+import { useDeleteFood } from "../../Queries/food/useDeleteFood";
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   const { data: products } = useGetFoods();
   const { data: categories } = useGetCategory();
+  const {deleteFood, isPending:isDeletePending, isSuccess}=useDeleteFood()
 
   console.log(products);
 
@@ -24,7 +26,7 @@ const Menu = () => {
 
   const [isDialogOpen, setIsDialogOpen] = useState({
     addProductForm: false,
-    DeleteDialog: false,
+    DeleteDialog: null,
     editCatgory: false,
   });
 
@@ -49,6 +51,12 @@ const Menu = () => {
     });
   }, [selectedCategory, searchValue, products]);
 
+
+  useEffect(()=>{
+    if(isSuccess){
+      setIsDialogOpen((prev:any)=>({...prev, DeleteDialog:null}))
+    }
+  },[isSuccess])
 
   return (
     <div className="w-full relative">
@@ -109,19 +117,21 @@ const Menu = () => {
               status: false,
             }))
           }
-          product={editProductForm.id}
+          product={filteredProducts?.find((product:any)=>product._id==editProductForm.id) }
         />
       </DialogLayout>
 
-      {isDialogOpen.DeleteDialog && (
+      {isDialogOpen.DeleteDialog!==null && (
         <DialogModal
-          message={`Do you really want to delete the product ${"Nothing"}?`}
+          isPending={isDeletePending}
+          message={`Do you really want to delete the product ${filteredProducts.find((product:any)=>product._id==isDialogOpen.DeleteDialog)?.name }?`}
           btntext="Delete"
-          onConfirm={() => console.log("Confirm")}
+          pendingText="Deleting"
+          onConfirm={() => {deleteFood(isDialogOpen.DeleteDialog); }}
           onCancel={() =>
             setIsDialogOpen((prevState) => ({
               ...prevState,
-              DeleteDialog: false,
+              DeleteDialog: null,
             }))
           }
         />
@@ -198,7 +208,7 @@ const Menu = () => {
           </thead>
           <tbody>
             {filteredProducts?.map((product: Food) => (
-              <ProductCard product={product}/>
+              <ProductCard product={product} setIsDialogOpen={setIsDialogOpen} isDeletePending={isDeletePending}  setEditProductForm={setEditProductForm} />
             ))}
           </tbody>
         </table>
