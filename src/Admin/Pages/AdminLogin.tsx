@@ -9,7 +9,7 @@ const AdminLogin = () => {
       const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
 
-  const {adminLogin}=useAdminLogin()
+  const {adminLogin, isPending}=useAdminLogin()
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const AdminLogin = () => {
       >
         <div className="flex flex-col justify-center items-center  mb-2">
           <p className="self-center ">Admin Login</p>
-          <h1 className="font-bold text-[2.5rem] 4xl:text-[5rem] text-primary-600 leading-[1] self-center">
+          <h1 className="font-bold text-[2.5rem] 4xl:text-[3rem] text-primary-600 leading-[1] self-center">
             Food<span className="text-primary-300">Mate</span>
           </h1>
         </div>
@@ -57,28 +57,13 @@ const AdminLogin = () => {
         </div>
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
         <button
+        disabled={isPending}
           type="submit"
           onClick={handleLogin}
-          className="w-full px-4 py-2 bg-orange-500 self-center text-white rounded-md mt-4"
+          className="w-full px-4 py-2 bg-orange-500 self-center disabled:bg-zinc-400 text-white rounded-md mt-4"
         >
-          Login{" "}
+          {isPending?"logging...":'Login'}
         </button>
-
-        {/* <div className="relative my-2">
-          <div className="absolute inset-0 flex items-center">
-            <div className="w-full border-t border-gray-300" />
-          </div>
-          <div className="relative flex justify-center text-sm ">
-            <span className=" bg-zinc-50 ">Or Continue with</span>
-          </div>
-        </div> */}
-
-        {/* <div className="flex gap-2 justify-center text-sm mt-2 px-2 text-zinc-800">
-          <div>Don't have an Account?</div>
-          <a href="/signup" className="underline cursor-pointer">
-            SignUp
-          </a>
-        </div> */}
       </form>
     </div>
   )
