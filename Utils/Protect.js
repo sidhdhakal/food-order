@@ -20,21 +20,17 @@ exports.protect = async (req, res, next) => {
     }
   
       //   Verify token
-      const decoded =await jwt.verify(token, process.env.SECRET);
-      const freshUser = await User.findById(decoded.user.id);
+      const decoded =jwt.verify(token, process.env.SECRET);
+      const freshUser = await User.findById(decoded.id);
       if (!freshUser)
         return res
           .status(401)
           .json({ success:false, message: 'User not Found' });
-  
-      // res.json({
-      //   token,
-      //   status: 'nothing'
-      // });
+
       req.user = freshUser;
-    //   res.locals.user=freshUser;
       next();
     } catch (err) {
+      console.log(err)
       res.status(400).json({
         success: false,
         message: err.message

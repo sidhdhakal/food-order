@@ -3,7 +3,41 @@ const User = require("../models/User");
 const bc = require("bcryptjs");
 const sendEmail = require("../Utils/Mailer");
 const { generateVerificationToken } = require("../Utils/VerificationToken");
-const { getJSDocReturnType } = require("typescript");
+const {signToken}= require('../Utils/SignToken')
+
+
+exports.adminLogin = async (req, res) => {
+  console.log(req.body)
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (user && user.role==='admin') {
+      const passcmp =await bc.compare(req.body.password, user.password);
+      console.log(passcmp)
+      if (passcmp){
+        const token=signToken(user._id)
+        console.log(token)
+        return res.status(200).json({
+          success: true,
+          token,
+          message: "Signed In successfully",
+          user: user,
+        });
+      }
+    }
+    res.status(400).json({
+      success: false,
+      message: "Invalid Credentials",
+    });
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+};
+
+
 exports.signup = async (req, res) => {
   try {
     const oldUser = await User.findOne({ email: req.body.email });
@@ -55,8 +89,8 @@ exports.signup = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (user) {
-      const passcmp = bc.compare(req.body.password, user.password);
+    if (user ) {
+      const passcmp = await bc.compare(req.body.password, user.password);
       if (passcmp)
         return res.status(200).json({
           success: true,

@@ -27,7 +27,7 @@ app.use(
 const corsOptions = {
     origin: ['http://localhost:5173','https://food-mate-v1.vercel.app'], // Adjust as needed for production
     methods: ['GET', 'POST','PUT','DELETE'],
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type','Authorization'],
 };
 
 // Apply CORS and Helmet middleware
