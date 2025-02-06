@@ -47,33 +47,33 @@ export async function addFoodApi(food:Food) {
     }
   }
 
-// export async function UpdateCategoryApi(food:any) {
-//   let iconBase64=undefined
-//   if(icon instanceof File || icon instanceof FileList)
-//     iconBase64=await convertBase64(icon)
-//   else{
-//     iconBase64=icon
-//   }
-//   try {
-//     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/category/updatecategory/${_id}`, {
-//       method: "PUT",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({ name,icon:iconBase64}),
-//     });
+export async function updateFoodApi({_id, name, description, category, sizes, available, image}:any) {
+  let imageBase64=undefined
+  if(image instanceof File || image instanceof FileList)
+    imageBase64=await convertBase64(image)
+  else{
+    imageBase64=image
+  }
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/updatefood/${_id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name,image:imageBase64, description, category, sizes, available}),
+    });
 
-//     const data = await res.json();
-//     if (data.success) {
-//       return data;
-//     } else {
-//       throw new Error(data.message || "Error updating Category");
-//     }
-//   } catch (error) {
-//     console.error("Error sending data to the server:", error);
-//     throw error;
-//   }
-// }
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error updating Food");
+    }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
 
 
 export async function updateFoodAvailabilityApi({
@@ -103,4 +103,26 @@ export async function updateFoodAvailabilityApi({
     console.error("Error sending data to the server:", error);
     throw error;
   }
+}
+
+export async function deleteFoodApi(id:any){
+  try{
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/deletefood/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error deleting data");
+    }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
 }

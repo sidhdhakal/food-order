@@ -3,6 +3,7 @@ import categories from '../../Data/Categories.json'
 import Input from '../../Components/UI/Input';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import ToggleSwitch from '../../Components/UI/ToggleSwitch';
+import { useUpdateFood } from '../../Queries/food/useUpdateFood';
 
 interface Size {
     name: string;
@@ -13,9 +14,11 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
+
+    const {updateFood,isPending:isUpatePending} = useUpdateFood()
 
 
     // Populate form with existing product data when component mounts
@@ -26,7 +29,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
             setCategory(product.category);
             setImage(product.image);
             setAvailable(product.available);
-            setSizes(product.sizes.length > 0 ? product.sizes : [{ name: '', price: 0 }]);
+            setSizes(product?.sizes?.length > 0 ? product.sizes : [{ name: '', price: 0 }]);
         }
     }, [product]);
 
@@ -46,30 +49,19 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
         setSizes(newSizes);
     };
 
+
+
     const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        const updatedProduct = {
-            ...product,
-            name: productName,
-            description,
-            image,
-            sizes,
-            category,
-            available
-        };
-        console.log('Updated Product:', updatedProduct);
-        // Add your update logic here
+       e.preventDefault()
+       updateFood({_id:product._id, name:productName, description,category,sizes, available, image })
+
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                setImage(event.target?.result as string);
-            };
-            reader.readAsDataURL(files[0]);
-        }
+            setImage(files[0])
+          }
     };
 
     return (
@@ -124,9 +116,13 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
                     >
                         {image ? (
                             <img
-                                src={image}
+                            src={image instanceof File ?
+                                URL.createObjectURL(image)
+                                :
+                                image
+                            }
                                 alt="Preview"
-                                className="max-w-full max-h-48 object-contain rounded-lg"
+                                className="max-w-full  max-h-48 object-contain rounded-lg"
                             />
                         ) : (
                             <>
@@ -202,6 +198,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
 
             <div className="flex justify-end space-x-4 mt-6">
                 <button
+                disabled={isUpatePending}
                     type="button"
                     onClick={onClose}
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
@@ -209,10 +206,11 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
                     Cancel
                 </button>
                 <button
+                disabled={isUpatePending}
                     type="submit"
-                    className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600"
+                    className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 disabled:bg-zinc-400"
                 >
-                    Edit Product
+                    {isUpatePending? 'Editing...':'Edit Product'}
                 </button>
             </div>
         </form>

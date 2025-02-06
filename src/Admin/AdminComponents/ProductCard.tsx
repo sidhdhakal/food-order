@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { Food, FoodSize } from "../../Utils/types";
 import { useUpdateFoodAvailability } from "../../Queries/food/useUpdateFoodAvailability";
 
-const ProductCard = ({ product }: { product: Food }) => {
+const ProductCard = ({ product, setIsDialogOpen, setEditProductForm, isDeletePending }: { product: Food, setIsDialogOpen:any, setEditProductForm:any, isDeletePending:boolean }) => {
   const { updateFoodAvailability, isPending } = useUpdateFoodAvailability();
   const handleMenuAvailableStatus = (id: any, value: boolean) => {
     updateFoodAvailability({_id:id, available:value})
@@ -13,7 +13,7 @@ const ProductCard = ({ product }: { product: Food }) => {
         <img
           src={product.image}
           alt={product.name}
-          className="w-16 h-16 min-w-16 object-cover rounded rotate-90"
+          className="w-16 h-16 min-w-16 object-cover rounded "
         />
       </td>
       <td className="p-2 ">{product.name}</td>
@@ -45,13 +45,25 @@ const ProductCard = ({ product }: { product: Food }) => {
       <td className="p-2 border-b">
         <div className="flex gap-2 justify-around">
           <button
-            disabled={isPending}
+          onClick={() =>
+            setEditProductForm(() => ({
+             status:true,
+             id:product._id
+            }))
+          }
+            disabled={isPending || isDeletePending}
             className="text-blue-600 hover:text-blue-800"
           >
             <Icon icon="cuida:edit-outline" className="text-2xl" />
           </button>
           <button
-            disabled={isPending}
+            onClick={() =>
+              setIsDialogOpen((prevState:any) => ({
+                ...prevState,
+                DeleteDialog: product._id,
+              }))
+            }
+            disabled={isPending || isDeletePending}
             className="text-red-600 hover:text-red-800"
           >
             <Icon icon="fluent:delete-32-regular" className="text-2xl" />
