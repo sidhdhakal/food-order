@@ -8,14 +8,13 @@ const CurrentOrderCard = () => {
   if (data?.doc.length === 0)
     return (
       <div className="py-5 text-xl text-zinc-400">
-        There is not Current Order{" "}
+        There is no Current Order
       </div>
     );
 
   return (
     <div className="w-full">
       {data?.doc?.map((currentOrder: any) => {
-        // Define all possible steps in the order progress
         const allSteps = [
           "Order Placed",
           "Order Confirmed",
@@ -24,14 +23,13 @@ const CurrentOrderCard = () => {
           "Completed",
         ];
 
-        // Map statusHistory to steps for progress display
-        const steps = allSteps.map((status: string) => {
-          // Find if the status exists in the order's statusHistory
+        const isCancelled = currentOrder?.currentStatus?.status === "Cancelled";
+
+        let steps = allSteps.map((status: string) => {
           const foundStatus = currentOrder?.statusHistory?.find(
             (historyStatus: any) => historyStatus.status === status
           );
 
-          // If the status matches the currentStatus, mark it as 'current'
           const isCurrent = currentOrder?.currentStatus?.status === status;
 
           return {
@@ -40,12 +38,23 @@ const CurrentOrderCard = () => {
               ? new Date(foundStatus.time).toLocaleTimeString()
               : "N/A",
             status: isCurrent
-              ? "current" // If the status is the current one, mark it as 'current'
+              ? "current"
               : foundStatus
-              ? "completed" // If the status is found in statusHistory, mark it as 'completed'
-              : "not-completed", // If it's neither in the statusHistory nor the currentStatus, it's 'not-completed'
+              ? "completed"
+              : "not-completed",
           };
         });
+
+        // If the order is cancelled, remove gray steps and show only "Cancelled"
+        if (isCancelled) {
+          steps = [
+            {
+              name: "Cancelled",
+              time: new Date(currentOrder?.currentStatus?.time).toLocaleTimeString(),
+              status: "cancelled",
+            },
+          ];
+        }
 
         return (
           <div
@@ -59,7 +68,9 @@ const CurrentOrderCard = () => {
                     Order #{currentOrder._id.slice(-5)}
                   </h2>
                   <div
-                    className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg bg-yellow-100 text-yellow-800`}
+                    className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg ${
+                      isCancelled ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"
+                    }`}
                   >
                     {currentOrder?.currentStatus?.status}
                   </div>
@@ -132,9 +143,9 @@ const CurrentOrderCard = () => {
                             ? "bg-green-500"
                             : step.status === "current"
                             ? "bg-yellow-500"
-                            : step.status === "not-completed"
-                            ? "bg-gray-200"
-                            : ""
+                            : step.status === "cancelled"
+                            ? "bg-red-500"
+                            : "bg-gray-200"
                         }`}
                       >
                         {step.status === "completed" && (
@@ -149,6 +160,12 @@ const CurrentOrderCard = () => {
                             className="text-white text-sm md:text-md lg:text-lg"
                           />
                         )}
+                        {step.status === "cancelled" && (
+                          <Icon
+                            icon="ph:x-circle"
+                            className="text-white text-sm md:text-md lg:text-lg"
+                          />
+                        )}
                       </div>
                       <div className="flex-1">
                         <div className="flex justify-between text-sm md:text-md lg:text-lg">
@@ -158,6 +175,8 @@ const CurrentOrderCard = () => {
                                 ? "text-green-500"
                                 : step.status === "current"
                                 ? "text-yellow-500"
+                                : step.status === "cancelled"
+                                ? "text-red-500"
                                 : "text-gray-400"
                             }`}
                           >
@@ -167,7 +186,7 @@ const CurrentOrderCard = () => {
                             {step.time}
                           </span>
                         </div>
-                        {index < steps.length - 1 && (
+                        {index < steps.length - 1 && step.status !== "cancelled" && (
                           <div
                             className={`w-px h-4 ml-3 ${
                               step.status === "completed"
