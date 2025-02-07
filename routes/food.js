@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const Food = require('../models/Food');  
-const multer = require('multer');
 const categoryController = require('../controllers/CategoryController')
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
@@ -9,9 +8,6 @@ const { getAll,  updateOne, createOne } = require('../controllers/handlerFactory
 const Category = require('../models/Category');
 const {createFood, updateFood, deleteFood} =require('../controllers/foodController')
 
-
-const storage = multer.memoryStorage();  
-const upload = multer({ storage: storage });
 
 router.get('/', (req, res) => {
   res.send("This is Food page");
