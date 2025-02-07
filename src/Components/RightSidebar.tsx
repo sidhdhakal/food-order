@@ -3,9 +3,11 @@ import { useState } from "react";
 import { useCart } from "../Utils/CartContext";
 import CartItem from "./UI/CartItem";
 import Button from "./UI/Button";
+import { useCreateOrder } from "../Queries/order/useCreateOrder";
 
 const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
   const { cart } = useCart();
+  const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
 
   const cartItems = Object.values(cart);
@@ -17,6 +19,11 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
   const totalPayment = subtotal + tax;
 
   const [isOrderOpen, _] = useState(false);
+
+  const handlePlaceOrder=()=>{
+    const items=Object.values(cart)
+    createOrder({items, paymentMethod})
+  }
 
   return (
     <div className={`
@@ -131,6 +138,8 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
               </div>
             </div>
             <Button
+            disabled={isPending}
+            onClick={handlePlaceOrder}
             className="
             py-3 lg:py-3 text-center 
             bg-primary-300 hover:bg-primary-500 

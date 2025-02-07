@@ -1,7 +1,7 @@
 import convertBase64 from "../Utils/ConvertBase64";
 import { getCookie } from "../Utils/getCookie";
 import { removeQuotes } from "../Utils/removeQuotes";
-const token=getCookie('jwt')
+const token=getCookie('adminjwt')
 
 export async function getCategoriesApi(){
   try{

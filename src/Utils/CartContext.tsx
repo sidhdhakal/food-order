@@ -2,14 +2,16 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 
 type CartItem = {
   qty: number;
-  item: any;
+  name: string;
+  image:string;
+  itemId:number;
   size: string; // Include the size in the cart item
   price: number; // Store the price for this size
 };
 
 interface CartContextType {
   cart: { [key: string]: CartItem }; // Key will be a combination of product ID and size
-  addToCart: (itemId: number, itemData: any, size: string, price: number) => void;
+  addToCart: (itemId: number, name:string, image:string, size: string, price: number) => void;
   removeFromCart: (itemId: number, size: string) => void;
   decreaseQuantity: (itemId: number, size: string) => void;
 }
@@ -31,14 +33,14 @@ interface CartProviderProps {
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<{ [key: string]: CartItem }>({});
 
-  const addToCart = (itemId: number, itemData: any, size: string, price: number) => {
+  const addToCart = (itemId: number, name:string, image:string, size: string, price: number) => {
     const cartKey = `${itemId}-${size}`; // Combine item ID and size to create a unique key
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
       if (updatedCart[cartKey]) {
         updatedCart[cartKey].qty += 1; // Increase quantity if the item is already in the cart
       } else {
-        updatedCart[cartKey] = { qty: 1, item: itemData, size, price }; // Add new item with size and price
+        updatedCart[cartKey] = { qty: 1, name,itemId, image, size, price }; // Add new item with size and price
       }
       return updatedCart;
     });

@@ -32,7 +32,7 @@ const ProductCard = ({ item }: any) => {
         }));
       }
       
-      addToCart(itemId, itemData, selectedSize, price);
+      addToCart(itemId, itemData.name, itemData.image, selectedSize, price);
     }
   };
 
