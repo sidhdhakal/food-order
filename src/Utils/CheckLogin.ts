@@ -5,7 +5,7 @@ export default function CheckLogin() {
     };
 
     // Get the user data from the cookie
-    const storedUser = getCookie('user');
+    const storedUser = getCookie('foodmateuser');
     console.log(storedUser)
     if (storedUser) {
         return storedUser; // Return the user data if found in cookies
