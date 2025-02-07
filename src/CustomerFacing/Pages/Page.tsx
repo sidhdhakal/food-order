@@ -48,7 +48,7 @@ const Page = () => {
           <div className="bg-zinc-100 w-full pt-[5rem] flex justify-between">
               {renderActiveComponent()}
               {/* <div className="h-[4rem] w-full bg-transparent md:hidden" /> */}
-            <RightSidebar   sidebarOpen={sidebarOpen}  />
+            <RightSidebar  setIsActiveComponent={setIsActiveComponent}  sidebarOpen={sidebarOpen}  />
           </div>
         </div>
       </div>
