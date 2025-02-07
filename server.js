@@ -68,6 +68,7 @@ app.use(bodyParser.json());
 
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/food',require('./routes/food'))
+app.use('/api/order',require('./routes/order'))
 
 // Start the server
 app.listen(3000, () => {
