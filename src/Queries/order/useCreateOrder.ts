@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { createOrderApi } from "../../Api/order";
+import { useCart } from "../../Utils/CartContext";
 
 export function useCreateOrder() {
   const queryClient=useQueryClient()
+    const { clearCart} = useCart();
+  
   const {
     mutate: createOrder,
     isError,
@@ -16,6 +19,7 @@ export function useCreateOrder() {
     onSuccess: () => {
       toast.success("New Order Placed Successfully");
       queryClient.invalidateQueries({queryKey:['food']})
+      clearCart()
     },
     onError: (error) => {
       console.error("Error adding Order:", error);

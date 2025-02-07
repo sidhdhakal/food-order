@@ -7,7 +7,7 @@ import { useCreateOrder } from "../Queries/order/useCreateOrder";
 import OrderStatus from "./OrderStatus";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
-  const { cart } = useCart();
+  const { cart} = useCart();
   const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
 
@@ -134,10 +134,10 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
             w-full rounded-xl sm:rounded-2xl 
             gap-x-1 sm:gap-x-2 !text-black 
             flex justify-center items-center 
-             text-sm sm:text-md lg:text-md 4xl:text-[1rem]
+             text-sm sm:text-md lg:text-md 4xl:text-[1rem] disabled:bg-zinc-300
           ">
             <Icon icon="icon-park-twotone:buy" className="text-base sm:text-[1.6rem]" />
-            Place Order
+            {isPending?'Placing Order...':'Place Order'}
             </Button>
           </div>
         </div>

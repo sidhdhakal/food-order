@@ -2,7 +2,7 @@ import { Icon } from "@iconify/react/dist/iconify.js"
 
 interface DialogModalProps {
     // productName?: string;
-    onConfirm?: () => void;
+    onConfirm?: any;
     onCancel?: () => void;
     // outsideClick?:()=>void
     message:string,
