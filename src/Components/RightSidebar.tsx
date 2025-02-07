@@ -4,8 +4,9 @@ import { useCart } from "../Utils/CartContext";
 import CartItem from "./UI/CartItem";
 import Button from "./UI/Button";
 import { useCreateOrder } from "../Queries/order/useCreateOrder";
+import OrderStatus from "./OrderStatus";
 
-const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
+const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
   const { cart } = useCart();
   const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
@@ -40,7 +41,7 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
         p-2 sm:p-3 pt-1 sm:pt-2
         flex flex-col h-full bg-white text-black rounded-[16px] sm:rounded-[24px]
       ">
-        <div className="flex justify-between items-center mb-2">
+        <div className="flex justify-between items-start mb-2">
           <h1 className={`
             text-xl sm:text-2xl 
             cursor-pointer ${isOrderOpen ? "text-zinc-400" : "text-black"}
@@ -48,20 +49,7 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
             Cart
           </h1>
 
-          <h1 className={`
-            text-base sm:text-lg 
-            cursor-pointer flex justify-center items-center gap-x-1 
-            ${!isOrderOpen ? "text-zinc-400" : "text-black"}
-          `}>
-            Order #2121
-            <span className={`
-              px-2 sm:px-3 py-0.5 sm:py-1 
-              w-fit rounded-full text-xs sm:text-sm 
-              bg-yellow-100 text-yellow-800
-            `}>
-              Preparing
-            </span>
-          </h1>
+          <OrderStatus setIsActiveComponent={setIsActiveComponent} />
         </div>
 
         <div className="flex flex-col justify-between h-full overflow-hidden gap-x-2 items-center">
@@ -78,7 +66,7 @@ const RightSidebar = ({sidebarOpen}:{sidebarOpen:boolean}) => {
                   <h1 className="text-base sm:text-xl text-zinc-300">No items in cart</h1>
                 </div>
               ) : (
-                cartItems.map((item) => <CartItem item={item} />)
+                cartItems.map((item, index) => <CartItem key={index} item={item} />)
               )}
             </div>
           </div>
