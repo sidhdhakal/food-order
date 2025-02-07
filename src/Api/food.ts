@@ -3,7 +3,6 @@ import { getCookie } from "../Utils/getCookie";
 import { removeQuotes } from "../Utils/removeQuotes";
 import { Food } from "../Utils/types";
 const token=getCookie('adminjwt')
-console.log(token)
 export async function addFoodApi(food:Food) {
 
     const image=await convertBase64(food.image)
