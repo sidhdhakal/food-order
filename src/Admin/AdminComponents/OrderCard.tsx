@@ -76,7 +76,7 @@ const OrderCard = ({ order }: any) => {
         <td className="p-2 w-[10%]">
           <Avatar name={order.user.name} picture={order.user.picture} />
         </td>
-        <td className="p-2 w-[25%]">
+        <td className="p-2 w-[20%]">
           {order.user.name}
           <br />
           <span className="text-zinc-500">{order.user.email}</span>
@@ -92,6 +92,9 @@ const OrderCard = ({ order }: any) => {
               </h1>
             </div>
           ))}
+        </td>
+        <td className="p-4 w-[15%]">
+          {order.message}
         </td>
         <td className="p-4 w-[10%]">
           <div className="border rounded-lg">

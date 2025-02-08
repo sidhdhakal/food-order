@@ -9,7 +9,7 @@ const Orders = () => {
 
 
 
-<div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
+<div className="w-full h-auto productlist  rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
           <h1 className="text-[1.5rem] font-semibold">
             Orders
@@ -22,8 +22,8 @@ const Orders = () => {
               <th className="p-4 pl-2 text-left w-[10%]"></th>
               <th className="p-4 pl-2 text-left w-[25%]">User</th>
               <th className="p-4 pl-2 text-left w-[25%]">Items</th>
+              <th className="p-4 pl-2 text-left w-[10%]">Message</th>
               <th className="p-4 pl-2 text-left w-[10%]">Status</th>
-              {/* <th className="p-4 pl-2 text-left w-[10%]">Ordered At</th> */}
               <th className="p-4 pl-2 text-left w-[20%]">Payment Method</th>
             </tr>
           </thead>

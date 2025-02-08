@@ -63,6 +63,7 @@ const Customers = () => {
       <div className="auto w-full flex justify-between items-start">
         <SearchInput
           className="flex"
+          placeholder="Search Customer"
           value={searchValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
             setSearchValue(e.target.value)
