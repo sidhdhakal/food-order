@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useCart } from "../Utils/CartContext";
 import Logo from "./UI/Logo";
 import SearchInput from "./UI/SearchInput";
+import { logOut } from "../Utils/logout";
 
 const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
   const { cart } = useCart(); // Get cart items from CartContext
@@ -27,10 +28,11 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
 
           <div className="flex justify-center items-center">
 
-          <div className="flex select-none justify-center items-center lg:hidden">
+          <div
+                onClick={() => setIsSidebarOpen(!sidebarOpen)}
+           className="flex select-none justify-center items-center  lg:hidden">
             <div className="relative mr-4 cursor-pointer">
               <Icon
-                onClick={() => setIsSidebarOpen(!sidebarOpen)}
                 icon="solar:cart-bold-duotone"
                 className="text-[2.5rem] lg:hidden mr-2"
               />
@@ -57,12 +59,6 @@ const UserDetail = () => {
     queryFn: CheckLogin,
   });
 
-  const logOut = () => {
-    document.cookie = `user=''; path=/; expires=${new Date(
-      Date.now() - 1000
-    ).toUTCString()}`;
-    window.location.reload();
-  };
 
   const [isOpen, setIsOpen] = useState(false);
   return (

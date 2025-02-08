@@ -4,6 +4,7 @@ import CheckLogin from '../Utils/CheckLogin';
 import menuItems from '../Data/Navs.json'
 import UserDetailDiv from "./UI/UserDetailDiv";
 import LogoSidebar from "./UI/LogoSidebar";
+import { logOut } from "../Utils/logout";
 const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
 
@@ -41,10 +42,6 @@ const UserDetail = () => {
     queryFn: CheckLogin
   })
 
-  const logOut = () => {
-    document.cookie = `user=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
-    window.location.reload();
-  };
   return (
     <>
       {user ? (

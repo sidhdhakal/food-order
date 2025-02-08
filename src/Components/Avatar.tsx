@@ -13,7 +13,7 @@ const Avatar = ({ name, picture, className }: { name?: string; picture: string, 
       ) : (
         <div className="w-12 aspect-square flex justify-center items-center text-center  text-2xl font-semibold text-white rounded-full bg-orange-400">
           {name?.split(" ")[0][0]}
-          {name?.split(" ")[1][0]}
+          {name?.split(' ').length==2 && name?.split(" ")[1][0]}
         </div>
       )}
     </div>

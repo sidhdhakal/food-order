@@ -10,6 +10,7 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   const { cart} = useCart();
   const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
+  const [message, setMessage]=useState('')
 
   const cartItems = Object.values(cart);
   const subtotal = cartItems.reduce(
@@ -23,7 +24,9 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
 
   const handlePlaceOrder=()=>{
     const items=Object.values(cart)
-    createOrder({items, paymentMethod})
+    if(items.length===0)
+        return 
+    createOrder({items, message, paymentMethod})
   }
 
   return (
@@ -73,6 +76,8 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
 
           <div className="w-full h-fit  flex flex-col gap-y-1 sm:gap-y-2 self-end justify-center">
             <textarea
+            value={message}
+            onChange={(e:any)=>setMessage(e.target.value)}
               className="w-full bg-zinc-100 rounded-[16px] sm:rounded-[24px] p-2 sm:p-3 text-xs sm:text-sm focus:outline-none active:outline-none"
               placeholder="Any Special Requirements?"
             />
