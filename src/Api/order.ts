@@ -5,7 +5,7 @@ const token=getCookie('adminjwt')
 
 const user=CheckLogin()
 
-export async function createOrderApi({items, paymentMethod}:any) {
+export async function createOrderApi({items,message, paymentMethod}:any) {
     console.log(items, paymentMethod)
     if(!user){
         throw new Error("You are not Logged In! Please Login to Place Order")
@@ -17,7 +17,7 @@ export async function createOrderApi({items, paymentMethod}:any) {
           "Content-Type": "application/json",
         //   'Authorization':`Bearer ${removeQuotes(token)}`
         },
-        body: JSON.stringify({email:user.email, items, paymentMethod})
+        body: JSON.stringify({email:user.email, items,message, paymentMethod})
       });
   
       const data = await res.json();
@@ -57,7 +57,8 @@ export async function createOrderApi({items, paymentMethod}:any) {
   }
 
   export async function getCurrentOrderApi(){
-
+    if(user.email==null)
+      return 
     try{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getcurrentorder`, {
         method: "POST",
@@ -122,7 +123,7 @@ export async function createOrderApi({items, paymentMethod}:any) {
         throw new Error(data.message || "Error fetching data");
       }
     } catch (error) {
-      console.error("Error sending data to the server:", error);
+      // console.error( error);
       throw error;
     }
   }

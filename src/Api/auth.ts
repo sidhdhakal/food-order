@@ -40,7 +40,7 @@ export async function signUpGoogleApi({
   picture: string;
 }) {
   try {
-    await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, {
+    const res=await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/googlesignup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -48,14 +48,14 @@ export async function signUpGoogleApi({
       body: JSON.stringify({ name, email, picture }),
     });
 
-    //   const data = await res.json();
-
-    //   if (res.ok) {
-    //     console.log(data.message || "Account created successfully");
-    //     // return data;
-    //   } else {
-    //     // throw new Error(data.message || "Error storing data");
-    //   }
+      const data = await res.json();
+    console.log(data)
+      if (data.success) {
+        console.log(data.message || "Account Signed successfully");
+        return data;
+      } else {
+        throw new Error(data.message || "Error storing data");
+      }
   } catch (error) {
     console.error("Error sending data to the server:", error);
     throw error;
