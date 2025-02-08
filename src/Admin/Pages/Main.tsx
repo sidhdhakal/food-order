@@ -10,7 +10,7 @@ const ProtectedRoute = () => {
 
 
     useEffect(() => {
-        const jwtToken = getCookie('jwt');
+        const jwtToken = getCookie('adminjwt');
         if (jwtToken) {
             setIsAuthenticated(true);
         } else {
