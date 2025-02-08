@@ -1,13 +1,12 @@
-import CheckLogin from "../Utils/CheckLogin";
 import { getCookie } from "../Utils/getCookie";
 import { removeQuotes } from "../Utils/removeQuotes";
 const token=getCookie('adminjwt')
 
-const user=CheckLogin()
+const userToken=getCookie('foodmateuser')
 
 export async function createOrderApi({items,message, paymentMethod}:any) {
     console.log(items, paymentMethod)
-    if(!user){
+    if(!userToken){
         throw new Error("You are not Logged In! Please Login to Place Order")
     }
     try {
@@ -15,9 +14,9 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-        //   'Authorization':`Bearer ${removeQuotes(token)}`
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
         },
-        body: JSON.stringify({email:user.email, items,message, paymentMethod})
+        body: JSON.stringify({items,message, paymentMethod})
       });
   
       const data = await res.json();
@@ -57,15 +56,16 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
   }
 
   export async function getCurrentOrderApi(){
-    if(user.email==null)
+    if(!userToken)
       return 
     try{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getcurrentorder`, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
+
         },
-        body:JSON.stringify({email:user.email})
       });
   
       const data=await res.json();
@@ -86,11 +86,12 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
 
     try{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/gettodaysorders`, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
+
         },
-        body:JSON.stringify({email:user.email})
       });
   
       const data=await res.json();
@@ -109,11 +110,12 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
 
     try{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getolderorders`, {
-        method: "POST",
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
+
         },
-        body:JSON.stringify({email:user.email})
       });
   
       const data=await res.json();

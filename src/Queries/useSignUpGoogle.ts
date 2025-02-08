@@ -13,10 +13,10 @@ export function useSignUpGoogle() {
     mutationFn: signUpGoogleApi,
     onSuccess: (data) => {
       console.log("Account created successfully:", data);
-      setCookie({email:data.user.email, name:data.user.name, picture:data.user.image})
-      // setTimeout(() => {
-      //   window.location.href = "/";
-      // }, );
+      setCookie(data.token)
+      setTimeout(() => {
+        window.location.href = "/";
+      }, );
     },
     onError: (error) => {
       toast.error(error.message)
