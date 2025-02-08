@@ -86,12 +86,61 @@ exports.signup = async (req, res) => {
   }
 };
 
+
+exports.googleSignUp = async (req, res) => {
+  try {
+    const oldUser = await User.findOne({ email: req.body.email });
+    if (oldUser){
+      if(!oldUser.isActive){
+        return res.status(401).json({
+          success: false,
+          message: "You are blocked by the admin, Please Contact to admin!",
+          user:oldUser
+        });
+      }
+      return res.status(200).json({
+        success: true,
+        message: "Account SignedIn Successfully",
+        user:oldUser
+      });
+    }
+
+    let newUser = await User.create({ ...req.body, isVerified: true });
+
+    if (newUser) {
+      return res.status(200).json({
+        success: true,
+        message: "Account SignedUp successfully",
+        user: newUser,
+      });
+    }
+
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+};
+
+
+
+
+
 exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user ) {
+      if(!user.isActive)
+        return res.status(401).json({
+          success: false,
+          message: "You are blocked by the admin Please Contact to admin!",
+          user: user,
+        });
       const passcmp = await bc.compare(req.body.password, user.password);
       if (passcmp)
+
         return res.status(200).json({
           success: true,
           message: "Signed In successfully",

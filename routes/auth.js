@@ -3,7 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
-const {signup, login, verifyemail, sendPasswordResetLink, resetPassword, adminLogin} = require('../controllers/AuthController');
+const {signup, login, verifyemail, sendPasswordResetLink, resetPassword, adminLogin, googleSignUp} = require('../controllers/AuthController');
 const { getAll, deleteOne, updateOne } = require('../controllers/handlerFactory');
 
 router.get('/',(req, res)=>{
@@ -13,6 +13,7 @@ router.get('/',(req, res)=>{
 router.post('/verifyemail', verifyemail )
 
 router.post('/signup',signup)
+router.post('/googlesignup',googleSignUp)
 
 router.post('/login',login)
 
