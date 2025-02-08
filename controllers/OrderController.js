@@ -2,16 +2,28 @@ const Order = require("../models/Order");
 const User = require("../models/User");
 exports.createOrder = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findById( req.user._id );
+    console.log(user)
     if (!user || !user.isVerified) {
       return res.status(400).json({
         success: false,
-        message: "Your cannot place order until you Verify Your Account!Please Check Email to Verify your account!",
+        message: "Please verify your account via email to place an order.",
       });
     }
 
     
+    const currentOrders = await Order.find({
+      "statusHistory.4": { $exists: false },
+      userId: user._id,
+      'currentStatus.status':{$ne:'Cancelled'}
+    }).sort({ createdAt: -1 });
 
+    if(currentOrders.length>=2){
+      return res.status(400).json({
+        success: false,
+        message: "You have 2 active orders. Complete or cancel one to create a new order.",
+      });
+    }
     const updatedItems = req.body.items.map(
       ({ itemId, image, ...rest }) => rest
     );
@@ -118,7 +130,8 @@ exports.updateCurrentOrder = async (req, res) => {
 
 exports.getCurrentOrder = async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findById( req.user._id );
+
     if (!user) {
       return res.status(404).json({
         success: true,
@@ -155,7 +168,8 @@ exports.getCurrentOrder = async (req, res) => {
 exports.getTodaysOrder = async (req, res) => {
     console.log('Todays ORder')
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findById( req.user._id );
+
       if (!user) {
         return res.status(404).json({
           success: true,
@@ -199,7 +213,8 @@ exports.getTodaysOrder = async (req, res) => {
   
   exports.getOlderOrders = async (req, res) => {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findById( req.user._id );
+
       if (!user) {
         return res.status(404).json({
           success: true,

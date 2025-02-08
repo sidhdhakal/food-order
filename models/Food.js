@@ -40,6 +40,10 @@ const foodSchema = new Schema({
     type: Boolean,
     default: true,
   },
+  veg:{
+    type:Boolean,
+    required:false
+  },
   createdAt: {
     type: Date,
     default: Date.now,
