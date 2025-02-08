@@ -23,6 +23,10 @@ const orderSchema = new Schema({
       }
     },
   ],
+  message:{
+    type:String,
+    require:false
+  },
   statusHistory: [
     {
       status: {
