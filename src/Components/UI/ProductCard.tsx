@@ -96,7 +96,7 @@ const ProductCard = ({ item }: any) => {
             {getPriceBySize(item, selectedSizes[item.id] || defaultSize)}
           </h1>
         </div>
-        <div className="w-[5.5rem] lg:w-[6.2rem] 4xl:w-[7rem] h-[2rem] lg:h-[2.3rem] 4xl:h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full shadow-sm">
+        <div className="w-[5.8rem] lg:w-[6.2rem] 4xl:w-[7rem] h-[2.2rem] lg:h-[2.4rem] 4xl:h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full shadow-sm">
           <span
             onClick={() => handleDecreaseQuantity(item.id, item)}
             className="h-full cursor-pointer aspect-square rounded-full bg-white shadow-md flex justify-center items-center hover:bg-zinc-300"
