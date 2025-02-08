@@ -3,12 +3,14 @@ const User = require("../models/User");
 exports.createOrder = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    if (!user) {
+    if (!user || !user.isVerified) {
       return res.status(400).json({
         success: false,
-        message: "Not a valid User",
+        message: "Your cannot place order until you Verify Your Account!Please Check Email to Verify your account!",
       });
     }
+
+    
 
     const updatedItems = req.body.items.map(
       ({ itemId, image, ...rest }) => rest
@@ -17,6 +19,7 @@ exports.createOrder = async (req, res) => {
     const orderData = {
       userId: user._id,
       items: updatedItems,
+      message:req.body.message,
       paymentMethod: req.body.paymentMethod,
       currentStatus: { status: "Order Placed", time: Date.now() },
     };
@@ -221,7 +224,7 @@ exports.getTodaysOrder = async (req, res) => {
         });
       }
   
-      return res.status(400).json({
+      return res.status(200).json({
         success: true,
         message: "No Older Orders Found",
       });
