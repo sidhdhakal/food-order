@@ -20,7 +20,7 @@ export function useAdminLogin() {
     },
     onError: (error) => {
       console.error("Error Signing In:", error);
-      toast.error(`Error: ${error.message}`);
+      toast.error(`${error.message}`);
     },
   });
 

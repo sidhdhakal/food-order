@@ -12,7 +12,6 @@ export function useGetOlderOrders() {
   } = useQuery({
     queryKey: ['olderOrder'],
     queryFn: getOlderOrdersApi,
-    // refetchInterval: 10000
   });
 
   return {

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTodaysOrdersApi } from "../../Api/order";
+import CheckLogin from "../../Utils/CheckLogin";
 
 export function useGetTodaysOrders() {
   const {
@@ -12,7 +13,7 @@ export function useGetTodaysOrders() {
   } = useQuery({
     queryKey: ['todaysorder'],
     queryFn: getTodaysOrdersApi,
-    refetchInterval: 10000
+    refetchInterval: CheckLogin()==null?false:2000
 
   });
 

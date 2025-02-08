@@ -18,7 +18,7 @@ export function useVerifyEmail() {
     },
     onError: (error) => {
       console.error("Error Verifying email:", error);
-      toast.error(`Error: ${error.message}`);
+      toast.error(`${error.message}`);
     },
   });
 

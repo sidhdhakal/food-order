@@ -21,7 +21,7 @@ export function useUpdateOrder() {
     },
     onError: (error) => {
       console.error("Error updating Category:", error);
-      toast.error(`Error: ${error.message}`);
+      toast.error(`${error.message}`);
     },
   });
 

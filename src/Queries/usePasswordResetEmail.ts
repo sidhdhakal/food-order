@@ -17,7 +17,7 @@ export function usePasswordResetEmail() {
     },
     onError: (error) => {
       console.error("Error Sending Password Reset Link:", error);
-      toast.error(`Error: ${error.message}`);
+      toast.error(`${error.message}`);
     },
   });
 

@@ -20,7 +20,7 @@ export function useSignUp() {
     },
     onError: (error) => {
       console.error("Error creating account:", error);
-      toast.error(`Error: ${error.message}`);
+      toast.error(`${error.message}`);
     },
   });
 
