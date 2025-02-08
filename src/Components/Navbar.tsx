@@ -29,9 +29,9 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
           <div className="flex justify-center items-center">
 
           <div
-                onClick={() => setIsSidebarOpen(!sidebarOpen)}
+               
            className="flex select-none justify-center items-center  lg:hidden">
-            <div className="relative mr-4 cursor-pointer">
+            <div  onClick={() => setIsSidebarOpen(!sidebarOpen)} className="relative mr-4 cursor-pointer">
               <Icon
                 icon="solar:cart-bold-duotone"
                 className="text-[2.5rem] lg:hidden mr-2"
@@ -55,10 +55,10 @@ export default Navbar;
 
 const UserDetail = () => {
   const { data: user } = useQuery({
-    queryKey: ["User"],
+    queryKey: ["user"],
     queryFn: CheckLogin,
   });
-
+  console.log(user)
 
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -77,7 +77,7 @@ const UserDetail = () => {
           {isOpen && (
             <div className="absolute top-[120%] right-0 h-fit w-fit bg-white shadow-md rounded-xl p-3">
               <h1 className="text-md leading-[1] 4xl:text-xl font-semibold  text-center">
-                {user.name}
+                {user?.name}
               </h1>
               <h3 className="text-zinc-600  4xl:flex 4xl:text-lg ">
                 {user.email}
