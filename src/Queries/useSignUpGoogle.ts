@@ -1,5 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signUpGoogleApi } from "../Api/auth";
+import toast from "react-hot-toast";
+import setCookie from "../Utils/setCookie";
 
 export function useSignUpGoogle() {
   const {
@@ -11,15 +13,17 @@ export function useSignUpGoogle() {
     mutationFn: signUpGoogleApi,
     onSuccess: (data) => {
       console.log("Account created successfully:", data);
-      setTimeout(() => {
-        window.location.href = "/";
-      }, );
+      setCookie({email:data.user.email, name:data.user.name, picture:data.user.image})
+      // setTimeout(() => {
+      //   window.location.href = "/";
+      // }, );
     },
     onError: (error) => {
-      console.error("Error creating account:", error);
-      setTimeout(() => {
-        window.location.href = "/";
-      });
+      toast.error(error.message)
+      // console.error( error);
+      // setTimeout(() => {
+      //   window.location.href = "/";
+      // });
     },
   });
 

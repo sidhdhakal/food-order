@@ -1,14 +1,9 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import DialogModal from "../DialogModal";
 import { useState } from "react";
+import { logOut } from "../../Utils/logout";
 
 const UserDetailDiv = ({ user }: any) => {
-  const logOut = () => {
-    document.cookie = `user=''; path=/; expires=${new Date(
-      Date.now() - 1000
-    ).toUTCString()}`;
-    window.location.reload();
-  };
 
   const [deleteDialogModal, setDeleteDialogModal]=useState(false)
   return (
