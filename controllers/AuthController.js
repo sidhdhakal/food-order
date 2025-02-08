@@ -14,7 +14,7 @@ exports.adminLogin = async (req, res) => {
       const passcmp =await bc.compare(req.body.password, user.password);
       console.log(passcmp)
       if (passcmp){
-        const token=signToken(user._id)
+        const token=signToken({id:user._id})
         console.log(token)
         return res.status(200).json({
           success: true,
@@ -98,8 +98,11 @@ exports.googleSignUp = async (req, res) => {
           user:oldUser
         });
       }
+      const token=signToken({id:oldUser._id, name:oldUser.name, email:oldUser.email, picture:oldUser.picture})
+
       return res.status(200).json({
         success: true,
+        token,
         message: "Account SignedIn Successfully",
         user:oldUser
       });
@@ -108,8 +111,11 @@ exports.googleSignUp = async (req, res) => {
     let newUser = await User.create({ ...req.body, isVerified: true });
 
     if (newUser) {
+      const token=signToken({id:newUser._id, name:newUser.name, email:newUser.email, picture:newUser.picture})
+
       return res.status(200).json({
         success: true,
+        token,
         message: "Account SignedUp successfully",
         user: newUser,
       });
@@ -139,14 +145,16 @@ exports.login = async (req, res) => {
           user: user,
         });
       const passcmp = await bc.compare(req.body.password, user.password);
-      if (passcmp)
-
+      if (passcmp){
+        const token=signToken({id:user._id, name:user.name, email:user.email})
         return res.status(200).json({
           success: true,
+          token,
           message: "Signed In successfully",
           user: user,
         });
-
+        
+      }
     }
     res.status(400).json({
       success: false,
