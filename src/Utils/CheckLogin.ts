@@ -1,14 +1,20 @@
+import { jwtDecode } from "jwt-decode";
+
 export default function CheckLogin() {
     const getCookie = (name:any) => {
         const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
-        return match ? JSON.parse(match[2]) : null;
+        return match ? match[2] : null;  
     };
 
-    // Get the user data from the cookie
-    const storedUser = getCookie('foodmateuser');
-    if (storedUser) {
-        return storedUser; // Return the user data if found in cookies
-    }
+    const token = getCookie('foodmateuser');
+    console.log(token);
     
-    return null; // Return null if no user data found in cookies
+    if (!token) return null; 
+    
+    const storedUser = jwtDecode(token);
+    console.log(storedUser);
+
+    if (storedUser) {
+        return storedUser; 
+    }
 }

@@ -80,12 +80,7 @@ export async function loginApi({
 
     const data = await res.json();
     if (data.success) {
-      // document.cookie = `userjwt=${JSON.stringify(
-      //   data.token
-      // )}; path=/; expires=${new Date(
-      //   Date.now() + 7 * 24 * 60 * 60 * 1000
-      // ).toUTCString()}`;
-      setCookie({name:data.user.name, email})
+      setCookie(data.token)
 
       return data;
     } else {
@@ -115,13 +110,7 @@ export async function adminLoginApi({
 
     const data = await res.json();
     if (data.success) {
-      document.cookie = `adminjwt=${JSON.stringify(
-        data.token
-      )}; path=/; expires=${new Date(
-        Date.now() + 7 * 24 * 60 * 60 * 1000
-      ).toUTCString()}`;
-
-      // setCookie({name:data.user.name, email})
+      setCookie(data.token, 'adminjwt')
 
       return data;
     } else {
