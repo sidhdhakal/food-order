@@ -5,7 +5,6 @@ const OrderCard = ({ order, setOrder, setFeedbackOpen }: any) => {
   const total=order.items.reduce((acc:number, item:any)=>{
     return acc+(item.price*item.qty)
   },0)
-  console.log(total)
   return (
     <div className="w-full bg-white rounded-xl p-4 shadow-sm">
       <div className="flex flex-row items-start justify-between space-y-0 pb-2">

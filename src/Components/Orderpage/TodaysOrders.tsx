@@ -1,29 +1,45 @@
 import { useGetTodaysOrders } from '../../Queries/order/useGetTodaysOrders'
+import IsError from '../UI/IsError'
+import Loading from '../UI/Loading'
 import Title from '../UI/Title'
 import OrderCard from './OrderCard'
 
-const TodaysOrders = ({setOrder, setfeedbackOpen}:any) => {
-    // const {data}=useGetTodaysOrder()
-    const {data}=useGetTodaysOrders()
-    console.log(data)
-    
+const TodaysOrders = ({ setOrder, setfeedbackOpen }: any) => {
+  const { data, isLoading, isError } = useGetTodaysOrders()
+  console.log(data)
 
-    if (data?.doc?.length === 0)
-        return (
-          <div className="py-5 text-xl text-zinc-400">
-            There are no Orders Today{" "}
-          </div>
-        );
+
+  if (data?.doc?.length === 0)
+    return (
+      <div className="py-5 text-xl text-zinc-400">
+        There are no Orders Today{" "}
+      </div>
+    );
   return (
     <div className="w-full">
-    <Title >Today's Orders</Title>
+      <Title >Today's Orders</Title>
 
-  <div className="grid grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
-    {data?.doc?.map((order:any) => (
-      <OrderCard key={order.id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen}/>
-    ))}
-  </div>
-</div>
+      <div className="grid grid-cols-1 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
+
+        {isLoading &&
+          <Loading>Loading...</Loading>
+        }
+        {isError &&
+          <IsError>Cannot get Todays orders</IsError>
+        }
+        {!isLoading && !isError &&
+          <div className="flex flex-col gap-3 mt-4">
+            {!data?.doc || data?.doc.length === 0
+              ?
+              <div className="py-5 text-xl text-zinc-400">There are no Todays Orders</div>
+              :
+              data?.doc?.map((order: any) => (
+                <OrderCard key={order.id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen} />
+              ))}
+          </div>
+        }
+      </div>
+    </div>
   )
 }
 

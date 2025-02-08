@@ -21,7 +21,7 @@ const Feedbacks = () => {
   return (
     <div className="flex flex-col home min-h-[calc(100vh-5rem)] gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent ">
       <div>
-        <Title className="text-[3rem] leading-[1] mb-2">Feedback</Title>
+        <Title className="text-3xl">Feedback</Title>
         <p className="text-gray-500">View and manage customer feedback</p>
         
         <div className="flex flex-wrap  gap-2 md:gap-3 lg:gap-4 mt-6">

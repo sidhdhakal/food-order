@@ -1,16 +1,26 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useGetCurrentOrder } from "../../Queries/order/useGetCurrentOrder";
+import Loading from "../UI/Loading";
+import IsError from "../UI/IsError";
 
 const CurrentOrderCard = () => {
-  const { data } = useGetCurrentOrder();
+  const { data , isLoading, isError} = useGetCurrentOrder();
   console.log(data?.doc);
 
-  if (data?.doc.length === 0)
+  if (data?.doc?.length === 0)
     return (
       <div className="py-5 text-xl text-zinc-400">
         There is no Current Order
       </div>
     );
+
+  if(isLoading)
+    return   <Loading>Loading...</Loading>
+
+  if(isError)
+      return  <IsError>Cannot Get Your Current Order</IsError>
+
+
 
   return (
     <div className="w-full">

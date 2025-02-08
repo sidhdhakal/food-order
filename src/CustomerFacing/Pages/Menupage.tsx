@@ -6,6 +6,7 @@ import { useState } from "react";
 import CategoryCard from "../../Components/UI/CategoryCard";
 import sortOptions from '../../Data/SortOptions.json'
 import SearchInput from "../../Components/UI/SearchInput";
+import Title from "../../Components/UI/Title";
 const Menupage = () => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [sortOption, setSortOption] = useState("bestMatch");
@@ -38,7 +39,7 @@ const Menupage = () => {
   return (
     <div className="flex flex-col home gap-y-8 min-h-[calc(100vh-5rem)] overflow-y-auto overflow-x-hidden text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent overflow-hidden">
       <div className="">
-        <h1 className="text-[3rem] leading-[1]">Explore Categories</h1>
+        <Title className='text-3xl' >Explore Categories</Title>
         <div className="flex flex-wrap gap-2 md:gap-3 lg:gap-4 mt-4">
           <div
             onClick={() => setSelectedCategory('All Products')}
