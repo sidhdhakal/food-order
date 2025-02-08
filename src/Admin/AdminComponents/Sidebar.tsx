@@ -4,7 +4,7 @@ import menuItems from '../../Data/AdminNavs.json'
 const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
     const logOut = () => {
-        document.cookie = `jwt=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
+        document.cookie = `adminjwt=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
         window.location.reload();
       };
     return (

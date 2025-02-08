@@ -48,9 +48,9 @@ const OrderCard = ({ order }: any) => {
       {deleteDialogOpen.id !== null && (
         <DialogModal
           message={`Do you really want to Cancel ${order.user.name}'s Order`}
-          btntext="Delete"
+          btntext="Cancel"
           isPending={isPending}
-          pendingText="Deleting..."
+          pendingText="Cancelling..."
           onConfirm={() =>
             updateOrder({
               _id: deleteDialogOpen.id,
@@ -94,7 +94,7 @@ const OrderCard = ({ order }: any) => {
           ))}
         </td>
         <td className="p-4 w-[15%]">
-          {order.message}
+          {order.message==""?'-':order.message}
         </td>
         <td className="p-4 w-[10%]">
           <div className="border rounded-lg">
