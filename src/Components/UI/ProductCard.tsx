@@ -65,18 +65,19 @@ const ProductCard = ({ item }: any) => {
           className="w-1/4 aspect-square object-cover rounded-xl 
           xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 "
         />
-        <div className="flex-1">
-          <H1>
+        <div className="flex-1 flex flex-col gap-y-1">
+          <H1 className="w-full flex justify-between" >
             {item.name}
             <span
-              className={`text-xs px-2 ml-1 w-fit border rounded-full flex items-center gap-1 
+              className={`text-[10px] md:text-xs p-1  ml-1 w-fit border rounded-lg flex items-center gap-1 
       ${
         item.veg
           ? "bg-green-100 border-green-500 text-green-700"
           : "bg-red-100 border-red-500 text-red-700"
-      }`}
+      }
+          `}
             >
-              {item.veg ? "🟢 Veg" : "🔴 Non-Veg"}
+              {item.veg ? "🟢" : "🔴"}
             </span>
           </H1>
 
