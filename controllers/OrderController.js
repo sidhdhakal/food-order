@@ -42,6 +42,7 @@ exports.createOrder = async (req, res) => {
         success: true,
         message: "Order created successfully",
         doc: newOrder,
+        user:user
       });
     }
   } catch (err) {
@@ -184,10 +185,12 @@ exports.getTodaysOrder = async (req, res) => {
       endOfDay.setHours(23, 59, 59, 999); // Set to last moment of the day
   
       const orders = await Order.find({
-        "statusHistory.4": { $exists: false }, 
+        'currentStatus.status': { $in: ['Completed', 'Cancelled'] },
         userId: user._id,
         createdAt: { $gte: startOfDay, $lte: endOfDay },
       }).sort({ createdAt: -1 });  // Sort by creation date in descending order
+      
+      
       
       if (orders.length > 0) {
         return res.status(200).json({
