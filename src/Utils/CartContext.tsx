@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
+import toast from 'react-hot-toast';
 
 type CartItem = {
   qty: number;
@@ -35,17 +36,31 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<{ [key: string]: CartItem }>({});
 
   const addToCart = (itemId: number, name: string, image: string, size: string, price: number) => {
-    const cartKey = `${itemId}-${size}`; // Combine item ID and size to create a unique key
+    const cartKey = `${itemId}-${size}`;
+    
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
-      if (updatedCart[cartKey]) {
-        updatedCart[cartKey].qty += 1; // Increase quantity if the item is already in the cart
-      } else {
-        updatedCart[cartKey] = { qty: 1, name, itemId, image, size, price }; // Add new item with size and price
+      const totalUniqueItems = Object.keys(updatedCart).length;
+  
+      if (!updatedCart[cartKey] && totalUniqueItems >= 5) {
+        toast.error("You can only have up to 5 different items in your cart.");
+        return prevCart;
       }
+  
+      if (updatedCart[cartKey]) {
+        if (updatedCart[cartKey].qty >= 3) {
+          toast.error("Maximum quantity per item is 3.");
+          return prevCart;
+        }
+        updatedCart[cartKey].qty += 1;
+      } else {
+        updatedCart[cartKey] = { qty: 1, name, itemId, image, size, price };
+      }
+  
       return updatedCart;
     });
   };
+  
 
   const removeFromCart = (itemId: number, size: string) => {
     const cartKey = `${itemId}-${size}`;
