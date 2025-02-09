@@ -7,6 +7,7 @@ export interface Food {
     category: string;
     rating?: number; // Should be between 0-5 when provided
     available?: boolean;
+    veg?:boolean | null,
     createdAt?: Date; // Will be automatically set by the schema
     updatedAt?: Date; // Will be automatically set by the schema
   }

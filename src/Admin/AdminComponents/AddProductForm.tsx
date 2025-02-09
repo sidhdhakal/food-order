@@ -4,6 +4,8 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import ToggleSwitch from '../../Components/UI/ToggleSwitch';
 import { useAddFood } from '../../Queries/food/useAddFood';
 import { useGetCategory } from '../../Queries/category/useGetCategories';
+import Checkbox from './Checkbox';
+import toast from 'react-hot-toast';
 
 interface Size {
     name: string;
@@ -21,6 +23,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
     const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
+    const [isVeg, setIsVeg]=useState<boolean | null>(false)
 
     const addSizeField = () => {
         setSizes([...sizes, { name: '', price: 0 }]);
@@ -41,8 +44,11 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
      const { addFood , isPending, isSuccess} = useAddFood();
 
       const handleSubmit = async (e:any) => {
+
         e.preventDefault()
-        addFood({name:productName, description,sizes,image, category, available})
+        if(isVeg==null)
+            toast.error('Please Check if the food is Veg or Not')
+        addFood({name:productName, description,sizes,image, category, veg:isVeg, available})
     
         };
     
@@ -55,6 +61,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                 setImage(null)
                 setAvailable(false)
                 setSizes([{name:'', price:0}])
+                setIsVeg(null)
         }
         }, [isSuccess])
 
@@ -108,6 +115,9 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                 </select>
             </div>
 
+            <div className='flex justify-start gap-x-4'>
+                <Checkbox id='addVegeterian' label='Vegeterian' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
+            </div>
 
             <div className="mt-4">
             <label className="block text-sm font-medium text-gray-700">Image</label>
@@ -152,16 +162,14 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
 
             <div className='flex justify-start gap-x-4'>
                 <label className="flex items-center">
-                    {/* <Input
-                        type="checkbox"
-                        checked={available}
-                        onChange={(e) => setAvailable(e.target.checked)}
-                        className="mr-2 text-primary-300 focus:ring-primary-300 "
-                    /> */}
+                  
                     <span>Available</span>
                 </label>
                     <ToggleSwitch checked={available} onChange={(e)=>setAvailable(e)}/>
             </div>
+
+         
+
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Sizes and Prices</label>

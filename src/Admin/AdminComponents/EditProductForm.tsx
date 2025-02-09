@@ -4,6 +4,7 @@ import Input from '../../Components/UI/Input';
 import { Icon } from '@iconify/react/dist/iconify.js';
 import ToggleSwitch from '../../Components/UI/ToggleSwitch';
 import { useUpdateFood } from '../../Queries/food/useUpdateFood';
+import Checkbox from './Checkbox';
 
 interface Size {
     name: string;
@@ -17,6 +18,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
     const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
+    const [isVeg, setIsVeg]=useState<boolean | null>()
 
     const {updateFood,isPending:isUpatePending} = useUpdateFood()
 
@@ -30,6 +32,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
             setImage(product.image);
             setAvailable(product.available);
             setSizes(product?.sizes?.length > 0 ? product.sizes : [{ name: '', price: 0 }]);
+            setIsVeg(product.veg)
         }
     }, [product]);
 
@@ -99,6 +102,10 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
                         <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
                 </select>
+            </div>
+
+            <div className='flex justify-start gap-x-4'>
+                <Checkbox id='editVegeterian' label='Vegeterian' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
             </div>
 
             <div className="mt-4">
