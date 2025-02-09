@@ -28,7 +28,7 @@ const TodaysOrders = ({ setOrder, setfeedbackOpen }: any) => {
           <IsError>Cannot get Todays orders</IsError>
         }
         {!isLoading && !isError &&
-          <div className="flex flex-col gap-3 mt-4">
+          <div key={1} className="flex flex-col gap-3 mt-4">
             {!data?.doc || data?.doc.length === 0
               ?
               <div className="py-5 text-xl text-zinc-400">There are no Todays Orders</div>

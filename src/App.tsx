@@ -10,6 +10,9 @@ import { Toaster } from 'react-hot-toast'
 import VerifyEmail from './CustomerFacing/Pages/VerifyEmail'
 import ResetPassword from './CustomerFacing/Pages/ResetPassword'
 import ProtectedRoute from './Admin/Pages/Main'
+import PurchaseFail from './CustomerFacing/Pages/Esewa/PurchaseFail'
+import PurchaseSuccess from './CustomerFacing/Pages/Esewa/PurchaseSuccess'
+import { CartProvider } from './Utils/CartContext'
 
 function App() {
   const queryClient = new QueryClient()
@@ -23,6 +26,8 @@ function App() {
         },
         
       }} />
+      <CartProvider>
+
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<Page />}/>
@@ -30,6 +35,8 @@ function App() {
             <Route path='/signup' element={<SignUp />}/>
             <Route path='/verifyemail' element={<VerifyEmail />}/>
             <Route path='/resetpassword' element={<ResetPassword />}/>
+            <Route path='/esewa/purchase_fail' element={<PurchaseFail />}/>
+            <Route path='/esewa/purchase_success' element={<PurchaseSuccess />}/>
 
             <Route path='/admin'>
             <Route path='' element={<ProtectedRoute />}/>
@@ -38,6 +45,7 @@ function App() {
             </Route>
           </Routes>
         </BrowserRouter>
+      </CartProvider>
       </GoogleOAuthProvider>
     </QueryClientProvider>
   )
