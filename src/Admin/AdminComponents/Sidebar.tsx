@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js"
 import LogoSidebar from "../../Components/UI/LogoSidebar"
 import menuItems from '../../Data/AdminNavs.json'
-const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
+const Sidebar = ({ activeComponent, setIsActiveComponent }: {activeComponent:string, setIsActiveComponent:(name:string)=>void}) => {
 
     const logOut = () => {
         document.cookie = `adminjwt=''; path=/; expires=${new Date(Date.now() - 1000).toUTCString()}`;
@@ -15,8 +15,8 @@ const Sidebar = ({ activeComponent, setIsActiveComponent }: any) => {
 
             <div className=' flex flex-1  justify-start items-center flex-col gap-y-2  p-4'>
 
-                {menuItems.map((item) => (
-                    <div key={item.id} onClick={() => setIsActiveComponent(item.name)} className={`lg:px-4 py-3  cursor-pointer flex flex-col lg:flex-row lg:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] lg:text-[1.1rem] font-semibold aspect-auto 
+                {menuItems.map((item:any) => (
+                    <div key={item.id} onClick={() => setIsActiveComponent(item?.name)} className={`lg:px-4 py-3  cursor-pointer flex flex-col lg:flex-row lg:justify-start justify-center gap-y-1 items-center gap-x-2 w-full rounded-2xl text-[1rem] lg:text-[1.1rem] font-semibold aspect-auto 
    ${activeComponent === item.name ? 'text-white bg-gradient-to-r from-primary-500 to-primary-300 shadow-lg' : 'text-black border-transparent'}`}>
                         <Icon icon={item.icon} className={`text-2xl lg:text-3xl 4xl:text-[1.8rem]`} />
                         {item.name}

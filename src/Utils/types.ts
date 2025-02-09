@@ -25,3 +25,47 @@ export interface Food {
     createdAt: Date;
     updatedAt: Date;
   }
+
+
+  export interface Item {
+    _id: string;
+
+    name: string;
+    price: number;
+    qty: number;
+    size: string;
+  }
+  
+  interface OrderStatus {
+    status: string;
+    time: Date;
+  }
+  
+  export interface Order {
+
+    _id: string;
+    createdAt: string;
+    items: Item[];
+    message?: string;
+    currentStatus?: OrderStatus | undefined; 
+    paymentMethod: string;
+    user?: User;
+  }
+
+
+  export interface User{
+    _id:string,
+    email: string;
+    name: string;
+    picture?: string;
+    password?: string;
+    role?: string;
+    isActive: boolean;
+    isVerified: boolean;
+    verifyToken?: string;
+    verifyTokenExpiry?: Date;
+    forgotPasswordToken?: string;
+    forgotPasswordExpiry?: Date;
+    createdAt: Date;
+    updatedAt: Date;
+  }

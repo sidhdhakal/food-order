@@ -39,7 +39,7 @@ const AdminLogin = () => {
             type="email"
             id="email"
             value={email}
-            onChange={(e: any) => setEmail(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />
@@ -50,7 +50,7 @@ const AdminLogin = () => {
             type="password"
             id="password"
             value={password}
-            onChange={(e: any) => setPassword(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
             required
             className="w-full bg-zinc-100 border border-zinc-300 rounded-md px-3 py-2 focus:outline-none"
           />

@@ -1,6 +1,7 @@
 import AddCategoryForm from "./AddCategoryForm";
 import CategoryCard from "./UI/CategoryCard";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
+import { Category } from "../../Utils/types";
 
 
 const EditCategoriesForm = ({}) => {
@@ -17,7 +18,7 @@ const EditCategoriesForm = ({}) => {
 
   return (
     <div className="space-y-4 mt-4 dialog relative">
-      {data.doc.map((category: any, index: any) => (
+      {data.doc.map((category: Category, index: number) => (
         <CategoryCard key={index} category={category} index={index}  />
       ))}
       <AddCategoryForm  />

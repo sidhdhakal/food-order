@@ -5,18 +5,19 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import ToggleSwitch from '../../Components/UI/ToggleSwitch';
 import { useUpdateFood } from '../../Queries/food/useUpdateFood';
 import Checkbox from './Checkbox';
+import { Food } from '../../Utils/types';
 
 interface Size {
     name: string;
     price: number;
 }
 
-const EditProductForm = ({ onClose, product }: { onClose: () => void, product: any }) => {
+const EditProductForm = ({ onClose, product }: { onClose: () => void, product: Food }) => {
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState<any>();
-    const [available, setAvailable] = useState(false);
+    const [available, setAvailable] = useState<any>(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
     const [isVeg, setIsVeg]=useState<boolean | null>()
 
@@ -30,7 +31,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: a
             setDescription(product.description);
             setCategory(product.category);
             setImage(product.image);
-            setAvailable(product.available);
+            setAvailable(product?.available);
             setSizes(product?.sizes?.length > 0 ? product.sizes : [{ name: '', price: 0 }]);
             setIsVeg(product.veg)
         }

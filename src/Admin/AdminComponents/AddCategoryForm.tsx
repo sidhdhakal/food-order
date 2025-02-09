@@ -5,7 +5,7 @@ import { useAddCategory } from "../../Queries/category/useAddCategory";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 const AddCategoryForm = () => {
-  const [newCategory, setNewCategory] = useState<{ name: string; icon: any }>({
+  const [newCategory, setNewCategory] = useState<{ name: string; icon: File | null }>({
     name: "",
     icon: null,
   });

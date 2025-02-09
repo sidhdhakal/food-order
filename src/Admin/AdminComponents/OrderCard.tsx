@@ -3,6 +3,7 @@ import Avatar from "../../Components/Avatar";
 import { useUpdateOrder } from "../../Queries/order/useUpdateOrder";
 import { useEffect, useState } from "react";
 import DialogModal from "../../Components/DialogModal";
+import { Item } from "../../Utils/types";
 
 const filterOptions = [
   { value: "Order Placed", label: "Order Placed", icon: "ph:clock" },
@@ -21,14 +22,14 @@ const filterOptions = [
   { value: "Cancelled", label: "Cancelled", icon: "ph:thumbs-down" },
 ];
 
-const OrderCard = ({ order }: any) => {
+const OrderCard = ({ order }: {order:any}) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<{
     id: string | null;
     st: string | null;
   }>({ id: null, st: null });
 
   const currentStatusIndex = filterOptions.findIndex(
-    (option) => option.value === order.currentStatus.status
+    (option) => option.value === order?.currentStatus?.status
   );
 
   const { updateOrder, isPending , isSuccess} = useUpdateOrder();
@@ -47,7 +48,7 @@ const OrderCard = ({ order }: any) => {
     <>
       {deleteDialogOpen.id !== null && (
         <DialogModal
-          message={`Do you really want to Cancel ${order.user.name}'s Order`}
+          message={`Do you really want to Cancel ${order?.user?.name}'s Order`}
           btntext="Cancel"
           isPending={isPending}
           pendingText="Cancelling..."
@@ -64,25 +65,25 @@ const OrderCard = ({ order }: any) => {
       )}
 
       <tr
-        key={order.id}
+        key={order._id}
         className={`border-b w-full  h-auto ${
-          order.currentStatus.status == "Completed"
+          order?.currentStatus?.status == "Completed"
             ? "!bg-green-100"
-            : order.currentStatus.status == "Cancelled"
+            : order?.currentStatus?.status == "Cancelled"
             ? "bg-red-100"
             : " hover:bg-gray-50"
         }`}
       >
         <td className="p-2 w-[10%]">
-          <Avatar name={order.user.name} picture={order.user.picture} />
+          <Avatar name={order?.user?.name} picture={order?.user?.picture || ''} />
         </td>
         <td className="p-2 w-[20%]">
-          {order.user.name}
+          {order?.user?.name}
           <br />
-          <span className="text-zinc-500">{order.user.email}</span>
+          <span className="text-zinc-500">{order?.user?.email}</span>
         </td>
         <td className="p-2 w-[25%]">
-          {order.items.map((item: any) => (
+          {order.items.map((item: Item) => (
             <div key={item._id} className="w-full h-full">
               <h1>
                 {item.name}{" "}
@@ -112,11 +113,11 @@ const OrderCard = ({ order }: any) => {
                     (option.value !== "Cancelled" &&
                       index !== currentStatusIndex + 1) ||
                     (["Ready for Pickup", "Completed"].includes(
-                      order.currentStatus.status
+                      order?.currentStatus?.status 
                     ) &&
                       option.value === "Cancelled")
                   }
-                  selected={order.currentStatus.status === option.value}
+                  selected={order?.currentStatus?.status === option.value}
                 >
                   {option.label}
                 </option>

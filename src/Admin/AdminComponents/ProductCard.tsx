@@ -4,8 +4,8 @@ import { useUpdateFoodAvailability } from "../../Queries/food/useUpdateFoodAvail
 
 const ProductCard = ({ product, setIsDialogOpen, setEditProductForm, isDeletePending }: { product: Food, setIsDialogOpen:any, setEditProductForm:any, isDeletePending:boolean }) => {
   const { updateFoodAvailability, isPending } = useUpdateFoodAvailability();
-  const handleMenuAvailableStatus = (id: any, value: boolean) => {
-    updateFoodAvailability({_id:id, available:value})
+  const handleMenuAvailableStatus = (id: string | undefined, value: boolean) => {
+    updateFoodAvailability({_id:id || '', available:value})
   };
   return (
     <tr key={product._id} className="border-b hover:bg-gray-50">

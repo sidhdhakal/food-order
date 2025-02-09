@@ -9,7 +9,7 @@ import Button from "../../Components/UI/Button";
 import EditCategoriesForm from "../AdminComponents/EditCategoriesForm";
 import { useGetFoods } from "../../Queries/food/useGetFoods";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
-import { Food} from "../../Utils/types";
+import { Category, Food} from "../../Utils/types";
 import ProductCard from "../AdminComponents/ProductCard";
 import { useDeleteFood } from "../../Queries/food/useDeleteFood";
 
@@ -186,8 +186,8 @@ const Menu = () => {
             className="px-4 py-2 border rounded-md bg-white"
           >
             <option value="">All Categories</option>
-            {categories?.doc?.map((category: any) => (
-              <option key={category.id} value={category.name}>
+            {categories?.doc?.map((category: Category) => (
+              <option key={category._id} value={category.name}>
                 {category.name}
               </option>
             ))}
