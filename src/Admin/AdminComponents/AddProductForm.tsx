@@ -116,7 +116,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
             </div>
 
             <div className='flex justify-start gap-x-4'>
-                <Checkbox id='addVegeterian' label='Vegeterian' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
+                <Checkbox id='addVegeterian' label=' Vegeterian 🟢' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
             </div>
 
             <div className="mt-4">
