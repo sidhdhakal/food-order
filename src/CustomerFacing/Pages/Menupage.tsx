@@ -7,16 +7,30 @@ import CategoryCard from "../../Components/UI/CategoryCard";
 import sortOptions from '../../Data/SortOptions.json'
 import SearchInput from "../../Components/UI/SearchInput";
 import Title from "../../Components/UI/Title";
-const Menupage = () => {
+
+const Menupage = ({searchValue, setSearchValue}:any) => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
   const [sortOption, setSortOption] = useState("bestMatch");
 
-
-  const getSortedOffers = () => {
+  // Helper function to handle filtering and sorting
+  const getFilteredOffers = () => {
     let filteredOffers =
       selectedCategory === "All Products"
         ? MenuData
         : MenuData.filter((offer) => offer.category === selectedCategory);
+
+    // Apply search filter
+    if (searchValue) {
+      filteredOffers = filteredOffers.filter((offer) =>
+        offer.name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }
+
+    return filteredOffers;
+  };
+
+  const getSortedOffers = () => {
+    const filteredOffers = getFilteredOffers(); // Get filtered offers based on the search term
 
     switch (sortOption) {
       case "priceLowHigh":
@@ -49,9 +63,7 @@ const Menupage = () => {
                 : "border-transparent bg-white "
             }`}
           >
-          
-      <img src='/Icons/diet.png' className="w-[1.6rem] mr-1 md:w-[2rem] lg:w-[2.8rem]"/>
-
+            <img src='/Icons/diet.png' className="w-[1.6rem] mr-1 md:w-[2rem] lg:w-[2.8rem]"/>
             <h1 className="text-md">{'All Products'}</h1>
           </div>
           {Categories.map((category) => (
@@ -64,18 +76,26 @@ const Menupage = () => {
           ))}
         </div>
       </div>
-      <SearchInput className="flex md:hidden w-full" />
+      <SearchInput
+        className="flex md:hidden w-full"
+        value={searchValue}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setSearchValue(e.target.value)
+        }
+      />
 
       <div className="w-full">
         <div className="flex justify-between items-center">
-        <h2 className="text-lg md:text-xl lg:text-3xl font-semibold">{selectedCategory || 'All'} ({getSortedOffers().length})</h2>
+          <h2 className="text-lg md:text-xl lg:text-3xl font-semibold">
+            {selectedCategory || 'All'} ({getSortedOffers().length})
+          </h2>
           <div className="flex items-center gap-2 bg-white px-2 md:px-3 py-2 rounded-xl shadow-sm">
             <Icon
               icon="solar:sort-line-duotone"
               className="text-gray-500 text-2xl"
             />
             <select
-              className="bg-transparent border-none outline-none text-gray-600 "
+              className="bg-transparent border-none outline-none text-gray-600"
               value={sortOption}
               onChange={(e) => setSortOption(e.target.value)}
             >
@@ -94,7 +114,6 @@ const Menupage = () => {
         </div>
       </div>
       <div className="bg-transparent h-[2rem] md:hidden"/>
-
     </div>
   );
 };

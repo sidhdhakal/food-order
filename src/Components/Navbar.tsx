@@ -7,7 +7,7 @@ import Logo from "./UI/Logo";
 import SearchInput from "./UI/SearchInput";
 import { logOut } from "../Utils/logout";
 
-const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
+const Navbar = ({searchValue, setSearchValue, activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
   const { cart } = useCart(); // Get cart items from CartContext
   return (
     <div className=" select-none min-h-[5rem] h-[5rem] w-full md:w-[calc(100vw-8rem)] 4xl:w-[calc(100vw-16rem)] fixed top-0 shadow-md bg-zinc-50/70 backdrop-blur-lg md:bg-zinc-50 flex justify-center items-center text-black z-[5]">
@@ -43,7 +43,15 @@ const Navbar = ({ activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveCom
             <UserDetail />
           </div>
 
-          <SearchInput />
+          <SearchInput 
+            value={searchValue}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            {
+              setSearchValue(e.target.value)
+              if(activeComponent!=='Menu')
+                  setIsActiveComponent('Menu')
+            }
+            }/>
       
         </div>
       </div>

@@ -12,14 +12,16 @@ import MobileSidebar from "../../Components/MobileSidebar";
 const Page = () => {
   const [activeComponent, setIsActiveComponent] = useState("Home");
   const [sidebarOpen, setIsSidebarOpen]=useState(false)
+  const [searchValue, setSearchValue] = useState("");
+
   const renderActiveComponent = () => {
     switch (activeComponent) {
       case "Home":
-        return <Homepage setIsActiveComponent={setIsActiveComponent} />;
+        return <Homepage  setIsActiveComponent={setIsActiveComponent} />;
       case "Orders":
         return <OrdersPage />;
       case "Menu":
-        return <Menupage />;
+        return <Menupage searchValue={searchValue} setSearchValue={setSearchValue} />;
       case "Feedback":
         return <Feedbacks />;
       case "Notifications":
@@ -43,7 +45,7 @@ const Page = () => {
           />
         </div>
         <div className="flex-1 h-screen flex flex-col">
-          <Navbar activeComponent={activeComponent}  sidebarOpen={sidebarOpen} setIsActiveComponent={setIsActiveComponent}
+          <Navbar  searchValue={searchValue} setSearchValue={setSearchValue} activeComponent={activeComponent}  sidebarOpen={sidebarOpen} setIsActiveComponent={setIsActiveComponent}
          setIsSidebarOpen={setIsSidebarOpen}/>
           <div className="bg-zinc-100 w-full pt-[5rem] flex justify-between">
               {renderActiveComponent()}
