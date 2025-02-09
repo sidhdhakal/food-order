@@ -5,6 +5,9 @@ import CartItem from "./UI/CartItem";
 import Button from "./UI/Button";
 import { useCreateOrder } from "../Queries/order/useCreateOrder";
 import OrderStatus from "./OrderStatus";
+import toast from "react-hot-toast";
+import CryptoJS from "crypto-js";
+// import createSignature from "../Utils/createSignature";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
   const { cart} = useCart();
@@ -20,14 +23,72 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   const tax = subtotal * 0.13;
   const totalPayment = subtotal + tax;
 
+  console.log(totalPayment)
+
   const [isOrderOpen, _] = useState(false);
 
   const handlePlaceOrder=()=>{
     const items=Object.values(cart)
     if(items.length===0)
         return 
+    if(paymentMethod=='esewa')
+      return handlePayButtonClick(items)
     createOrder({items, message, paymentMethod})
   }
+
+
+  async function handlePayButtonClick(items:any) {
+    window.localStorage.setItem('Cart',JSON.stringify({items, message, paymentMethod}))
+    try {
+          const uuid=new Date().getTime().toString().slice(-6);
+    const jsonData:any = {
+          "amount": totalPayment.toFixed(2).toString(),
+          "failure_url": `${import.meta.env.VITE_URL}/esewa/purchase_fail`,
+          "product_delivery_charge": "0",
+          "product_service_charge": "0",
+          "product_code": "EPAYTEST",
+          "signature": "",
+          "signed_field_names": "total_amount,transaction_uuid,product_code",
+       
+          "success_url": `${import.meta.env.VITE_URL}/esewa/purchase_success?uuid=${uuid}&amount=${totalPayment.toFixed(2)}&code=EPAYTEST&`,
+          "tax_amount": "0",
+          "total_amount": totalPayment.toFixed(2).toString(),
+          "transaction_uuid":uuid
+    };
+    let url="https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+    
+    const message = "total_amount=" + jsonData.total_amount + ",transaction_uuid=" + jsonData.transaction_uuid + ",product_code=" + jsonData.product_code;
+    const signature = createSignature(message);
+    jsonData.signature = signature;
+    
+    
+    const form = document.createElement("form");
+    for (const key in jsonData) {
+          const field = document.createElement("input");
+          field.setAttribute("type", "hidden");
+          field.setAttribute("name", key);
+          field.setAttribute("value", jsonData[key]);
+          form.appendChild(field);
+    }
+    
+    form.setAttribute("method", "post");
+    form.setAttribute("action", url); 
+    document.body.appendChild(form);
+    form.submit();
+
+    } catch (error) {
+      console.log(error)
+          toast.error("Something Unexpected Happen! Please Try Again later")                 
+    } finally{
+    }
+}
+
+function createSignature(message:string) {
+  const hash = CryptoJS.HmacSHA256(message,"8gBm/:&EnhH.1/q");
+  const hashInBase64 = CryptoJS.enc.Base64.stringify(hash);
+  return hashInBase64;
+}
+
 
   return (
     <div className={`
