@@ -20,10 +20,10 @@ const ProductCard = ({ item }: any) => {
   const handleAddToCart = (itemId: number, itemData: any) => {
     const defaultSize = itemData.sizes[0]?.name;
     const selectedSize = selectedSizes[itemId] || defaultSize;
-    
+
     if (selectedSize) {
       const price = getPriceBySize(itemData, selectedSize);
-      
+
       // Ensure the size is selected in the state
       if (!selectedSizes[itemId]) {
         setSelectedSizes((prev) => ({
@@ -31,7 +31,7 @@ const ProductCard = ({ item }: any) => {
           [itemId]: selectedSize,
         }));
       }
-      
+
       addToCart(itemId, itemData.name, itemData.image, selectedSize, price);
     }
   };
@@ -39,7 +39,7 @@ const ProductCard = ({ item }: any) => {
   const handleDecreaseQuantity = (itemId: number, _: any) => {
     const defaultSize = item.sizes[0]?.name;
     const selectedSize = selectedSizes[itemId] || defaultSize;
-    
+
     if (selectedSize) {
       decreaseQuantity(itemId, selectedSize);
     }
@@ -66,7 +66,21 @@ const ProductCard = ({ item }: any) => {
           xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 "
         />
         <div className="flex-1">
-         <H1>{item.name}</H1>
+          {/* <H1>{item.name} <span className="text-sm px-2  bg-white border border-primary-400 rounded-full">{item.veg?'veg':'non veg'}</span></H1> */}
+          <H1>
+            {item.name}
+            <span
+              className={`text-xs px-2 ml-1 w-fit border rounded-full flex items-center gap-1 
+      ${
+        item.veg
+          ? "bg-green-100 border-green-500 text-green-700"
+          : "bg-red-100 border-red-500 text-red-700"
+      }`}
+            >
+              {item.veg ? "🟢 Veg" : "🔴 Non-Veg"}
+            </span>
+          </H1>
+
           <P>{item.description}</P>
           <div className="flex gap-x-3 justify-start items-center">
             <h1>Sizes:</h1>
@@ -92,9 +106,12 @@ const ProductCard = ({ item }: any) => {
       <div className="flex justify-between w-full items-center">
         <div className="flex gap-x-2 flex-col">
           <h1 className="xs:text-md sm:text-md md:text-lg lg:text-[1.2vw] font-bold">
-            <span className="text-zinc-600 font-normal xs:text-xs sm:text-xs md:text-sm">Rs</span>{" "}
+            <span className="text-zinc-600 font-normal xs:text-xs sm:text-xs md:text-sm">
+              Rs
+            </span>{" "}
             {getPriceBySize(item, selectedSizes[item.id] || defaultSize)}
           </h1>
+          
         </div>
         <div className="w-[5.8rem] lg:w-[6.2rem] 4xl:w-[7rem] h-[2.2rem] lg:h-[2.4rem] 4xl:h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full shadow-sm">
           <span
@@ -111,9 +128,9 @@ const ProductCard = ({ item }: any) => {
             className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 shadow-md flex justify-center items-center hover:bg-primary-600"
             onClick={() => handleAddToCart(item.id, item)}
           >
-            <Icon 
-              icon="lucide:plus" 
-              className="text-white xs:text-xs sm:text-sm lg:text-[1.3vw]" 
+            <Icon
+              icon="lucide:plus"
+              className="text-white xs:text-xs sm:text-sm lg:text-[1.3vw]"
             />
           </span>
         </div>
