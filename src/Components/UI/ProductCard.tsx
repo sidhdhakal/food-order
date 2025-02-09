@@ -66,7 +66,6 @@ const ProductCard = ({ item }: any) => {
           xs:w-1/4 sm:w-1/4 md:w-1/4 lg:w-1/4 "
         />
         <div className="flex-1">
-          {/* <H1>{item.name} <span className="text-sm px-2  bg-white border border-primary-400 rounded-full">{item.veg?'veg':'non veg'}</span></H1> */}
           <H1>
             {item.name}
             <span

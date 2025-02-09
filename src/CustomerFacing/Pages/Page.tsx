@@ -5,7 +5,6 @@ import Sidebar from "../../Components/Sidebar";
 import Feedbacks from "./Feedbacks";
 import Navbar from "../../Components/Navbar";
 import RightSidebar from "../../Components/RightSidebar";
-import { CartProvider } from "../../Utils/CartContext";
 import OrdersPage from "./Orderspage";
 import Notifications from "./Notifications";
 import MobileSidebar from "../../Components/MobileSidebar";
@@ -30,7 +29,8 @@ const Page = () => {
     }
   };
   return (
-    <CartProvider>
+    
+    <>
       <MobileSidebar
          activeComponent={activeComponent}
          setIsActiveComponent={setIsActiveComponent} 
@@ -52,7 +52,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-    </CartProvider>
+    </>
   );
 };
 
