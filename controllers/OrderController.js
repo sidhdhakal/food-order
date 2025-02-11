@@ -2,8 +2,8 @@ const Order = require("../models/Order");
 const User = require("../models/User");
 exports.createOrder = async (req, res) => {
   try {
-    const user = await User.findById( req.user._id );
-    console.log(user)
+    const user = await User.findById(req.user._id);
+    console.log(user);
     if (!user || !user.isVerified) {
       return res.status(400).json({
         success: false,
@@ -11,19 +11,34 @@ exports.createOrder = async (req, res) => {
       });
     }
 
-    
+    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length !== 2) {
+      return res.status(400).json({
+        success: false,
+        message: "Order must contain exactly 2 items.",
+      });
+    }
+
+    const invalidQuantityItems = req.body.items.filter(item => !item.qty || item.qty > 3);
+    if (invalidQuantityItems.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Each item quantity must be between 1 and 3.",
+      });
+    }
+
     const currentOrders = await Order.find({
       "statusHistory.4": { $exists: false },
       userId: user._id,
-      'currentStatus.status':{$ne:'Cancelled'}
+      'currentStatus.status': { $ne: 'Cancelled' }
     }).sort({ createdAt: -1 });
 
-    if(currentOrders.length>=2){
+    if (currentOrders.length >= 2) {
       return res.status(400).json({
         success: false,
         message: "You have 2 active orders. Complete or cancel one to create a new order.",
       });
     }
+
     const updatedItems = req.body.items.map(
       ({ itemId, image, ...rest }) => rest
     );
@@ -31,18 +46,19 @@ exports.createOrder = async (req, res) => {
     const orderData = {
       userId: user._id,
       items: updatedItems,
-      message:req.body.message,
+      message: req.body.message,
       paymentMethod: req.body.paymentMethod,
       currentStatus: { status: "Order Placed", time: Date.now() },
     };
     console.log(orderData);
+    
     const newOrder = await Order.create(orderData);
     if (newOrder) {
       return res.status(200).json({
         success: true,
         message: "Order created successfully",
         doc: newOrder,
-        user:user
+        user: user
       });
     }
   } catch (err) {
