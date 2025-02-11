@@ -1,22 +1,26 @@
 import { getCookie } from "../Utils/getCookie";
 import { removeQuotes } from "../Utils/removeQuotes";
+import CryptoJS from "crypto-js";
 const token=getCookie('adminjwt')
 
 const userToken=getCookie('foodmateuser')
-
+ const encryptData = (data:any) => {
+        return CryptoJS.AES.encrypt(JSON.stringify(data), "sonamkotauko").toString();
+    };
 export async function createOrderApi({items,message, paymentMethod}:any) {
     console.log(items, paymentMethod)
     if(!userToken){
         throw new Error("You are not Logged In! Please Login to Place Order")
     }
     try {
+      const encryptedData=encryptData({items, message, paymentMethod})
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/createorder`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           'Authorization':`Bearer ${removeQuotes(userToken)}`
         },
-        body: JSON.stringify({items,message, paymentMethod})
+        body: JSON.stringify({data:encryptedData})
       });
   
       const data = await res.json();
