@@ -1,5 +1,6 @@
 const Order = require("../models/Order");
 const User = require("../models/User");
+const { decryptData } = require('../Utils/decryptData');
 exports.createOrder = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -10,17 +11,15 @@ exports.createOrder = async (req, res) => {
         message: "Please verify your account via email to place an order.",
       });
     }
-
-    // Validate items array length
-    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length >= 2) {
+    const decryptedData=JSON.parse(decryptData(req.body.data))
+    if (!decryptedData.items || !Array.isArray(decryptedData.items) || decryptedData.items.length > 2) {
       return res.status(400).json({
         success: false,
-        message: "Order must contain 2 or  less 2 items.",
+        message: "Order must contain 2 or less 2 items.",
       });
     }
 
-    // Validate quantity for each item
-    const invalidQuantityItems = req.body.items.filter(item => !item.qty || item.qty > 3);
+    const invalidQuantityItems = decryptedData.items.filter(item => !item.qty || item.qty > 3);
     if (invalidQuantityItems.length > 0) {
       return res.status(400).json({
         success: false,
@@ -41,15 +40,15 @@ exports.createOrder = async (req, res) => {
       });
     }
 
-    const updatedItems = req.body.items.map(
+    const updatedItems = decryptedData.items.map(
       ({ itemId, image, ...rest }) => rest
     );
 
     const orderData = {
       userId: user._id,
       items: updatedItems,
-      message: req.body.message,
-      paymentMethod: req.body.paymentMethod,
+      message: decryptedData.message,
+      paymentMethod: decryptedData.paymentMethod,
       currentStatus: { status: "Order Placed", time: Date.now() },
     };
     console.log(orderData);
