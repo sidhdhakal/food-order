@@ -13,70 +13,102 @@ interface Size {
 }
 
 const AddProductForm = ({ onClose }: { onClose: () => void }) => {
-
-    const { data} = useGetCategory();
-    console.log(data)
-
+    const { data } = useGetCategory();
+    
     const [productName, setProductName] = useState<string>('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('');
     const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
-    const [isVeg, setIsVeg]=useState<boolean | null>(false)
+    const [isVeg, setIsVeg] = useState<boolean | null>(false);
+
+    const hasEmptyFields = () => {
+        return sizes.some(size => size.name.trim() === '' || size.price === 0);
+    };
 
     const addSizeField = () => {
+        if (hasEmptyFields()) {
+            toast.error('Please fill in all current size and price fields before adding a new one');
+            return;
+        }
         setSizes([...sizes, { name: '', price: 0 }]);
     };
 
     const updateSize = (index: number, field: keyof Size, value: string | number) => {
-        if(value=='') return
         const newSizes = [...sizes];
-        newSizes[index][field] = value as never;
+        
+        // For price field
+        if (field === 'price') {
+            const numValue = typeof value === 'string' ? parseFloat(value) : value;
+            if (isNaN(numValue)) return;
+            newSizes[index][field] = numValue as never;
+        }
+        // For name field
+        else {
+            newSizes[index][field] = value as never;
+        }
+
+        // Remove any additional empty fields if this field is being cleared
+        if ((value === '' || value === 0) && sizes.length > 1) {
+            const otherEmptyFields = sizes.filter((size, i) => 
+                i !== index && (size.name === '' || size.price === 0)
+            );
+            if (otherEmptyFields.length > 0) {
+                const filteredSizes = sizes.filter((size, i) => 
+                    i === index || (size.name !== '' && size.price !== 0)
+                );
+                setSizes(filteredSizes);
+                return;
+            }
+        }
+
         setSizes(newSizes);
     };
 
     const removeSizeField = (index: number) => {
         const newSizes = sizes.filter((_, i) => i !== index);
-        setSizes(newSizes);
+        // Ensure at least one field remains
+        if (newSizes.length === 0) {
+            setSizes([{ name: '', price: 0 }]);
+        } else {
+            setSizes(newSizes);
+        }
     };
 
-     const { addFood , isPending, isSuccess} = useAddFood();
+    const { addFood, isPending, isSuccess } = useAddFood();
 
-      const handleSubmit = async (e:any) => {
-
-        e.preventDefault()
-        if(isVeg==null)
-            toast.error('Please Check if the food is Veg or Not')
-        addFood({name:productName, description,sizes,image, category, veg:isVeg, available})
-    
-        };
-    
-    
-        useEffect(()=>{
-            if(isSuccess){
-                setProductName('')
-                setDescription('')
-                setCategory('')
-                setImage(null)
-                setAvailable(false)
-                setSizes([{name:'', price:0}])
-                setIsVeg(null)
+    const handleSubmit = async (e: any) => {
+        e.preventDefault();
+        if (isVeg == null) {
+            toast.error('Please Check if the food is Veg or Not');
+            return;
         }
-        }, [isSuccess])
+        if (hasEmptyFields()) {
+            toast.error('Please fill in all size and price fields or remove empty ones');
+            return;
+        }
+        addFood({ name: productName, description, sizes, image, category, veg: isVeg, available });
+    };
 
-   
-
+    useEffect(() => {
+        if (isSuccess) {
+            setProductName('');
+            setDescription('');
+            setCategory('');
+            setImage(null);
+            setAvailable(false);
+            setSizes([{ name: '', price: 0 }]);
+            setIsVeg(null);
+        }
+    }, [isSuccess]);
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
             setImage(files[0]);
-          }
-      
+        }
     };
-
-
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4 mt-6 dialog">
@@ -108,26 +140,23 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     required
                     className="mt-1 block w-full border border-gray-300 bg-gray-100 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-300 focus:border-primary-300"
                 >
-                    <option  selected hidden>Select Category</option>
-                    {data?.doc?.map((cat:any) => (
+                    <option value="" hidden>Select Category</option>
+                    {data?.doc?.map((cat: any) => (
                         <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
                 </select>
             </div>
 
             <div className='flex justify-start gap-x-4'>
-                <Checkbox id='addVegeterian' label=' Vegeterian 🟢' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
+                <Checkbox id='addVegeterian' label=' Vegeterian 🟢' checked={isVeg || false} onChange={() => setIsVeg(!isVeg)} />
             </div>
 
             <div className="mt-4">
-            <label className="block text-sm font-medium text-gray-700">Image</label>
-
+                <label className="block text-sm font-medium text-gray-700">Image</label>
                 <div className="relative border-2 border-dashed rounded-lg p-4 transition-colors">
                     <Input
                         type="file"
-
                         onChange={handleImageChange}
-                        // accept="image/*"
                         id="new-image"
                         className="w-full hidden"
                     />
@@ -137,7 +166,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     >
                         {image ? (
                             <img
-                                src={image? URL.createObjectURL(image):''}
+                                src={image ? URL.createObjectURL(image) : ''}
                                 alt="Preview"
                                 className="max-w-full max-h-48 object-contain rounded-lg"
                             />
@@ -162,40 +191,34 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
 
             <div className='flex justify-start gap-x-4'>
                 <label className="flex items-center">
-                  
                     <span>Available</span>
                 </label>
-                    <ToggleSwitch checked={available} onChange={(e)=>setAvailable(e)}/>
+                <ToggleSwitch checked={available} onChange={(e) => setAvailable(e)} />
             </div>
-
-         
-
 
             <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Sizes and Prices</label>
                 {sizes.map((size, index) => (
                     <div key={index} className="flex space-x-2 mb-2 items-center">
                         <div>
-                        <label htmlFor='size'>Size</label>
-
-                        <Input
-                            type="text"
-                            placeholder="size"
-                            value={size.name}
-                            onChange={(e) => updateSize(index, 'name', e.target.value)}
-                            required
+                            <label htmlFor='size'>Size</label>
+                            <Input
+                                type="text"
+                                placeholder="size"
+                                value={size.name}
+                                onChange={(e) => updateSize(index, 'name', e.target.value)}
+                                required
                             />
-                            </div>
+                        </div>
                         <div>
-                        <label htmlFor='price'>Price</label>
-                        <Input
-                            type="number"
-                            placeholder="Price"
-                            value={size.price}
-                            onChange={(e) => updateSize(index, 'price', parseFloat(e.target.value))}
-                            required
-                            min="0"
-                            step="0.01"
+                            <label htmlFor='price'>Price</label>
+                            <Input
+                                type="number"
+                                placeholder="Price"
+                                value={size.price}
+                                onChange={(e) => updateSize(index, 'price', parseFloat(e.target.value))}
+                                required
+                                step="0.01"
                             />
                         </div>
                         {sizes.length > 1 && (
@@ -232,12 +255,11 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     type="submit"
                     className="px-4 py-2 bg-primary-500 disabled:bg-zinc-400 text-white rounded-md hover:bg-primary-600"
                 >
-                                        {isPending? 'Adding...':'Add Product'}
-
+                    {isPending ? 'Adding...' : 'Add Product'}
                 </button>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default AddProductForm
+export default AddProductForm;
