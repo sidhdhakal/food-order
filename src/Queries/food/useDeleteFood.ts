@@ -16,7 +16,7 @@ export function useDeleteFood() {
     mutationFn: deleteFoodApi,
     onSuccess: () => {
       toast.success("Food Deleted Successfully");
-      queryClient.invalidateQueries({queryKey:['food']})
+      queryClient.invalidateQueries({queryKey:['adminfood']})
 
     },
     onError: (error) => {

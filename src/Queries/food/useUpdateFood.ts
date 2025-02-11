@@ -16,7 +16,7 @@ export function useUpdateFood() {
     mutationFn: updateFoodApi,
     onSuccess: () => {
       toast.success("Food Updated Successfully");
-      queryClient.invalidateQueries({queryKey:['food']})
+      queryClient.invalidateQueries({queryKey:['adminfood']})
   
     },
     onError: (error) => {

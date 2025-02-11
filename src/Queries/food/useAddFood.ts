@@ -15,7 +15,7 @@ export function useAddFood() {
     mutationFn: addFoodApi,
     onSuccess: () => {
       toast.success("New Food Added Successfully");
-      queryClient.invalidateQueries({queryKey:['food']})
+      queryClient.invalidateQueries({queryKey:['adminfood']})
     },
     onError: (error) => {
       console.error("Error adding Food:", error);

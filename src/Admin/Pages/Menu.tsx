@@ -7,16 +7,16 @@ import DialogModal from "../../Components/DialogModal";
 import EditProductForm from "../AdminComponents/EditProductForm";
 import Button from "../../Components/UI/Button";
 import EditCategoriesForm from "../AdminComponents/EditCategoriesForm";
-import { useGetFoods } from "../../Queries/food/useGetFoods";
 import { useGetCategory } from "../../Queries/category/useGetCategories";
 import { Category, Food} from "../../Utils/types";
 import ProductCard from "../AdminComponents/ProductCard";
 import { useDeleteFood } from "../../Queries/food/useDeleteFood";
+import { useGetAdminFoods } from "../../Queries/food/useGetAdminFoods";
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const { data: products, isLoading, isError } = useGetFoods();
+  const { data: products, isLoading, isError } = useGetAdminFoods();
   const { data: categories } = useGetCategory();
   const {deleteFood, isPending:isDeletePending, isSuccess}=useDeleteFood()
 

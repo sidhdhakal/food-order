@@ -50,6 +50,26 @@ export async function addFoodApi(food:Food) {
       throw error;
     }
   }
+  export async function getAdminFoodsApi(){
+    try{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/adminfoods`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+  
+      const data=await res.json();
+      if(data.success){
+        return data
+      }  else {
+        throw new Error(data.message || "Error fetching data");
+      }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+  }
 
 export async function updateFoodApi({_id, name, description, category, sizes, available, image}:any) {
   let imageBase64=undefined
