@@ -13,12 +13,7 @@ interface MenuPageProps {
   setSearchValue: (value: string) => void;
 }
 
-interface MenuDataResponse {
-  success: boolean;
-  results: number;
-  message: string;
-  doc: any[];
-}
+
 
 const Menupage = ({ searchValue, setSearchValue }: MenuPageProps) => {
   const [selectedCategory, setSelectedCategory] = useState("All Products");
