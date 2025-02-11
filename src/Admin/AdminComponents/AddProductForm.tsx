@@ -9,7 +9,7 @@ import toast from 'react-hot-toast';
 
 interface Size {
     name: string;
-    price: number;
+    price: number ;
 }
 
 const AddProductForm = ({ onClose }: { onClose: () => void }) => {
@@ -20,7 +20,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
     const [category, setCategory] = useState('');
     const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState(false);
-    const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
+    const [sizes, setSizes] = useState<Size[]>([{ name: '', price:0 }]);
     const [isVeg, setIsVeg] = useState<boolean | null>(false);
 
     const hasEmptyFields = () => {
