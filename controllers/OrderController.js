@@ -12,10 +12,10 @@ exports.createOrder = async (req, res) => {
     }
 
     // Validate items array length
-    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length <= 2) {
+    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length >= 2) {
       return res.status(400).json({
         success: false,
-        message: "Order must contain exactly 2 items.",
+        message: "Order must contain 2 or  less 2 items.",
       });
     }
 
