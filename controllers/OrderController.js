@@ -229,7 +229,7 @@ exports.getTodaysOrder = async (req, res) => {
       startOfDay.setHours(0, 0, 0, 0);  // Set time to 00:00:00.000 for today
   
       const orders = await Order.find({
-        "statusHistory.4": { $exists: false },
+        // "statusHistory.4": { $exists: false },
         userId: user._id,
         createdAt: { $lt: startOfDay },  // Get orders created before the start of today
       }).sort({ createdAt: -1 });
