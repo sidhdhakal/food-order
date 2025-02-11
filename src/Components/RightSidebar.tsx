@@ -20,8 +20,8 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
     (total, item) => total + item.price * item.qty,
     0
   );
-  const tax = subtotal * 0.13;
-  const totalPayment = subtotal + tax;
+  // const tax = subtotal * 0.13;
+  const totalPayment = subtotal ;
 
   console.log(totalPayment)
 
@@ -143,17 +143,16 @@ function createSignature(message:string) {
               placeholder="Any Special Requirements?"
             />
             <div className="bg-zinc-100 p-2 sm:p-3 rounded-[16px] sm:rounded-[24px]">
-              {/* Payment Summary content remains the same */}
               <h1 className="text-sm sm:text-md lg:text-[1.4rem] mb-2">Payment Summary</h1>
               <div className="flex flex-col w-full text-zinc-600 mb-2 sm:mb-4 text-sm sm:text-sm md:text-md lg:text-lg">
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center mb-2">
                   <h1>Sub Total</h1>
                   <h1>Rs {subtotal.toFixed(2)}</h1>
                 </div>
-                <div className="flex justify-between items-center pb-1 sm:pb-2">
+                {/* <div className="flex justify-between items-center pb-1 sm:pb-2">
                   <h1>Tax (13%)</h1>
                   <h1>Rs {tax.toFixed(2)}</h1>
-                </div>
+                </div> */}
                 <div className="flex justify-between items-center pt-1 sm:pt-2 border-t border-dashed text-black font-semibold border-zinc-400">
                   <h1>Total Payment</h1>
                   <h1>Rs {totalPayment.toFixed(2)}</h1>
