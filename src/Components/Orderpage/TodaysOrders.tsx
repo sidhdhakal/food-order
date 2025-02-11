@@ -4,7 +4,7 @@ import Loading from '../UI/Loading'
 import Title from '../UI/Title'
 import OrderCard from './OrderCard'
 
-const TodaysOrders = ({ setOrder, setfeedbackOpen }: any) => {
+const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackOpen:(value:boolean)=>void}) => {
   const { data, isLoading, isError } = useGetTodaysOrders()
   console.log(data)
 

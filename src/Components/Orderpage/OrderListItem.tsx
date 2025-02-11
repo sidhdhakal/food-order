@@ -13,6 +13,13 @@ import { Icon } from "@iconify/react/dist/iconify.js";
             .map((item: any) => `${item.qty}x ${item.name} (${item.size})`)
             .join(", ")}
         </div>
+        <div
+                    className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg ${
+                      order.currentStatus.status==='Cancelled' ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
+                    }`}
+                  >
+                    {order?.currentStatus?.status}
+                  </div>
       </div>
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-1">

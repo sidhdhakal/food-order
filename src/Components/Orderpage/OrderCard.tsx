@@ -5,7 +5,7 @@ import { Item } from "../../Utils/types";
 
 
 
-const OrderCard = ({ order, setOrder, setFeedbackOpen }: any) => {
+const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:any, setfeedbackOpen:(value:boolean)=>void}) => {
   const total = useMemo(() => 
     order.items.reduce((acc: number, item: any) => acc + item.price * item.qty, 0), 
     [order.items]
@@ -35,8 +35,8 @@ const OrderCard = ({ order, setOrder, setFeedbackOpen }: any) => {
             <button
               className="text-zinc-500 text-left"
               onClick={() => {
+                setfeedbackOpen(true);
                 setOrder(order);
-                setFeedbackOpen(true);
               }}
             >
               Give a Feedback?

@@ -6,7 +6,7 @@ const PurchaseSuccess = () => {
   // const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
 
-  // const transactionId = searchParams.get("uuiid");
+  // const transactionId = searchParams.get("uuid");
   // const amount = searchParams.get("amount");
   // const productCode = searchParams.get("code");
 
@@ -22,6 +22,10 @@ const PurchaseSuccess = () => {
 
   useEffect(() => {
     const createOrderHandler = async () => {
+      // const res=await fetch(`https://rc.esewa.com.np/api/epay/transaction/status/?product_code=${productCode}&total_amount=${amount}&transaction_uuid=${transactionId}`,{
+      //   mode:'no-cors'
+      // })
+      // console.log(res)
       if (savedCartData) {
         try {
           await createOrder(parsedCartData); 

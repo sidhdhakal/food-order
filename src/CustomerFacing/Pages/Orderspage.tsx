@@ -12,7 +12,7 @@ const OrdersPage = () => {
 
 const [feedbackOpen, setfeedbackOpen]=useState(false)
 const [order, setOrder]=useState(null)
-
+console.log(feedbackOpen, order)
   return (
 
     <div className="flex flex-col   home gap-y-8 min-h-[calc(100vh-5rem)] text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent overflow-y-auto">
