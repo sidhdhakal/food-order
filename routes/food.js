@@ -28,6 +28,8 @@ router.delete('/category/deletecategory/:id',
 
 router.get('/getfoods',getFoods)
 
+router.get('adminfoods', getAll(Food))
+
 router.post('/createfood',
   protect,restrictTo('admin'),
   createFood)
