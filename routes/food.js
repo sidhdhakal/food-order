@@ -6,7 +6,7 @@ const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 const { getAll,  updateOne, createOne } = require('../controllers/handlerFactory');
 const Category = require('../models/Category');
-const {createFood, updateFood, deleteFood} =require('../controllers/foodController')
+const {createFood, updateFood, deleteFood, getFoods} =require('../controllers/foodController')
 
 
 router.get('/', (req, res) => {
@@ -26,7 +26,7 @@ router.delete('/category/deletecategory/:id',
   categoryController.deleteCategory)
 
 
-router.get('/getfoods',getAll(Food))
+router.get('/getfoods',getFoods)
 
 router.post('/createfood',
   protect,restrictTo('admin'),

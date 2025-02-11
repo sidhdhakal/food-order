@@ -2,6 +2,24 @@ const Food = require("../models/Food");
 const { optimizeBase64Image } = require("../Utils/optimizeImage");
 const { uploadToCloudinary, deleteImageFromCloudinary } = require("../Utils/cloudinary");
 
+exports.getFoods = async(req, res)=>{
+  try{
+
+    const doc=await Food.find({available:true})
+    res.status(200).json({
+      success: true,
+      results: doc.length,
+      message:'Data Fetched Successfully',
+      doc
+    });
+  } catch (err) {
+    console.log(err)
+    res.status(400).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+}
 
 exports.createFood = async (req, res) => {
   try {
