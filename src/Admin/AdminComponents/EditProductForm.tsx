@@ -6,6 +6,7 @@ import ToggleSwitch from '../../Components/UI/ToggleSwitch';
 import { useUpdateFood } from '../../Queries/food/useUpdateFood';
 import Checkbox from './Checkbox';
 import { Food } from '../../Utils/types';
+import toast from 'react-hot-toast';
 
 interface Size {
     name: string;
@@ -19,12 +20,10 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
     const [image, setImage] = useState<any>();
     const [available, setAvailable] = useState<any>(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
-    const [isVeg, setIsVeg]=useState<boolean | null>()
+    const [isVeg, setIsVeg] = useState<boolean | null>();
 
-    const {updateFood,isPending:isUpatePending} = useUpdateFood()
+    const { updateFood, isPending: isUpatePending } = useUpdateFood();
 
-
-    // Populate form with existing product data when component mounts
     useEffect(() => {
         if (product) {
             setProductName(product.name);
@@ -33,39 +32,77 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
             setImage(product.image);
             setAvailable(product?.available);
             setSizes(product?.sizes?.length > 0 ? product.sizes : [{ name: '', price: 0 }]);
-            setIsVeg(product.veg)
+            setIsVeg(product.veg);
         }
     }, [product]);
 
+    const hasEmptyFields = () => {
+        return sizes.some(size => size.name.trim() === '' || size.price === 0);
+    };
+
     const addSizeField = () => {
+        if (hasEmptyFields()) {
+            toast.error('Please fill in all current size and price fields before adding a new one');
+            return;
+        }
         setSizes([...sizes, { name: '', price: 0 }]);
     };
 
     const updateSize = (index: number, field: keyof Size, value: string | number) => {
-        if (value === '') return;
         const newSizes = [...sizes];
-        newSizes[index][field] = value as never;
+        
+        // For price field
+        if (field === 'price') {
+            const numValue = typeof value === 'string' ? parseFloat(value) : value;
+            if (isNaN(numValue)) return;
+            newSizes[index][field] = numValue as never;
+        }
+        // For name field
+        else {
+            newSizes[index][field] = value as never;
+        }
+
+        // Remove any additional empty fields if this field is being cleared
+        if ((value === '' || value === 0) && sizes.length > 1) {
+            const otherEmptyFields = sizes.filter((size, i) => 
+                i !== index && (size.name === '' || size.price === 0)
+            );
+            if (otherEmptyFields.length > 0) {
+                const filteredSizes = sizes.filter((size, i) => 
+                    i === index || (size.name !== '' && size.price !== 0)
+                );
+                setSizes(filteredSizes);
+                return;
+            }
+        }
+
         setSizes(newSizes);
     };
 
     const removeSizeField = (index: number) => {
         const newSizes = sizes.filter((_, i) => i !== index);
-        setSizes(newSizes);
+        // Ensure at least one field remains
+        if (newSizes.length === 0) {
+            setSizes([{ name: '', price: 0 }]);
+        } else {
+            setSizes(newSizes);
+        }
     };
 
-
-
     const handleSubmit = (e: React.FormEvent) => {
-       e.preventDefault()
-       updateFood({_id:product._id, name:productName, description,category,sizes, available, image })
-
+        e.preventDefault();
+        if (hasEmptyFields()) {
+            toast.error('Please fill in all size and price fields or remove empty ones');
+            return;
+        }
+        updateFood({ _id: product._id, name: productName, description, category, sizes, available, image });
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
-            setImage(files[0])
-          }
+            setImage(files[0]);
+        }
     };
 
     return (
@@ -98,7 +135,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
                     required
                     className="mt-1 block w-full border border-gray-300 bg-gray-100 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary-300 focus:border-primary-300"
                 >
-                    <option value="" selected hidden>Select Category</option>
+                    <option value="" hidden>Select Category</option>
                     {categories.map((cat) => (
                         <option key={cat.id} value={cat.name}>{cat.name}</option>
                     ))}
@@ -106,7 +143,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
             </div>
 
             <div className='flex justify-start gap-x-4'>
-                <Checkbox id='editVegeterian' label='Vegeterian 🟢' checked={isVeg || false} onChange={()=>setIsVeg(!isVeg)} />
+                <Checkbox id='editVegeterian' label='Vegeterian 🟢' checked={isVeg || false} onChange={() => setIsVeg(!isVeg)} />
             </div>
 
             <div className="mt-4">
@@ -124,13 +161,13 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
                     >
                         {image ? (
                             <img
-                            src={image instanceof File ?
-                                URL.createObjectURL(image)
-                                :
-                                image
-                            }
+                                src={image instanceof File ?
+                                    URL.createObjectURL(image)
+                                    :
+                                    image
+                                }
                                 alt="Preview"
-                                className="max-w-full  max-h-48 object-contain rounded-lg"
+                                className="max-w-full max-h-48 object-contain rounded-lg"
                             />
                         ) : (
                             <>
@@ -206,7 +243,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
 
             <div className="flex justify-end space-x-4 mt-6">
                 <button
-                disabled={isUpatePending}
+                    disabled={isUpatePending}
                     type="button"
                     onClick={onClose}
                     className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
@@ -214,15 +251,15 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
                     Cancel
                 </button>
                 <button
-                disabled={isUpatePending}
+                    disabled={isUpatePending}
                     type="submit"
                     className="px-4 py-2 bg-primary-500 text-white rounded-md hover:bg-primary-600 disabled:bg-zinc-400"
                 >
-                    {isUpatePending? 'Editing...':'Edit Product'}
+                    {isUpatePending ? 'Editing...' : 'Edit Product'}
                 </button>
             </div>
         </form>
-    )
-}
+    );
+};
 
-export default EditProductForm
+export default EditProductForm;

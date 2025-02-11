@@ -22,7 +22,7 @@ const ProductCard = ({ product, setIsDialogOpen, setEditProductForm, isDeletePen
       <td className="p-2 ">
         {product.sizes.map((size: FoodSize) => (
           <div key={size.name}>
-            {size.name}: ${size.price}
+            {size.name}: Rs. {size.price}
           </div>
         ))}
       </td>
