@@ -11,13 +11,15 @@ exports.createOrder = async (req, res) => {
       });
     }
 
-    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length !== 2) {
+    // Validate items array length
+    if (!req.body.items || !Array.isArray(req.body.items) || req.body.items.length <= 2) {
       return res.status(400).json({
         success: false,
         message: "Order must contain exactly 2 items.",
       });
     }
 
+    // Validate quantity for each item
     const invalidQuantityItems = req.body.items.filter(item => !item.qty || item.qty > 3);
     if (invalidQuantityItems.length > 0) {
       return res.status(400).json({
