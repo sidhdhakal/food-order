@@ -14,7 +14,6 @@ const Feedbacks = () => {
     : userFeedbacks?.doc?.filter((feedback:any) => feedback.category === selectedCategory);
 
 
-    console.log(filteredFeedbacks)
 
   return (
     <div className="flex flex-col home min-h-[calc(100vh-5rem)] gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent ">

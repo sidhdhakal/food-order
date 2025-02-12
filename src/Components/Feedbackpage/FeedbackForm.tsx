@@ -30,11 +30,9 @@ const FeedbackForm = ({ order, setfeedbackOpen }: any) => {
       })),
       feedback
     };
-    console.log(feedbackData)
     createFeedback(feedbackData);
     setfeedbackOpen(false);
   };
-  console.log(ratings)
   return (
     <div
       onClick={(e) => {
