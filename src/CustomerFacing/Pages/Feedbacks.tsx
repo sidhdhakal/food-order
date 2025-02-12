@@ -5,10 +5,12 @@ import FeedbackCard from '../../Components/Feedbackpage/FeedbackCard';
 import CategoryCard from '../../Components/UI/CategoryCard';
 import Title from '../../Components/UI/Title';
 import { useGetMyFeedbacks } from '../../Queries/feedback/useGetMyFeedbacks';
+import Loading from '../../Components/UI/Loading';
+import IsError from '../../Components/UI/IsError';
 const Feedbacks = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Feedbacks');
   
-  const{data:userFeedbacks}=useGetMyFeedbacks()
+  const{data:userFeedbacks, isLoading, isError}=useGetMyFeedbacks()
   const filteredFeedbacks = selectedCategory === '' || selectedCategory === 'All Feedbacks'
     ? userFeedbacks?.doc
     : userFeedbacks?.doc?.filter((feedback:any) => feedback.category === selectedCategory);
@@ -35,9 +37,18 @@ const Feedbacks = () => {
 
       <h1 className="text-md text-center">All Feedbacks</h1>
     </div>
+    {isLoading &&
+          <Loading>Loading...</Loading>
+        }
+        {isError &&
+          <IsError>Cannot get Feedbacks</IsError>
+        }
+        {!isLoading && !isError &&
+        <>
           {categories.slice(1).map((category) => (
-           <CategoryCard key={category.id} category={category} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
+            <CategoryCard key={category.id} category={category} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
           ))}
+          </>}
         </div>
       </div>
 
