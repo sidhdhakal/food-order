@@ -69,7 +69,7 @@ const ProductCard = ({ item }: any) => {
           <H1 className="w-full flex justify-between" >
             {item.name}
             <span
-              className={`text-[10px] md:text-xs p-1  ml-1 w-fit border rounded-lg flex items-center gap-1 
+              className={`text-[10px] md:text-xs p-1 h-fit  ml-1 w-auto border rounded-lg flex items-center gap-1 
       ${
         item.veg
           ? "bg-green-100 border-green-500 text-green-700"

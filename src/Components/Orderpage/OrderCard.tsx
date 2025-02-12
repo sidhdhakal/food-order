@@ -32,15 +32,16 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
         <div className="flex flex-row items-start justify-between space-y-0 pb-2">
           <div className="flex gap-x-2">
             <h1 className="text-xl font-semibold">#{order._id.slice(-5)}</h1>
-            <button
-              className="text-zinc-500 text-left"
-              onClick={() => {
-                setfeedbackOpen(true);
-                setOrder(order);
-              }}
-            >
-              Give a Feedback?
-            </button>
+    {!order.feedback && order.currentStatus.status=='Completed' &&
+                <button
+                className="text-zinc-500 text-left"
+                onClick={() => {
+                  setfeedbackOpen(true);
+                  setOrder(order);
+                }}
+              >
+                Give a Feedback?
+              </button>}
           </div>
           <div className={`px-3 py-1 rounded-full text-nowrap text-sm ${statusClass}`}>
             {order.currentStatus?.status}
