@@ -69,8 +69,9 @@ app.use(bodyParser.json());
 app.use('/api/auth',require('./routes/auth'))
 app.use('/api/food',require('./routes/food'))
 app.use('/api/order',require('./routes/order'))
+app.use('/api/feedback',require('./routes/feedback'))
 
 // Start the server
-app.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
+app.listen(4000, () => {
+    console.log('Server is running on http://localhost:4000');
 });
