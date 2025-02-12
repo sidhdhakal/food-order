@@ -20,7 +20,6 @@ const Menu = () => {
   const { data: categories } = useGetCategory();
   const {deleteFood, isPending:isDeletePending, isSuccess}=useDeleteFood()
 
-  console.log(products);
 
   const [searchValue, setSearchValue] = useState("");
 

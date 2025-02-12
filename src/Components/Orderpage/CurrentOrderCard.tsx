@@ -5,7 +5,6 @@ import IsError from "../UI/IsError";
 
 const CurrentOrderCard = () => {
   const { data , isLoading, isError} = useGetCurrentOrder();
-  console.log(data?.doc);
 
   if (data?.doc?.length === 0)
     return (

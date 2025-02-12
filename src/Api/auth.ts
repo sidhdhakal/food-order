@@ -49,9 +49,7 @@ export async function signUpGoogleApi({
     });
 
       const data = await res.json();
-    console.log(data)
       if (data.success) {
-        console.log(data.message || "Account Signed successfully");
         return data;
       } else {
         throw new Error(data.message || "Error storing data");
@@ -128,7 +126,6 @@ export async function passwordResetEmailApi({
 }: {
   email: string;
 }) {
-  console.log('password reset link', email)
   try {
     const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/sendpasswordresetlink`, {
       method: "POST",

@@ -38,7 +38,9 @@ const Order = () => {
   
     //     if (res.ok) {
     //       // Successful response
-    //       console.log(data.message || 'Data stored successfully');
+    //       
+    // 
+    // (data.message || 'Data stored successfully');
     //     } else {
     //       // If the server returns an error message
     //       console.error(data.message || 'Error storing data');

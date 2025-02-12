@@ -66,8 +66,8 @@ const UserDetail = () => {
     queryKey: ["user"],
     queryFn: CheckLogin,
   });
-  console.log(user)
 
+  
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="md:hidden">

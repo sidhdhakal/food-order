@@ -12,8 +12,7 @@ export function useVerifyEmail() {
     isSuccess,
   } = useMutation({
     mutationFn: verifyEmailApi,
-    onSuccess: (data) => {
-      console.log("Email Verified successfully:", data);
+    onSuccess: () => {
       toast.success("Email Verified Successfully!");
     },
     onError: (error) => {

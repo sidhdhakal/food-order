@@ -19,7 +19,6 @@ export async function addFoodApi(food:Food) {
   
       const data = await res.json();
       if (data.success) {
-        console.log(data.message || "New Food created successfully");
         return data;
       } else {
         throw new Error(data.message || "Error storing data");

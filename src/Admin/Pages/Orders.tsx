@@ -3,7 +3,6 @@ import OrderCard from "../AdminComponents/OrderCard"
 
 const Orders = () => {
   const {data, isLoading, isError}=useGetAllOrders()
-  console.log(data)
   return (
     <div className="w-full relative">
 

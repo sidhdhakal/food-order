@@ -12,7 +12,6 @@ export function useSignUpGoogle() {
   } = useMutation({
     mutationFn: signUpGoogleApi,
     onSuccess: (data) => {
-      console.log("Account created successfully:", data);
       setCookie(data.token)
       setTimeout(() => {
         window.location.href = "/";

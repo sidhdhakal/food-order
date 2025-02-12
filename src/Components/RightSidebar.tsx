@@ -23,7 +23,6 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   // const tax = subtotal * 0.13;
   const totalPayment = subtotal ;
 
-  console.log(totalPayment)
 
   const [isOrderOpen, _] = useState(false);
 
@@ -77,7 +76,6 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
     form.submit();
 
     } catch (error) {
-      console.log(error)
           toast.error("Something Unexpected Happen! Please Try Again later")                 
     } finally{
     }

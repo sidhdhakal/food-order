@@ -13,7 +13,6 @@ export function useLogin() {
   } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      console.log("Signed In successfully:", data);
       if(data.user.isVerified)
       toast.success("Signed In Successfully");
       else 

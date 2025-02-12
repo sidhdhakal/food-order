@@ -47,7 +47,6 @@ export async function getCustomersApi(){
     _id:string,
     isActive:boolean,
   }) {
-    console.log('update Cusotmer',_id)
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/updatecustomer/${_id}`, {
         method: "PUT",

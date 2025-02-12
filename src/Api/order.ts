@@ -8,7 +8,6 @@ const userToken=getCookie('foodmateuser')
         return CryptoJS.AES.encrypt(JSON.stringify(data), "sonamkotauko").toString();
     };
 export async function createOrderApi({items,message, paymentMethod}:any) {
-    console.log(items, paymentMethod)
     if(!userToken){
         throw new Error("You are not Logged In! Please Login to Place Order")
     }
@@ -25,7 +24,7 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
   
       const data = await res.json();
       if (data.success) {
-        console.log(data.message || "New Food created successfully");
+
         return data;
       } else {
         throw new Error(data.message || "Error storing data");
@@ -102,7 +101,7 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
       if(data.success){
         return data
       }  else {
-        throw new Error(data.message || "Error fetching data");
+        // throw new Error(data.message || "Error fetching data");
       }
     } catch (error) {
       console.error("Error sending data to the server:", error);

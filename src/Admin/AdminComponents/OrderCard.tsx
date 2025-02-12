@@ -46,7 +46,6 @@ const OrderCard = ({ order }: {order:any}) => {
   },[isSuccess])
 
   const price=order.items.reduce((total:number, currentItem:any) => total + currentItem.price * currentItem.qty, 0)
-  console.log(price)
   return (
     <>
       {deleteDialogOpen.id !== null && (

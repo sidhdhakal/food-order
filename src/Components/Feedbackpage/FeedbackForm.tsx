@@ -19,12 +19,12 @@ const FeedbackForm = ({ order, setfeedbackOpen }:any) => {
   };
 
   const handleSubmit = () => {
-    const feedbackData = {
-      orderId: order._id,
-      ratings,
-      feedback
-    };
-    console.log("Submitting feedback:", feedbackData);
+    // const feedbackData = {
+    //   orderId: order._id,
+    //   ratings,
+    //   feedback
+    // };
+
     // Add your submission logic here
     setfeedbackOpen(false);
   };

@@ -15,7 +15,6 @@ const PurchaseSuccess = () => {
   let parsedCartData = null;
   if (savedCartData) {
     parsedCartData = JSON.parse(savedCartData);
-    console.log(parsedCartData);
   }
 
   const { createOrder, isPending, isError, isSuccess } = useCreateOrder();

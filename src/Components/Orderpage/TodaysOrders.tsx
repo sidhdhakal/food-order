@@ -6,7 +6,6 @@ import OrderCard from './OrderCard'
 
 const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackOpen:(value:boolean)=>void}) => {
   const { data, isLoading, isError } = useGetTodaysOrders()
-  console.log(data)
 
 
   if (data?.doc?.length === 0)
@@ -34,7 +33,7 @@ const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackO
               <div className="py-5 text-xl text-zinc-400">There are no Todays Orders</div>
               :
               data?.doc?.map((order: any) => (
-                <OrderCard key={order.id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen} />
+                <OrderCard key={order._id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen} />
               ))}
           </div>
         }

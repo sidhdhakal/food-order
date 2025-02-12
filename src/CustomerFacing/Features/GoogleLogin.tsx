@@ -20,7 +20,6 @@ const GoogleLogin = () => {
   };
 
   const errorMessage = () => {
-    console.log("An error occurred");
   };
   return <Google onSuccess={responseMessage} onError={errorMessage} />;
 };
