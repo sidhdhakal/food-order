@@ -88,9 +88,9 @@ const ProductCard = ({ item }: any) => {
               {item.sizes.map((size: any) => (
                 <div
                   key={size.name}
-                  onClick={() => handleSizeChange(item.id, size.name)}
+                  onClick={() => handleSizeChange(item._id, size.name)}
                   className={`text-[0.9rem] sm:text-xs capitalize md:text-sm lg:text-sm px-2 py-1 rounded-full border cursor-pointer ${
-                    selectedSizes[item.id] === size.name
+                    selectedSizes[item._id] === size.name
                       ? "bg-primary-300/30 border-primary-400"
                       : "border-zinc-200"
                   }`}
@@ -109,24 +109,24 @@ const ProductCard = ({ item }: any) => {
             <span className="text-zinc-600 font-normal xs:text-xs sm:text-xs md:text-sm">
               Rs
             </span>{" "}
-            {getPriceBySize(item, selectedSizes[item.id] || defaultSize)}
+            {getPriceBySize(item, selectedSizes[item._id] || defaultSize)}
           </h1>
           
         </div>
         <div className="w-[5.8rem] lg:w-[6.2rem] 4xl:w-[7rem] h-[2.2rem] lg:h-[2.4rem] 4xl:h-[2.5rem] flex justify-between items-center bg-zinc-100 rounded-full shadow-sm">
           <span
-            onClick={() => handleDecreaseQuantity(item.id, item)}
+            onClick={() => handleDecreaseQuantity(item._id, item)}
             className="h-full cursor-pointer aspect-square rounded-full bg-white shadow-md flex justify-center items-center hover:bg-zinc-300"
           >
             <Icon icon="ic:round-minus" />
           </span>
           <h1 className="xs:text-xs sm:text-sm md:text-base">
-            {cart[`${item.id}-${selectedSizes[item.id] || defaultSize}`]?.qty ||
+            {cart[`${item._id}-${selectedSizes[item._id] || defaultSize}`]?.qty ||
               0}
           </h1>
           <span
             className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 shadow-md flex justify-center items-center hover:bg-primary-600"
-            onClick={() => handleAddToCart(item.id, item)}
+            onClick={() => handleAddToCart(item._id, item)}
           >
             <Icon
               icon="lucide:plus"

@@ -44,6 +44,9 @@ const OrderCard = ({ order }: {order:any}) => {
     if(isSuccess)
         setDeleteDialogOpen((prev) => ({ ...prev, id: null, st: null }))
   },[isSuccess])
+
+  const price=order.items.reduce((total:number, currentItem:any) => total + currentItem.price * currentItem.qty, 0)
+  console.log(price)
   return (
     <>
       {deleteDialogOpen.id !== null && (
@@ -92,7 +95,9 @@ const OrderCard = ({ order }: {order:any}) => {
                 </span>
               </h1>
             </div>
+            
           ))}
+          <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
         </td>
         <td className="p-4 w-[15%]">
           {order.message==""?'-':order.message}
