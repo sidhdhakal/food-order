@@ -2,6 +2,14 @@ const Food = require("../models/Food");
 const { optimizeBase64Image } = require("../Utils/optimizeImage");
 const { uploadToCloudinary, deleteImageFromCloudinary } = require("../Utils/cloudinary");
 
+exports.updateFoodTemp=async (req, res)=>{
+    await Food.updateMany({raters: 0})
+    return res.status(200).json({
+      success: true,
+      message: "Updated successfully",
+    });
+}
+
 exports.getFoods = async(req, res)=>{
   try{
 

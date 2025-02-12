@@ -8,6 +8,10 @@ const orderSchema = new Schema({
   },
   items: [
     {
+      itemId:{
+        type:String,
+        required:false
+      },
       name: {
         type: String,
         required: true,
@@ -65,6 +69,10 @@ const orderSchema = new Schema({
       type: Date,
       required:false
     },
+  },
+  feedback:{
+    type:Boolean,
+    required:false,
   },
   paymentMethod: {
     type: String,

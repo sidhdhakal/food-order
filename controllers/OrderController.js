@@ -4,7 +4,6 @@ const { decryptData } = require('../Utils/decryptData');
 exports.createOrder = async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
-    console.log(user);
     if (!user || !user.isVerified) {
       return res.status(400).json({
         success: false,
@@ -41,7 +40,7 @@ exports.createOrder = async (req, res) => {
     }
 
     const updatedItems = decryptedData.items.map(
-      ({ itemId, image, ...rest }) => rest
+      ({  image, ...rest }) => rest
     );
 
     const orderData = {
@@ -51,7 +50,6 @@ exports.createOrder = async (req, res) => {
       paymentMethod: decryptedData.paymentMethod,
       currentStatus: { status: "Order Placed", time: Date.now() },
     };
-    console.log(orderData);
     
     const newOrder = await Order.create(orderData);
     if (newOrder) {
@@ -72,7 +70,6 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.updateCurrentOrder = async (req, res) => {
-    console.log(req.body);
     try {
       const order = await Order.findById(req.body._id);
   
@@ -83,7 +80,6 @@ exports.updateCurrentOrder = async (req, res) => {
         });
       }
   
-      console.log(order);
   
       let updatedStatusHistory = [
         ...order.statusHistory,
@@ -129,7 +125,6 @@ exports.updateCurrentOrder = async (req, res) => {
         user: user || { name: "Unknown", email: "", image: "" },
       };
   
-      console.log("updatedOrder", updatedOrder);
   
       res.status(200).json({
         success: true,
@@ -184,7 +179,6 @@ exports.getCurrentOrder = async (req, res) => {
 
 
 exports.getTodaysOrder = async (req, res) => {
-    console.log('Todays ORder')
     try {
       const user = await User.findById( req.user._id );
 

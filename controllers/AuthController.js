@@ -7,15 +7,12 @@ const {signToken}= require('../Utils/SignToken')
 
 
 exports.adminLogin = async (req, res) => {
-  console.log(req.body)
   try {
     const user = await User.findOne({ email: req.body.email });
     if (user && user.role==='admin') {
       const passcmp =await bc.compare(req.body.password, user.password);
-      console.log(passcmp)
       if (passcmp){
         const token=signToken({id:user._id})
-        console.log(token)
         return res.status(200).json({
           success: true,
           token,
@@ -216,7 +213,6 @@ exports.verifyemail = async (req, res) => {
 }
 
 exports.sendPasswordResetLink = async (req, res) => {
-  console.log(req.body.email)
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
@@ -240,7 +236,6 @@ exports.sendPasswordResetLink = async (req, res) => {
       subject: 'Reset Your Password' ,
       type:'resetpassword'
     })
-    console.log(emailresponse)
     if(emailresponse.accepted.length!=0)
       return res.status(400).json({
         success: true,

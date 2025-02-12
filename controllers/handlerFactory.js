@@ -1,6 +1,5 @@
 
 exports.deleteOne = Model => async (req, res) => {
-  console.log(req.params.id)
   try {
     const doc = await Model.findByIdAndDelete(req.params.id);
 
@@ -99,7 +98,6 @@ exports.getAll = Model => async (req, res) => {
   // SEND RESPONSE
 
   try{
-
     const doc=await Model.find()
     res.status(200).json({
       success: true,

@@ -33,8 +33,14 @@ const foodSchema = new Schema({
   rating: {
     type: Number,
     required: false,
+    default:0,
     min: 0,
     max: 5,
+  },
+  raters:{
+    type:Number,
+    required:false,
+    default:0
   },
   available: {
     type: Boolean,
