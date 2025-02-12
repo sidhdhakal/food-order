@@ -1,34 +1,40 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useState } from "react";
+import { useCreateFeedback } from "../../Queries/feedback/useCreateFeedback";
 
-const FeedbackForm = ({ order, setfeedbackOpen }:any) => {
+const FeedbackForm = ({ order, setfeedbackOpen }: any) => {
   const [ratings, setRatings] = useState(
-    Object.fromEntries(order?.items.map((item:any) => [item._id, 0]))
+    Object.fromEntries(order?.items.map((item: any) => [item.itemId, 0]))
   );
   const [feedback, setFeedback] = useState("");
 
-  const handleRatingChange = (itemId:string, rating:any) => {
+  const handleRatingChange = (itemId: string, rating: number) => {
     setRatings(prev => ({
       ...prev,
       [itemId]: rating
     }));
   };
 
-  const handleFormClick = (e:any) => {
+  const handleFormClick = (e: React.MouseEvent) => {
     e.stopPropagation();
   };
 
+  const { createFeedback } = useCreateFeedback();
+  
   const handleSubmit = () => {
-    // const feedbackData = {
-    //   orderId: order._id,
-    //   ratings,
-    //   feedback
-    // };
-
-    // Add your submission logic here
+    const feedbackData = {
+      orderId: order._id,
+      ratings: Object.entries(ratings).map(([itemId, rating]) => ({
+        itemId,
+        rating
+      })),
+      feedback
+    };
+    console.log(feedbackData)
+    createFeedback(feedbackData);
     setfeedbackOpen(false);
   };
-
+  console.log(ratings)
   return (
     <div
       onClick={(e) => {
@@ -61,7 +67,7 @@ const FeedbackForm = ({ order, setfeedbackOpen }:any) => {
         </div>
 
         <div className="grid grid-cols-1 gap-3 mb-4">
-          {order.items.map((item:any) => (
+          {order.items.map((item: any) => (
             <div key={item._id} className="p-3 border rounded-lg">
               <div className="flex justify-between items-center mb-2">
                 <p className="font-semibold">{item.name}</p>
@@ -75,15 +81,15 @@ const FeedbackForm = ({ order, setfeedbackOpen }:any) => {
                 {[1, 2, 3, 4, 5].map((star) => (
                   <button
                     key={star}
-                    onClick={() => handleRatingChange(item._id, star)}
+                    onClick={() => handleRatingChange(item.itemId, star)}
                     className={`focus:outline-none ${
-                      ratings[item._id] >= star ? "text-orange-400" : "text-gray-300"
+                      ratings[item.itemId] >= star ? "text-orange-400" : "text-gray-300"
                     }`}
                   >
                     <Icon icon="iconamoon:star-fill" className="text-xl" />
                   </button>
                 ))}
-                <span className="ml-2">({ratings[item._id]}/5)</span>
+                <span className="ml-2">({ratings[item.itemId]}/5)</span>
               </div>
             </div>
           ))}

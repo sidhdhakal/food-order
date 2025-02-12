@@ -1,22 +1,20 @@
 import { useState } from 'react';
 import { Icon } from "@iconify/react/dist/iconify.js";
-import feedbacks from '../../Data/Feedbacks.json'
 import categories from '../../Data/FeedbackCategory.json'
 import FeedbackCard from '../../Components/Feedbackpage/FeedbackCard';
 import CategoryCard from '../../Components/UI/CategoryCard';
 import Title from '../../Components/UI/Title';
+import { useGetMyFeedbacks } from '../../Queries/feedback/useGetMyFeedbacks';
 const Feedbacks = () => {
   const [selectedCategory, setSelectedCategory] = useState('All Feedbacks');
   
-  const userId = "John Doe"; // Replace with actual logged-in user info (e.g., context or prop)
-
-  const userFeedbacks = feedbacks.filter(feedback => feedback.customerName === userId);
-
+  const{data:userFeedbacks}=useGetMyFeedbacks()
   const filteredFeedbacks = selectedCategory === '' || selectedCategory === 'All Feedbacks'
-    ? userFeedbacks
-    : userFeedbacks.filter(feedback => feedback.category === selectedCategory);
+    ? userFeedbacks?.doc
+    : userFeedbacks?.doc?.filter((feedback:any) => feedback.category === selectedCategory);
 
 
+    console.log(filteredFeedbacks)
 
   return (
     <div className="flex flex-col home min-h-[calc(100vh-5rem)] gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent ">
@@ -46,7 +44,7 @@ const Feedbacks = () => {
 
       <div className="w-full">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg md:text-xl lg:text-3xl font-semibold">{selectedCategory || 'All'} Reviews ({filteredFeedbacks.length})</h2>
+          <h2 className="text-lg md:text-xl lg:text-3xl font-semibold">{selectedCategory || 'All'} Reviews ({filteredFeedbacks?.length})</h2>
           <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-sm">
             <Icon icon="icon-park-twotone:filter" className="text-gray-500 text-2xl" />
 
@@ -59,7 +57,7 @@ const Feedbacks = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-4">
-          {filteredFeedbacks.map((feedback) => (
+          {filteredFeedbacks?.map((feedback:any) => (
             <FeedbackCard key={feedback.id} feedback={feedback} />
           ))}
         </div>
