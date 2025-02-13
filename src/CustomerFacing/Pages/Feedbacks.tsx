@@ -37,18 +37,10 @@ const Feedbacks = () => {
 
       <h1 className="text-md text-center">All Feedbacks</h1>
     </div>
-    {isLoading &&
-          <Loading>Loading...</Loading>
-        }
-        {isError &&
-          <IsError>Cannot get Feedbacks</IsError>
-        }
-        {!isLoading && !isError &&
-        <>
+  
           {categories.slice(1).map((category) => (
             <CategoryCard key={category.id} category={category} selectedCategory={selectedCategory} setSelectedCategory={setSelectedCategory}/>
           ))}
-          </>}
         </div>
       </div>
 
@@ -67,9 +59,18 @@ const Feedbacks = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-4">
+        {isLoading &&
+          <Loading>Loading...</Loading>
+        }
+        {isError &&
+          <IsError>Cannot get Feedbacks</IsError>
+        }
+        {!isLoading && !isError &&
+        <>
           {filteredFeedbacks?.map((feedback:any) => (
             <FeedbackCard key={feedback.id} feedback={feedback} />
           ))}
+          </>}
         </div>
       </div>
       <div className="bg-transparent h-[2rem] md:hidden"/>

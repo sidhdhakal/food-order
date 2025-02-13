@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { getTodaysOrdersApi } from "../../Api/order";
 import CheckLogin from "../../Utils/CheckLogin";
+const user=await CheckLogin()
 
-export function useGetTodaysOrders() {
+export  function useGetTodaysOrders() {
   const {
     data,
     isLoading,
@@ -11,9 +12,9 @@ export function useGetTodaysOrders() {
     isSuccess,
     refetch
   } = useQuery({
-    queryKey: ['todaysorder'],
+    queryKey: ['todaysorders'],
     queryFn: getTodaysOrdersApi,
-    refetchInterval: CheckLogin()==null?false:2000
+    refetchInterval: user==null?false:10000
 
   });
 

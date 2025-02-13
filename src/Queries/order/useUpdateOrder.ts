@@ -16,7 +16,7 @@ export function useUpdateOrder() {
     mutationFn: updateOrderApi,
     onSuccess: () => {
       toast.success("Order Updated Successfully");
-      queryClient.invalidateQueries({queryKey:['orders']})
+      queryClient.invalidateQueries({queryKey:['orders','todaysorders']})
   
     },
     onError: (error) => {

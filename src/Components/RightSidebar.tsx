@@ -7,6 +7,7 @@ import { useCreateOrder } from "../Queries/order/useCreateOrder";
 import OrderStatus from "./OrderStatus";
 import toast from "react-hot-toast";
 import CryptoJS from "crypto-js";
+import CheckLogin from "../Utils/CheckLogin";
 // import createSignature from "../Utils/createSignature";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
@@ -26,7 +27,9 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
 
   const [isOrderOpen, _] = useState(false);
 
-  const handlePlaceOrder=()=>{
+  const handlePlaceOrder=async ()=>{
+    const user=await CheckLogin()
+    console.log(user)
     const items=Object.values(cart)
     if(items.length===0)
         return 
@@ -34,7 +37,8 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
       const itemId=Object.keys(cart)[index].split('-')[0]
       return {...item, itemId}
     })
-
+    if(!user)
+        return toast.error('You are not logged In!')
     if(paymentMethod=='esewa')
       return handlePayButtonClick(items)
     createOrder({items, message, paymentMethod})

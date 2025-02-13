@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getCurrentOrderApi } from "../../Api/order";
 import CheckLogin from "../../Utils/CheckLogin";
-
+const user=await CheckLogin()
 export function useGetCurrentOrder() {
   const {
     data,
@@ -11,9 +11,9 @@ export function useGetCurrentOrder() {
     isSuccess,
     refetch
   } = useQuery({
-    queryKey: ['order'],
+    queryKey: ['orders'],
     queryFn: getCurrentOrderApi,
-    refetchInterval: CheckLogin()==null?false:2000
+    refetchInterval:user==null?false:2000
   });
 
   return {
