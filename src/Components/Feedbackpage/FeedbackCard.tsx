@@ -65,12 +65,13 @@ const FeedbackCard = ({ feedback }:any) => {
         <div className="mt-4 p-3 bg-gray-50 rounded-lg">
           <div className="flex items-center gap-2 mb-2">
             <Icon icon="ph:arrow-bend-up-right" className="text-primary-600" />
-            <span className="font-medium">Staff Response</span>
-            <span className="text-sm text-gray-500">
-              • {formatDistanceToNow(new Date(feedback.reply.createdAt), { addSuffix: true })}
+            <span className=" text-gray-500">(Staff Response)  &nbsp;
+              <span className='text-black'>{feedback.reply}</span>
             </span>
+            {/* <span className="text-sm text-gray-500">
+              • {formatDistanceToNow(new Date(feedback?.reply?.createdAt), { addSuffix: true })}
+            </span> */}
           </div>
-          <div className="text-sm">{feedback.reply.content}</div>
         </div>
       ) : (
         <div className="mt-4 text-sm text-gray-500 italic">

@@ -73,7 +73,7 @@ const Login = () => {
         {loginError && <p style={{ color: "red" }}>{loginError}</p>}
 
 
-      <button onClick={handleForgotPassword} disabled={isEmailPending} className="hover:text-primary-500 self-end mb-2 cursor-pointer disabled:text-zinc-300">Forgot password?</button>
+      <button onClick={handleForgotPassword} disabled={isEmailPending} className="hover:text-primary-500 self-end mb-4 cursor-pointer disabled:text-zinc-300">Forgot password?</button>
 
         <Button 
         type='submit'

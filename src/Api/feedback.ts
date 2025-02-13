@@ -60,19 +60,17 @@ export async function createFeedbackApi(feedbackData:any) {
     }
   }
 
-  export async function getCurrentOrderApi(){
-    if(!userToken)
+  export async function getAllFeedbacksApi(){
+    if(!token)
       return 
     try{
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getcurrentorder`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/feedback/getallfeedbacks`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          'Authorization':`Bearer ${removeQuotes(userToken)}`
-
+          'Authorization':`Bearer ${removeQuotes(token)}`
         },
       });
-  
       const data=await res.json();
       if(data.success){
         return data
@@ -87,65 +85,16 @@ export async function createFeedbackApi(feedbackData:any) {
 
 
 
-  export async function getTodaysOrdersApi(){
-
-    try{
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/gettodaysorders`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization':`Bearer ${removeQuotes(userToken)}`
-
-        },
-      });
-  
-      const data=await res.json();
-      if(data.success){
-        return data
-      }  else {
-      }
-    } catch (error) {
-      console.error("Error sending data to the server:", error);
-      throw error;
-    }
-  }
-  
-  export async function getOlderOrdersApi(){
-
-    try{
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getolderorders`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization':`Bearer ${removeQuotes(userToken)}`
-
-        },
-      });
-  
-      const data=await res.json();
-      if(data.success){
-        return data
-      }  else {
-        throw new Error(data.message || "Error fetching data");
-      }
-    } catch (error) {
-      throw error;
-    }
-  }
-
-
-
-
-  export async function updateOrderApi({_id, status}:any) {
+  export async function replyToFeedbackApi({_id, reply}:any) {
    
     try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updatecurrentorder`, {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/feedback/replytofeedback/${_id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
           'Authorization':`Bearer ${removeQuotes(token)}`
         },
-        body: JSON.stringify({_id, status}),
+        body: JSON.stringify({_id, reply}),
       });
   
       const data = await res.json();
