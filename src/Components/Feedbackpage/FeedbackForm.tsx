@@ -26,7 +26,8 @@ const FeedbackForm = ({ order, setfeedbackOpen }: any) => {
       orderId: order._id,
       ratings: Object.entries(ratings).map(([itemId, rating]) => ({
         itemId,
-        rating
+        rating,
+        feedback
       })),
       feedback
     };

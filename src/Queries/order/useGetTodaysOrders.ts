@@ -14,7 +14,7 @@ export  function useGetTodaysOrders() {
   } = useQuery({
     queryKey: ['todaysorders'],
     queryFn: getTodaysOrdersApi,
-    refetchInterval: user==null?false:10000
+    refetchInterval: user==null?false:5000
 
   });
 

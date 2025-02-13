@@ -32,7 +32,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
             {!isLoading && !isError && data?.doc && (
               <>
                 {getRandomItems(data.doc, 3).map((item:any) => (
-                  <ProductCard key={item.id} item={item} />
+                  <ProductCard key={item._id} item={item} />
                 ))}
               </>
             )}
@@ -46,7 +46,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
             {!isLoading && !isError && (
               <>
                 {data?.doc?.slice(4,10).map((item:any) => (
-                  <ProductCard key={item.id} item={item} />
+                  <ProductCard key={item._id} item={item} />
                 ))}
               </>
             )}

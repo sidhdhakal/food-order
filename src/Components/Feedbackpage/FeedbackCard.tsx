@@ -4,7 +4,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 const FeedbackCard = ({ feedback }:any) => {
   const formattedDate = formatDistanceToNow(new Date(feedback.createdAt), { addSuffix: true });
-
+  console.log(feedback)
   const getItemRating = (itemId: string) => {
     const ratingObj = feedback.ratings.find((r: any) => r.itemId === itemId);
     return ratingObj ? ratingObj.rating : null;
@@ -57,7 +57,9 @@ const FeedbackCard = ({ feedback }:any) => {
             </div>
           );
         })}
+
       </div>
+        <p className='text-zinc-700 text-lg'>{feedback?.feedback}</p>
 
       {feedback.reply ? (
         <div className="mt-4 p-3 bg-gray-50 rounded-lg">

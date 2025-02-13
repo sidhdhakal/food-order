@@ -68,7 +68,7 @@ const Feedbacks = () => {
         {!isLoading && !isError &&
         <>
           {filteredFeedbacks?.map((feedback:any) => (
-            <FeedbackCard key={feedback.id} feedback={feedback} />
+            <FeedbackCard key={feedback._id} feedback={feedback} />
           ))}
           </>}
         </div>
