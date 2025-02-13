@@ -37,7 +37,7 @@ const FeedbackCard = ({ feedback }: { feedback: any }) => {
 
         <div className="bg-gray-50 p-3 rounded-lg flex gap-2">
           <Icon icon="carbon:user-feedback" className="w-5 h-5 text-gray-600 mt-0.5" />
-          <p>{feedback.feedback}</p>
+          <p>{feedback?.feedback?feedback.feedback:'-'}</p>
         </div>
 
         {feedback.reply && (

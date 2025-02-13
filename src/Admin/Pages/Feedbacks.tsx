@@ -48,7 +48,7 @@ const Feedbacks = () => {
       </div>
       <div className="w-full mt-7 h-auto productlist rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
-          <h1 className="text-[1.5rem] font-semibold">Customer Feedbacks</h1>
+          <h1 className="text-[1.5rem] font-semibold">Customer Feedbacks ({filteredFeedbacks?.length})</h1>
         </div>
 
         <div className=" grid grid-cols-2 gap-8">
