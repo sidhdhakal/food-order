@@ -6,7 +6,6 @@ import { Category } from "../../Utils/types";
 
 const EditCategoriesForm = ({}) => {
   const { data, isLoading, error, isError} = useGetCategory();
-  // console.log(data);
 
   if (isLoading) {
     return <div>Loading...</div>;
