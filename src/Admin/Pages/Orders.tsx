@@ -1,14 +1,37 @@
+import { useMemo, useState } from "react";
 import { useGetAllOrders } from "../../Queries/order/useGetAllOrders"
 import OrderCard from "../AdminComponents/OrderCard"
+import SearchInput from "../../Components/UI/SearchInput";
 
 const Orders = () => {
   const {data, isLoading, isError}=useGetAllOrders()
+    const [searchValue, setSearchValue] = useState("");
+  
+    const filteredOrders = useMemo(() => {
+      if (!data?.doc) return [];
+  
+      return data.doc.filter(
+        (order: any) =>
+          !searchValue ||
+          order.user.name.toLowerCase().includes(searchValue.toLowerCase()) ||
+          order.user.email.toLowerCase().includes(searchValue.toLowerCase())
+      );
+    }, [searchValue, data?.doc]);
   return (
     <div className="w-full relative">
 
 
-
-<div className="w-full h-auto productlist  rounded-xl overflow-hidden bg-white p-6">
+<div className="auto w-full flex justify-between items-start">
+        <SearchInput
+          className="flex"
+          placeholder="Search Orders "
+          value={searchValue}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(e.target.value)
+          }
+        />
+      </div>
+<div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
           <h1 className="text-[1.5rem] font-semibold">
             Orders
@@ -33,7 +56,7 @@ const Orders = () => {
             {isError && 
             <div className="w-full flex justify-center items-center">Failed to Fetch Foods</div>
             }
-            {!isLoading && !isError && data?.doc.map((order:any) => (
+            {!isLoading && !isError && filteredOrders?.map((order:any) => (
               <OrderCard order={order}/>
             ))}
           </tbody>
