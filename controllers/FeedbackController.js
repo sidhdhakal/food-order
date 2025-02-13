@@ -79,3 +79,38 @@ exports.createFeedback = async (req, res) => {
     }
   };
   
+  exports.getAllFeedbacks = async (req, res) => {
+    try {
+      const doc = await Feedback.find().sort({createdAt:-1});
+  
+      const feedbackWithOrders = await Promise.all(
+        doc.map(async (item) => {
+          const user = await User.findById(item.userId);
+          const order = await Order.findById(item.orderId);
+          return {
+            ...item.toObject(),  
+            user:{
+              _id:user._id,
+              name:user.name,
+              email:user.email
+            },
+            items:order.items,
+          };
+        })
+      );
+  
+      res.status(200).json({
+        success: true,
+        results: feedbackWithOrders.length,
+        message: 'All Feedbacks Successfully',
+        doc: feedbackWithOrders, 
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        message: "Internal Server Error!",
+      });
+    }
+  };
+  

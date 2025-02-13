@@ -6,15 +6,11 @@ const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOld
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 const { getAll, createOne, updateOne } = require('../controllers/handlerFactory');
-const { createFeedback, getMyFeedbacks } = require('../controllers/FeedbackController');
+const { createFeedback, getMyFeedbacks, getAllFeedbacks } = require('../controllers/FeedbackController');
 router.get('/', (req, res) => {
     res.send("This is Feedback page");
   });
   
-
-router.get('/getallfeedbacks',
-  protect,restrictTo('admin'),
-  getAll(Feedback))
 
 router.get('/getmyfeedbacks',protect, getMyFeedbacks)
 
@@ -24,7 +20,11 @@ router.put('/replytofeedback/:id',
     protect, restrictTo('admin'),
     updateOne(Feedback))
 
-// router.get('/gettodaysorders', protect, getTodaysOrder)
+router.get('/getallfeedbacks',
+  protect, 
+  restrictTo('admin'),
+  getAllFeedbacks
+)
 
 // router.get('/getolderorders',protect, getOlderOrders)
 

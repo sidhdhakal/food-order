@@ -28,19 +28,19 @@ exports.updateOne = Model => async (req, res) => {
     });
 
     if (!doc) {
-      res.status(400).json({
+     return  res.status(400).json({
         success: false,
         
         message: "No Doc found"
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
         doc
     });
   } catch (err) {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
       message: err.message
     });
