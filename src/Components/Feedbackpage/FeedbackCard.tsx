@@ -4,7 +4,6 @@ import { formatDistanceToNow } from 'date-fns';
 
 const FeedbackCard = ({ feedback }:any) => {
   const formattedDate = formatDistanceToNow(new Date(feedback.createdAt), { addSuffix: true });
-  console.log(feedback)
   const getItemRating = (itemId: string) => {
     const ratingObj = feedback.ratings.find((r: any) => r.itemId === itemId);
     return ratingObj ? ratingObj.rating : null;

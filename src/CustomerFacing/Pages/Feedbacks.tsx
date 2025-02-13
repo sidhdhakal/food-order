@@ -4,8 +4,15 @@ import Title from "../../Components/UI/Title";
 import { useGetMyFeedbacks } from "../../Queries/feedback/useGetMyFeedbacks";
 import Loading from "../../Components/UI/Loading";
 import IsError from "../../Components/UI/IsError";
+import { useQuery } from "@tanstack/react-query";
+import CheckLogin from "../../Utils/CheckLogin";
 const Feedbacks = () => {
   const [selectedCategory, _] = useState("All Feedbacks");
+
+  const { data: user } = useQuery({
+    queryKey: ['User'],
+    queryFn: CheckLogin
+  })
 
   const { data: userFeedbacks, isLoading, isError } = useGetMyFeedbacks();
   const filteredFeedbacks =
@@ -17,6 +24,10 @@ const Feedbacks = () => {
 
   return (
     <div className="flex flex-col home min-h-[calc(100vh-5rem)] gap-y-8 overflow-y-auto text-black rounded-[24px] flex-1 justify-start items-start p-4 bg-transparent ">
+{!user?
+  <IsError>Please Login to see your Feedbbacks</IsError>:
+    <>
+
       <div>
         <Title className="text-3xl">Feedback</Title>
         <p className="text-gray-500">View and manage customer feedback</p>
@@ -81,6 +92,8 @@ const Feedbacks = () => {
         </div>
       </div>
       <div className="bg-transparent h-[2rem] md:hidden" />
+      </>}
+
     </div>
   );
 };

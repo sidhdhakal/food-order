@@ -29,7 +29,6 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
 
   const handlePlaceOrder=async ()=>{
     const user=await CheckLogin()
-    console.log(user)
     const items=Object.values(cart)
     if(items.length===0)
         return 
