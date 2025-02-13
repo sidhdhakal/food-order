@@ -17,6 +17,7 @@ exports.createFeedback = async (req, res) => {
         userId: user._id,
         ...decryptedData
       };
+      console.log(decryptedData)
 
       await Promise.all(feedbackData.ratings.map(async (item) => {
         const food = await Food.findById(item.itemId);
@@ -51,7 +52,7 @@ exports.createFeedback = async (req, res) => {
 
   exports.getMyFeedbacks = async (req, res) => {
     try {
-      const doc = await Feedback.find({ userId: req.user._id });
+      const doc = await Feedback.find({ userId: req.user._id }).sort({createdAt:-1});
   
       const feedbackWithOrders = await Promise.all(
         doc.map(async (item) => {

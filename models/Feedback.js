@@ -21,7 +21,7 @@ const feedbackSchema = new Schema({
       }
     },
   ],
-  message:{
+  feedback:{
     type:String,
     required:false
   },
