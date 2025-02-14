@@ -1,5 +1,3 @@
-import { Icon } from "@iconify/react/dist/iconify.js"
-import SearchInput from "../../Components/UI/SearchInput"
 
 const Dashboard = () => {
   return (
