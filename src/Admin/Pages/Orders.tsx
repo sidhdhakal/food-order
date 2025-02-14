@@ -41,10 +41,10 @@ const Orders = () => {
         <table className="w-full border-collapse">
           <thead className="bg-zinc-100">
             <tr>
-              <th className="p-4 pl-2 text-left w-[10%]"></th>
-              <th className="p-4 pl-2 text-left w-[25%]">User</th>
-              <th className="p-4 pl-2 text-left w-[25%]">Ordered On</th>
-              <th className="p-4 pl-2 text-left w-[25%]">Items</th>
+              <th className="p-4 pl-2 text-left w-[5%]"></th>
+              <th className="p-4 pl-2 text-left w-[20%]">User</th>
+              <th className="p-4 pl-2 text-left w-[20%]">Items</th>
+              <th className="p-4 pl-2 text-left w-[10%]">Ordered On</th>
               <th className="p-4 pl-2 text-left w-[10%]">Message</th>
               <th className="p-4 pl-2 text-left w-[10%]">Status</th>
               <th className="p-4 pl-2 text-left w-[20%]">Payment Method</th>

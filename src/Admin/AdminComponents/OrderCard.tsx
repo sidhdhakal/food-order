@@ -86,9 +86,7 @@ const OrderCard = ({ order }: {order:any}) => {
           <span className="text-zinc-500">{order?.user?.email}</span>
         </td>
 
-        <td className="p-2 w-[5%]">
-          {formatDateTime(order.createdAt).split(',')[0]}
-        </td>
+        
         <td className="p-2 w-[25%]">
           {order.items.map((item: Item) => (
             <div key={item._id} className="w-full h-full">
@@ -102,6 +100,9 @@ const OrderCard = ({ order }: {order:any}) => {
             
           ))}
           <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
+        </td>
+        <td className="p-2 w-[5%]">
+          {formatDateTime(order.createdAt).split(',')[0]}
         </td>
         <td className="p-4 w-[15%]">
           {order.message==""?'-':order.message}
