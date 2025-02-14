@@ -123,6 +123,10 @@ const ordersSevenDays = await Order.find({
           value: cancelledOrders,
         },
         {
+          title:'Total Pending',
+          value:totalOrders-(deliveredOrders+cancelledOrders)
+        },
+        {
           title: "Total Revenue",
           value: revenue,
         },
