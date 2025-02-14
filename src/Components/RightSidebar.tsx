@@ -168,15 +168,18 @@ function createSignature(message:string) {
 
               <div className="grid grid-cols-3 gap-x-2 rounded-[16px] sm:rounded-[20px]">
                 {["esewa", "cash", "paylater"].map((method) => (
-                  <div
+                  <button
+                    disabled={method=='paylater'}
                     key={method}
                     onClick={() => setPaymentMethod(method)}
                     className={`
+                      
                       w-full cursor-pointer py-2 sm:py-2 
                       rounded-xl sm:rounded-2xl 
                       flex flex-col justify-center items-center 
                       gap-y-0.5 sm:gap-y-1 border 
                       text-xs sm:text-md lg:text-md 4xl:text-[1rem]
+                      ${method=='paylater'?'text-zinc-400':''}
                       ${paymentMethod === method 
                         ? "bg-primary-100/80 border-primary-400" 
                         : "border-transparent bg-white"}
@@ -193,7 +196,7 @@ function createSignature(message:string) {
                       className="text-base sm:text-[1.5rem]" 
                     />
                     {method.charAt(0).toUpperCase() + method.slice(1)}
-                  </div>
+                  </button>
                 ))}
               </div>
             </div>
