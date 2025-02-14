@@ -6,16 +6,17 @@ type CartItem = {
   name: string;
   image: string;
   itemId: number;
-  size: string; // Include the size in the cart item
-  price: number; // Store the price for this size
+  category:string;
+  size: string; 
+  price: number; 
 };
 
 interface CartContextType {
-  cart: { [key: string]: CartItem }; // Key will be a combination of product ID and size
-  addToCart: (itemId: number, name: string, image: string, size: string, price: number) => void;
+  cart: { [key: string]: CartItem }; 
+  addToCart: (itemId: number, name: string, image: string, category:string, size: string, price: number) => void;
   removeFromCart: (itemId: number, size: string) => void;
   decreaseQuantity: (itemId: number, size: string) => void;
-  clearCart: () => void; // Add function to clear the entire cart
+  clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -35,7 +36,7 @@ interface CartProviderProps {
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<{ [key: string]: CartItem }>({});
 
-  const addToCart = (itemId: number, name: string, image: string, size: string, price: number) => {
+  const addToCart = (itemId: number, name: string, image: string,category:string, size: string, price: number) => {
     const cartKey = `${itemId}-${size}`;
     
     setCart((prevCart) => {
@@ -54,7 +55,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         }
         updatedCart[cartKey].qty += 1;
       } else {
-        updatedCart[cartKey] = { qty: 1, name, itemId, image, size, price };
+        updatedCart[cartKey] = { qty: 1, name, itemId, image,category, size, price };
       }
   
       return updatedCart;
@@ -67,7 +68,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
       if (updatedCart[cartKey]) {
-        delete updatedCart[cartKey]; // Remove item from cart by key
+        delete updatedCart[cartKey]; 
       }
       return updatedCart;
     });
@@ -79,9 +80,9 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       const updatedCart = { ...prevCart };
       if (updatedCart[cartKey]) {
         if (updatedCart[cartKey].qty > 1) {
-          updatedCart[cartKey].qty -= 1; // Decrease quantity if greater than 1
+          updatedCart[cartKey].qty -= 1; 
         } else {
-          delete updatedCart[cartKey]; // Remove item if quantity is 1
+          delete updatedCart[cartKey]; 
         }
       }
       return updatedCart;

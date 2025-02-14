@@ -53,7 +53,7 @@ const CartItem = ({ item }: any) => {
           <span
             className="h-full cursor-pointer aspect-square rounded-full bg-primary-500 shadow-md flex justify-center items-center hover:bg-primary-600"
             onClick={() =>
-              addToCart(item.itemId, item.name, item.image, item.size, item.price)
+              addToCart(item.itemId, item.name, item.image,item.category, item.size, item.price)
             }
           >
             <Icon 

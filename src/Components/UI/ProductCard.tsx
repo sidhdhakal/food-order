@@ -24,7 +24,6 @@ const ProductCard = ({ item }: any) => {
     if (selectedSize) {
       const price = getPriceBySize(itemData, selectedSize);
 
-      // Ensure the size is selected in the state
       if (!selectedSizes[itemId]) {
         setSelectedSizes((prev) => ({
           ...prev,
@@ -32,7 +31,7 @@ const ProductCard = ({ item }: any) => {
         }));
       }
 
-      addToCart(itemId, itemData.name, itemData.image, selectedSize, price);
+      addToCart(itemId, itemData.name, itemData.image,itemData.category, selectedSize, price);
     }
   };
 
