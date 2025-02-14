@@ -5,7 +5,7 @@ export async function getDataApi({startDate, endDate}:any){
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({startDate, endDate})
+        body: JSON.stringify({startDate:startDate.toISOString(), endDate:endDate.toISOString()})
 
       });
   
