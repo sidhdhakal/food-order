@@ -23,7 +23,7 @@ const PreviousOrders = () => {
   const filteredOrders =
     filterOption === "All Orders"
       ? data?.doc
-      : data?.doc.filter((order: any) => order.currentStatus.status === filterOption);
+      : data?.doc?.filter((order: any) => order?.currentStatus?.status === filterOption);
 
 
   return (
