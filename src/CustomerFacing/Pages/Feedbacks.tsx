@@ -29,8 +29,7 @@ const Feedbacks = () => {
     <>
 
       <div>
-        <Title className="text-3xl">Feedback</Title>
-        <p className="text-gray-500">View and manage customer feedback</p>
+        <Title className="text-3xl">Feedbacks</Title>
 
         {/* <div className="flex flex-wrap  gap-2 md:gap-3 lg:gap-4 mt-6">
           <div
@@ -63,7 +62,7 @@ const Feedbacks = () => {
       <div className="w-full">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg md:text-xl lg:text-3xl font-semibold">
-            {selectedCategory || "All"}  ({filteredFeedbacks?.length})
+            {/* {selectedCategory || "All"}  ({filteredFeedbacks?.length}) */}
           </h2>
           {/* <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-xl shadow-sm">
             <Icon
