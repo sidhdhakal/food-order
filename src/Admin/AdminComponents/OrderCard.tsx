@@ -4,6 +4,7 @@ import { useUpdateOrder } from "../../Queries/order/useUpdateOrder";
 import { useEffect, useState } from "react";
 import DialogModal from "../../Components/DialogModal";
 import { Item } from "../../Utils/types";
+import formatDateTime from "../../Utils/formatDateTime";
 
 const filterOptions = [
   { value: "Order Placed", label: "Order Placed", icon: "ph:clock" },
@@ -83,6 +84,10 @@ const OrderCard = ({ order }: {order:any}) => {
           {order?.user?.name}
           <br />
           <span className="text-zinc-500">{order?.user?.email}</span>
+        </td>
+
+        <td className="p-2 w-[5%]">
+          {formatDateTime(order.createdAt).split(',')[0]}
         </td>
         <td className="p-2 w-[25%]">
           {order.items.map((item: Item) => (
