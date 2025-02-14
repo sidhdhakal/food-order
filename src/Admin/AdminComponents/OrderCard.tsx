@@ -70,7 +70,7 @@ const OrderCard = ({ order }: {order:any}) => {
         key={order._id}
         className={`border-b w-full  h-auto ${
           order?.currentStatus?.status == "Completed"
-            ? "!bg-green-100"
+            ? "!bg-green-50"
             : order?.currentStatus?.status == "Cancelled"
             ? "bg-red-100"
             : " hover:bg-gray-50"

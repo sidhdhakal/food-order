@@ -11,13 +11,16 @@ const CustomerCard = ({customer, setDeleteDialogOpen, isPending, handleUserStatu
                     <td className="p-2 w-[25%]">{customer.name}</td>
                     <td className="p-2 w-[25%]">{customer.email}</td>
     
-                    <td className="p-2 w-[10%] ">
+                    <td className={`p-2 w-[10%] `}>
+                      <Icon icon='ic:baseline-verified' className={`text-2xl ${customer.isVerified?'text-green-500':'text-gray-400'}`}/>
+                    </td>
+                    {/* <td className="p-2 w-[10%] ">
                       {customer.isVerified?
                       <img src='/Icons/check.png' className='w-6' />
                       :
                       <img src='/Icons/uncheck.png' className='w-6' />
                     }
-                    </td>
+                    </td> */}
                     <td className="p-2 w-[10%]">
                       <span
                         className={`px-2 py-1 rounded text-sm ${

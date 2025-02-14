@@ -5,7 +5,7 @@ const token=getCookie('adminjwt')
 
 const userToken=getCookie('foodmateuser')
  const encryptData = (data:any) => {
-        return CryptoJS.AES.encrypt(JSON.stringify(data), "sonamkotauko").toString();
+        return CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_RSA_SECRET_KEY).toString();
     };
 export async function createOrderApi({items,message, paymentMethod}:any) {
     if(!userToken){
