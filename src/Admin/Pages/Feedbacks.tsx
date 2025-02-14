@@ -2,6 +2,8 @@ import { useGetAllFeedbacks } from "../../Queries/feedback/useGetAllFeedbacks";
 import SearchInput from "../../Components/UI/SearchInput";
 import { useMemo, useState } from "react";
 import FeedbackCard from "../AdminComponents/FeedbackCard";
+import Loading from "../../Components/UI/Loading";
+import IsError from "../../Components/UI/IsError";
 
 const Feedbacks = () => {
   const { data, isLoading, isError } = useGetAllFeedbacks();
@@ -18,21 +20,9 @@ const Feedbacks = () => {
     );
   }, [searchValue, data?.doc]);
 
-  if (isLoading) {
-    return (
-      <div className="w-full h-40 flex items-center justify-center">
-        <p className="text-gray-500">Loading feedbacks...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <Loading>Getting Feedbacks...</Loading>;
 
-  if (isError) {
-    return (
-      <div className="w-full h-40 flex items-center justify-center">
-        <p className="text-red-500">Error loading feedbacks</p>
-      </div>
-    );
-  }
+  if (isError) return <IsError>Failed to get Feedbacks</IsError>;
 
   return (
     <div className="w-full relative">

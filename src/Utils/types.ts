@@ -29,7 +29,7 @@ export interface Food {
 
   export interface Item {
     _id: string;
-
+    category?:string,
     name: string;
     price: number;
     qty: number;
