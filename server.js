@@ -70,6 +70,7 @@ app.use('/api/auth',require('./routes/auth'))
 app.use('/api/food',require('./routes/food'))
 app.use('/api/order',require('./routes/order'))
 app.use('/api/feedback',require('./routes/feedback'))
+app.use('/api/dashboard',require('./routes/dashboard'))
 
 // Start the server
 app.listen(4000, () => {
