@@ -17,15 +17,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useGetData } from "../../Queries/useGetData";
 import Loading from "../../Components/UI/Loading";
 import IsError from "../../Components/UI/IsError";
-// const chartData = [
-//   { name: "Sunday", orders: 320 },
-//   { name: "Monday", orders: 380 },
-//   { name: "Tuesday", orders: 456 },
-//   { name: "Wednesday", orders: 390 },
-//   { name: "Thursday", orders: 340 },
-//   { name: "Friday", orders: 410 },
-//   { name: "Saturday", orders: 450 },
-// ];
+
 
 const categoryColors = [
   "#FF6B6B",
@@ -101,7 +93,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-8">
         {data?.doc?.stats.map((stat: any, index: number) => (
           <div key={index} className="bg-white p-4 rounded-xl shadow-sm">
             <div className="flex items-start gap-4">
@@ -221,7 +213,7 @@ const stats = [
     bgColor: "bg-emerald-100",
   },
   {
-    icon: "mdi:package-variant",
+    icon: "mdi:package-variant", 
     color: "text-purple-500",
     bgColor: "bg-purple-100",
   },
@@ -231,8 +223,14 @@ const stats = [
     bgColor: "bg-red-100",
   },
   {
+    icon: "mdi:clock-outline", 
+    color: "text-amber-500",  
+    bgColor: "bg-amber-100",
+  },
+  {
     icon: "rivet-icons:money",
     color: "text-blue-500",
     bgColor: "bg-blue-100",
   },
+
 ];
