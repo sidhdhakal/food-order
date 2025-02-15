@@ -81,6 +81,7 @@ const Feedbacks = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2  gap-4">
           {isLoading && <Loading>Loading...</Loading>}
           {isError && <IsError>Cannot get Feedbacks</IsError>}
+          {filteredFeedbacks?.length==0 && <IsError>You haven't give any feedbacks yet</IsError>}
           {!isLoading && !isError && (
             <>
               {filteredFeedbacks?.map((feedback: any) => (
