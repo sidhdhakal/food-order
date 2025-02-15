@@ -28,6 +28,8 @@ const OrderCard = ({ order }: {order:any}) => {
     id: string | null;
     st: string | null;
   }>({ id: null, st: null });
+  const[message, setMessage]=useState<string | null>(null)
+
 
   const currentStatusIndex = filterOptions.findIndex(
     (option) => option.value === order?.currentStatus?.status
@@ -55,10 +57,14 @@ const OrderCard = ({ order }: {order:any}) => {
           btntext="Cancel"
           isPending={isPending}
           pendingText="Cancelling..."
+          showInput={true}
+          inputMessage={message}
+          setInputMessage={setMessage}
           onConfirm={() =>
             updateOrder({
               _id: deleteDialogOpen.id,
               status: deleteDialogOpen.st,
+              message
             })
           }
           onCancel={() =>
@@ -106,6 +112,11 @@ const OrderCard = ({ order }: {order:any}) => {
         </td>
         <td className="p-4 w-[15%]">
           {order.message==""?'-':order.message}
+          {order?.cancelMessage &&
+          <div className="mt-2">
+          Cancel Reason: {order?.cancelMessage}
+          </div>
+          }
         </td>
         <td className="p-4 w-[10%]">
           <div className="border rounded-lg">

@@ -43,11 +43,11 @@ const Orders = () => {
             <tr>
               <th className="p-4 pl-2 text-left w-[5%]"></th>
               <th className="p-4 pl-2 text-left w-[20%]">User</th>
-              <th className="p-4 pl-2 text-left w-[20%]">Items</th>
+              <th className="p-4 pl-2 text-left w-[12%]">Items</th>
               <th className="p-4 pl-2 text-left w-[10%]">Ordered On</th>
-              <th className="p-4 pl-2 text-left w-[10%]">Message</th>
+              <th className="p-4 pl-2 text-left w-[15%]">Message</th>
               <th className="p-4 pl-2 text-left w-[10%]">Status</th>
-              <th className="p-4 pl-2 text-left w-[20%]">Payment Method</th>
+              <th className="p-4 pl-2 text-left w-[10%]">Payment Method</th>
             </tr>
           </thead>
           <tbody>

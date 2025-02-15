@@ -10,7 +10,7 @@ interface DialogModalProps {
     isPending?:boolean
     pendingText:string
     showInput?:boolean
-    inputMessage?:string,
+    inputMessage?:string | null,
     setInputMessage?:any
 
 }
@@ -44,7 +44,7 @@ const DialogModal = ({  onConfirm, showInput, inputMessage, setInputMessage, onC
           <div className="space-y-3">
             <textarea
             required
-              value={inputMessage}
+              value={inputMessage || ""}
               onChange={(e) => setInputMessage(e.target.value)}
               placeholder="Please Write reason for cancelling..."
               className="w-full min-h-[100px] p-3 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none bg-zinc-100"

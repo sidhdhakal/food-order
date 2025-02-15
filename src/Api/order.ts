@@ -136,7 +136,7 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
 
 
 
-  export async function updateOrderApi({_id, status}:any) {
+  export async function updateOrderApi({_id, status, message}:any) {
    
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updatecurrentorder`, {
@@ -145,7 +145,7 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
           "Content-Type": "application/json",
           'Authorization':`Bearer ${removeQuotes(token)}`
         },
-        body: JSON.stringify({_id, status}),
+        body: JSON.stringify({_id, status, message}),
       });
   
       const data = await res.json();
