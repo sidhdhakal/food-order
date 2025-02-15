@@ -8,18 +8,18 @@ import SearchInput from "./UI/SearchInput";
 import { logOut } from "../Utils/logout";
 
 const Navbar = ({searchValue, setSearchValue, activeComponent, sidebarOpen, setIsSidebarOpen, setIsActiveComponent }: any) => {
-  const { cart } = useCart(); // Get cart items from CartContext
+  const { cart } = useCart(); 
   return (
     <div className=" select-none min-h-[5rem] h-[5rem] w-full md:w-[calc(100vw-8rem)] 4xl:w-[calc(100vw-16rem)] fixed top-0 shadow-md bg-zinc-50/70 backdrop-blur-lg md:bg-zinc-50 flex justify-center items-center text-black z-[5]">
       <div className="w-full px-4 md:px-8 flex justify-between items-center">
         <div className="h-full hidden md:flex justify-center items-center gap-x-4">
-          <Icon
+          {/* <Icon
             onClick={() => window.history.back()}
             icon="mynaui:arrow-long-left-solid"
             className="text-[3rem] px-3 rounded-2xl bg-zinc-200/70 hover:bg-zinc-300 cursor-pointer"
-          />
+          /> */}
 
-          <p className="hidden md:block">{activeComponent} </p>
+          {/* <p className="hidden md:block">{activeComponent} </p> */}
         </div>
 
         <div onClick={()=>setIsActiveComponent('Home')} className="md:hidden">

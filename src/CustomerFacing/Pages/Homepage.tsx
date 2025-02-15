@@ -7,11 +7,6 @@ import { useGetFoods } from "../../Queries/food/useGetFoods";
 const Homepage = ({setIsActiveComponent}:any) => {
   const { data, isLoading, isError } = useGetFoods();
 
-  // Function to get random items from array
-  const getRandomItems = (array: any[], count: number) => {
-    const shuffled = [...array].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  };
 
   return (
       <div className="flex flex-col home gap-y-8 bg-zinc-100 flex-1 min-h-[calc(100vh-5rem)] overflow-y-auto text-black p-4">
@@ -31,7 +26,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
             {isError && <IsError>Cannot get Todays Special</IsError>}
             {!isLoading && !isError && data?.doc && (
               <>
-                {getRandomItems(data.doc, 3).map((item:any) => (
+                {data?.doc?.slice(5,8,3).map((item:any) => (
                   <ProductCard key={item._id} item={item} />
                 ))}
               </>

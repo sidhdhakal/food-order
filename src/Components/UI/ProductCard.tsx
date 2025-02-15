@@ -49,8 +49,33 @@ const ProductCard = ({ item }: any) => {
     return size ? size.price : 0;
   };
 
-  const defaultSize = item.sizes[0]?.name;
+  const renderStarRating = (rating: number = 0) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating - fullStars >= 0.5;
+    const emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0);
+    
+    return (
+      <div className="flex items-center ">
+        {[...Array(fullStars)].map((_, i) => (
+          <Icon key={`full-${i}`} icon="mdi:star" className="text-orange-400 text-lg" />
+        ))}
+        {hasHalfStar && (
+          <Icon icon="mdi:star-half" className="text-orange-400 text-lg" />
+        )}
+        {[...Array(emptyStars)].map((_, i) => (
+          <Icon key={`empty-${i}`} icon="mdi:star-outline" className="text-orange-400 text-lg" />
+        ))}
+        {rating > 0 ? (
+          <span className="text-sm text-gray-600 ml-1">({rating.toFixed(1)})</span>
+        ) : (
+          <span className="text-sm text-gray-500 ml-1">Not rated yet</span>
+        )}
+      </div>
+    );
+  };
 
+  const defaultSize = item.sizes[0]?.name;
+  console.log(item)
   return (
     <div
       key={item.id}
@@ -81,7 +106,10 @@ const ProductCard = ({ item }: any) => {
           </H1>
 
           <P>{item.description}</P>
-          <div className="flex gap-x-3 justify-start items-center">
+          
+          {renderStarRating(item.rating)}
+          
+          <div className="flex gap-x-3 justify-start items-center mt-1">
             <h1>Sizes:</h1>
             <div className="flex gap-x-2 mt-1">
               {item.sizes.map((size: any) => (
