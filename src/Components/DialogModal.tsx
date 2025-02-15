@@ -9,9 +9,13 @@ interface DialogModalProps {
     btntext:string,
     isPending?:boolean
     pendingText:string
+    showInput?:boolean
+    inputMessage?:string,
+    setInputMessage?:any
+
 }
 
-const DialogModal = ({  onConfirm, onCancel, message, btntext, isPending, pendingText }: DialogModalProps) => {
+const DialogModal = ({  onConfirm, showInput, inputMessage, setInputMessage, onCancel, message, btntext, isPending, pendingText }: DialogModalProps) => {
     return (
         <div onClick={onCancel} className='fixed top-0 animate-fadeIn left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
             <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>
@@ -35,6 +39,18 @@ const DialogModal = ({  onConfirm, onCancel, message, btntext, isPending, pendin
                         This process cannot be undone. */}
                         {message}
                     </p>
+
+                    {showInput && (
+          <div className="space-y-3">
+            <textarea
+            required
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
+              placeholder="Please Write reason for cancelling..."
+              className="w-full min-h-[100px] p-3 border rounded-lg focus:outline-none focus:ring-1 focus:ring-orange-500 resize-none bg-zinc-100"
+            />
+          </div>
+        )}
 
                     <div className='flex justify-center space-x-4 pt-4'>
                         <button

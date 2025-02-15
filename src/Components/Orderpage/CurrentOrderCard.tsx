@@ -2,9 +2,15 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useGetCurrentOrder } from "../../Queries/order/useGetCurrentOrder";
 import Loading from "../UI/Loading";
 import IsError from "../UI/IsError";
+import DialogModal from "../DialogModal";
+import { useCancelOrder } from "../../Queries/order/useCancelOrder";
+import { useState } from "react";
+import Button from "../UI/Button";
 
 const CurrentOrderCard = () => {
   const { data , isLoading, isError} = useGetCurrentOrder();
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
+  const[message, setMessage]=useState('')
 
   if (data?.doc?.length === 0)
     return (
@@ -19,10 +25,28 @@ const CurrentOrderCard = () => {
   if(isError)
       return  <IsError>Cannot Get Your Current Order</IsError>
 
+    const {cancelOrder, isPending, }=useCancelOrder()
 
-
+  const handleCancelUser=()=>{
+    if(message==="")
+        return
+    cancelOrder({_id:deleteDialogOpen, message})
+  }
   return (
     <div className="w-full">
+       {deleteDialogOpen !==null && (
+        <DialogModal
+          message={`Do you really want to Cancel Current Order?`}
+          btntext="Delete"
+          isPending={isPending}
+          pendingText="Deleting..."
+          onConfirm={handleCancelUser}
+          showInput={true}
+          inputMessage={message}
+          setInputMessage={setMessage}
+          onCancel={() => setDeleteDialogOpen(null)}
+        />
+      )}
       {data?.doc?.map((currentOrder: any) => {
         const allSteps = [
           "Order Placed",
@@ -54,7 +78,6 @@ const CurrentOrderCard = () => {
           };
         });
 
-        // If the order is cancelled, remove gray steps and show only "Cancelled"
         if (isCancelled) {
           steps = [
             {
@@ -136,6 +159,10 @@ const CurrentOrderCard = () => {
                     {currentOrder?.paymentMethod}
                   </span>
                 </div>
+                  
+                {currentOrder.statusHistory.length<2 &&
+                <Button onClick={()=>setDeleteDialogOpen(currentOrder._id)} className="!w-fit mt-4 !bg-zinc-200 !text-black !hover:bg-zinc-300">Cancel Order</Button>
+                }
               </div>
 
               {/* Order Progress */}

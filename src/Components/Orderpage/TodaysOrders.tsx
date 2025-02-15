@@ -7,7 +7,6 @@ import OrderCard from './OrderCard'
 const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackOpen:(value:boolean)=>void}) => {
   const { data, isLoading, isError } = useGetTodaysOrders()
 
-
   if (data?.doc?.length === 0)
     return (
       <div className="py-5 text-xl text-zinc-400">
@@ -16,10 +15,9 @@ const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackO
     );
   return (
     <div className="w-full">
-      <Title >Today's Orders</Title>
+      <Title>Today's Orders</Title>
 
-      <div className=" mt-4">
-
+      <div className="mt-4">
         {isLoading &&
           <Loading>Loading...</Loading>
         }
@@ -33,7 +31,10 @@ const TodaysOrders = ({ setOrder, setfeedbackOpen }: {setOrder:any, setfeedbackO
               <div className="py-5 text-xl text-zinc-400">There are no Todays Orders</div>
               :
               data?.doc?.map((order: any) => (
-                <OrderCard key={order._id} order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen} />
+                <div key={order._id}>
+                
+                  <OrderCard order={order} setOrder={setOrder} setfeedbackOpen={setfeedbackOpen} />
+                </div>
               ))}
           </div>
         }

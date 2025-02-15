@@ -53,6 +53,13 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
           {new Date(order.createdAt).toLocaleTimeString()}
         </div>
 
+        {order.cancelMessage && (
+                    <div className="my-2 p-3 bg-red-50 border border-red-200 rounded-md text-red-700">
+                      <span className="font-semibold">Cancel Reason:</span> {order.cancelMessage}
+                    </div>
+                  )}
+
+                  
         <div className="mt-4 space-y-2">
           {order.items.map((item: Item, index: number) => (
             <div key={index} className="flex justify-between items-center">
@@ -65,6 +72,8 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
           ))}
         </div>
       </div>
+
+    
 
       <div className="border-t pt-2 mt-2 flex justify-between items-center">
         <div className="text-sm">Payment Method</div>

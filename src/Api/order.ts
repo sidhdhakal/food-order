@@ -159,3 +159,29 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
       throw error;
     }
   }
+
+
+
+  export async function cancelOrderApi({_id, message}:any) {
+   
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/cancelorder`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
+        },
+        body: JSON.stringify({_id,  message}),
+      });
+  
+      const data = await res.json();
+      if (data.success) {
+        return data;
+      } else {
+        throw new Error(data.message || "Error updating Category");
+      }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+  }
