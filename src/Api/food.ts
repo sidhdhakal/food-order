@@ -70,7 +70,7 @@ export async function addFoodApi(food:Food) {
     }
   }
 
-export async function updateFoodApi({_id, name, description, category, sizes, available, image}:any) {
+export async function updateFoodApi({_id, name, description,veg, category, sizes, available, image}:any) {
   let imageBase64=undefined
   if(image instanceof File || image instanceof FileList)
     imageBase64=await convertBase64(image)
@@ -85,7 +85,7 @@ export async function updateFoodApi({_id, name, description, category, sizes, av
         'Authorization':`Bearer ${removeQuotes(token)}`
 
       },
-      body: JSON.stringify({ name,image:imageBase64, description, category, sizes, available}),
+      body: JSON.stringify({ name,image:imageBase64,veg, description, category, sizes, available}),
     });
 
     const data = await res.json();

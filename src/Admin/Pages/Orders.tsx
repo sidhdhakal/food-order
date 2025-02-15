@@ -34,7 +34,7 @@ const Orders = () => {
 <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4">
           <h1 className="text-[1.5rem] font-semibold">
-            Orders
+            Orders ({filteredOrders?.length})
           </h1>
         </div>
         

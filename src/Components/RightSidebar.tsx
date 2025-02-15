@@ -12,7 +12,6 @@ import CheckLogin from "../Utils/CheckLogin";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
   const { cart} = useCart();
-  console.log(cart)
   const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
   const [message, setMessage]=useState('')

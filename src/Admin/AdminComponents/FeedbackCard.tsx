@@ -10,6 +10,7 @@ const FeedbackCard = ({ feedback }: { feedback: any }) => {
   const handleSubmitReply = () => {
     if (replyText === "") return;
     replyToFeedback({ _id: feedback._id, reply: replyText });
+    setShowReply(false)
   };
 
   return (

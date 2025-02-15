@@ -18,16 +18,6 @@ import { useGetData } from "../../Queries/useGetData";
 import Loading from "../../Components/UI/Loading";
 import IsError from "../../Components/UI/IsError";
 
-
-const categoryColors = [
-  "#FF6B6B",
-  "#845EF7",
-  "#51CF66",
-  "#354AF0",
-  "#ff9AF0",
-  "#332354",
-];
-
 const Dashboard = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [dateRange, setDateRange] = useState({
@@ -47,7 +37,6 @@ const Dashboard = () => {
 
   if (isError) return <IsError>Failed to get Data</IsError>;
 
-  console.log(data?.doc)
   
   return (
     <div className="p-6 bg-gray-100">
@@ -206,6 +195,17 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+
+const categoryColors = [
+"#FF6B6B",
+"#845EF7",
+"#FFA500",
+"#354AF0",
+ "#ff9AF0",
+ "#A8E6A3"
+];
+
 const stats = [
   {
     icon: "mdi:cart",

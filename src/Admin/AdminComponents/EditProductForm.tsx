@@ -95,7 +95,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
             toast.error('Please fill in all size and price fields or remove empty ones');
             return;
         }
-        updateFood({ _id: product._id, name: productName, description, category, sizes, available, image });
+        updateFood({ _id: product._id, name: productName, description, veg:isVeg,category, sizes, available, image });
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
