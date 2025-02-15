@@ -10,7 +10,8 @@ exports.getData = async (req, res) => {
 
     const end = new Date(endDate);
     end.setHours(23, 59, 59, 999);
-
+    console.log(start, end);
+    console.log(start, end);
     const orders = await Order.find({
       createdAt: { $gte: start, $lte: end },
     });
@@ -20,9 +21,12 @@ exports.getData = async (req, res) => {
     const cancelledOrders = orders.filter(
       (order) => order.currentStatus.status === "Cancelled"
     ).length;
-    const deliveredOrders = orders.filter(
+    const deliveredOrdersArray = orders.filter(
       (order) => order.currentStatus.status === "Completed"
-    ).length;
+    );
+    const deliveredOrders = deliveredOrdersArray.length;
+
+    const revenueItems = deliveredOrdersArray.flatMap((order) => order.items);
 
 
     const items = orders.flatMap((order) => order.items);
@@ -44,10 +48,8 @@ exports.getData = async (req, res) => {
       (item) => item.category === "Healthy Options"
     ).length;
 
-    // Calculate total number of items to find percentages
     const totalItems = items.length;
 
-    // Calculate percentages for each category
     const categorySales = [
       {
         name: "Fast Food",
@@ -75,19 +77,21 @@ exports.getData = async (req, res) => {
       },
     ];
 
-    const revenue = items.reduce((total, item) => {
+
+    const revenue = revenueItems.reduce((total, item) => {
       return total + item.price * item.qty;
     }, 0);
 
-    const todayNepal = getNepalTime();
+    const todayNepal = new Date();
 
-const sevenDaysAgoNepal = new Date(todayNepal);
-sevenDaysAgoNepal.setDate(todayNepal.getDate() - 7);
+    const sevenDaysAgoNepal = new Date();
+sevenDaysAgoNepal.setHours(0, 0, 0, 0); 
+sevenDaysAgoNepal.setDate(sevenDaysAgoNepal.getDate() - 7); 
 
-const ordersSevenDays = await Order.find({
-  createdAt: { $gte: sevenDaysAgoNepal, $lte: todayNepal },
-  'currentStatus.status': { $in: ['Completed', 'Cancelled'] }
-});
+    const ordersSevenDays = await Order.find({
+      createdAt: { $gte: sevenDaysAgoNepal, $lte: todayNepal },
+      "currentStatus.status": { $in: ["Completed", "Cancelled"] },
+    });
 
     const daysOfWeek = [
       "Sunday",
@@ -103,7 +107,7 @@ const ordersSevenDays = await Order.find({
 
     ordersSevenDays.forEach((order) => {
       const orderDate = new Date(order.createdAt);
-      const dayOfWeek = orderDate.getDay(); 
+      const dayOfWeek = orderDate.getDay();
       orderCounts[dayOfWeek].orders += 1;
     });
 
@@ -122,8 +126,8 @@ const ordersSevenDays = await Order.find({
           value: cancelledOrders,
         },
         {
-          title:'Total Pending',
-          value:totalOrders-(deliveredOrders+cancelledOrders)
+          title: "Total Pending",
+          value: totalOrders - (deliveredOrders + cancelledOrders),
         },
         {
           title: "Total Revenue",
