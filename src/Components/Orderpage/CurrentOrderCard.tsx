@@ -8,9 +8,16 @@ import { useState } from "react";
 import Button from "../UI/Button";
 
 const CurrentOrderCard = () => {
-  const { data , isLoading, isError} = useGetCurrentOrder();
+  const { data, isLoading, isError } = useGetCurrentOrder();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
-  const[message, setMessage]=useState('')
+  const [message, setMessage] = useState('');
+  const { cancelOrder, isPending } = useCancelOrder();
+
+  if (isLoading)
+    return <Loading>Loading...</Loading>
+
+  if (isError)
+    return <IsError>Cannot Get Your Current Order</IsError>
 
   if (data?.doc?.length === 0)
     return (
@@ -19,22 +26,15 @@ const CurrentOrderCard = () => {
       </div>
     );
 
-  if(isLoading)
-    return   <Loading>Loading...</Loading>
-
-  if(isError)
-      return  <IsError>Cannot Get Your Current Order</IsError>
-
-    const {cancelOrder, isPending, }=useCancelOrder()
-
-  const handleCancelUser=()=>{
-    if(message==="")
-        return
-    cancelOrder({_id:deleteDialogOpen, message})
+  const handleCancelUser = () => {
+    if (message === "")
+      return
+    cancelOrder({ _id: deleteDialogOpen, message })
   }
+
   return (
     <div className="w-full">
-       {deleteDialogOpen !==null && (
+      {deleteDialogOpen !== null && (
         <DialogModal
           message={`Do you really want to Cancel Current Order?`}
           btntext="Delete"
@@ -160,8 +160,13 @@ const CurrentOrderCard = () => {
                   </span>
                 </div>
                   
-                {currentOrder.statusHistory.length<2 &&
-                <Button onClick={()=>setDeleteDialogOpen(currentOrder._id)} className="!w-fit mt-4 !bg-zinc-200 !text-black !hover:bg-zinc-300">Cancel Order</Button>
+                {currentOrder?.statusHistory?.length < 2 &&
+                  <Button 
+                    onClick={() => setDeleteDialogOpen(currentOrder._id)} 
+                    className="!w-fit !mt-4 !bg-zinc-100 !text-black !hover:bg-zinc-200"
+                  >
+                    Cancel Order
+                  </Button>
                 }
               </div>
 

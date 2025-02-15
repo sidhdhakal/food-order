@@ -32,7 +32,7 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
         <div className="flex flex-row items-start justify-between space-y-0 pb-2">
           <div className="flex gap-x-2">
             <h1 className="text-xl font-semibold">#{order._id.slice(-5)}</h1>
-    {!order.feedback && order.currentStatus.status=='Completed' &&
+    {!order.feedback && order?.currentStatus?.status=='Completed' &&
                 <button
                 className="text-zinc-500 text-left"
                 onClick={() => {
@@ -53,9 +53,9 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
           {new Date(order.createdAt).toLocaleTimeString()}
         </div>
 
-        {order.cancelMessage && (
+        {order?.cancelMessage && (
                     <div className="my-2 p-3 bg-red-50 border border-red-200 rounded-md text-red-700">
-                      <span className="font-semibold">Cancel Reason:</span> {order.cancelMessage}
+                      <span className="font-semibold">Cancel Reason:</span> {order?.cancelMessage}
                     </div>
                   )}
 
