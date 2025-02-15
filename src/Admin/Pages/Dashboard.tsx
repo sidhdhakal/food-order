@@ -59,7 +59,7 @@ const Dashboard = () => {
           </button>
 
           {showDatePicker && (
-            <div className="absolute right-0 mt-2 z-50">
+            <div className="absolute right-0 top-10 mt-2 z-50">
               <div className="bg-white rounded-lg shadow-lg p-2">
                 <DateRange
                   ranges={[dateRange]}
