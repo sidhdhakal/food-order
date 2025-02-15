@@ -70,3 +70,18 @@
 .mobilenav{
   box-shadow: 0px -1px 10px #dddddd;
 }
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s cubic-bezier(0.25, 0.1, 0.1, 1) forwards;
+}

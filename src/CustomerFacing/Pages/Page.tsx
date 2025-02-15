@@ -34,6 +34,7 @@ const Page = () => {
     
     <>
       <MobileSidebar
+        setIsSidebarOpen={setIsSidebarOpen}
          activeComponent={activeComponent}
          setIsActiveComponent={setIsActiveComponent} 
         />
@@ -49,7 +50,7 @@ const Page = () => {
          setIsSidebarOpen={setIsSidebarOpen}/>
           <div className="bg-zinc-100 w-full pt-[5rem] flex justify-between">
               {renderActiveComponent()}
-              {/* <div className="h-[4rem] w-full bg-transparent md:hidden" /> */}
+              <div onClick={()=>setIsSidebarOpen(false)} className={`w-full h-full  animate-fadeIn fixed backdrop-blur-sm lg:hidden ${sidebarOpen?'flex':'hidden'}`}/>
             <RightSidebar  setIsActiveComponent={setIsActiveComponent}  sidebarOpen={sidebarOpen}  />
           </div>
         </div>

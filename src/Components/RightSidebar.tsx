@@ -98,7 +98,7 @@ function createSignature(message:string) {
 
   return (
     <div className={`
-      p-2 sm:p-3 lg:pl-0  bg-transparent transition-all duration-200 
+       lg:p-3 lg:pl-0 bg-transparent transition-all duration-200 
       lg:translate-x-0 right-0 
       h-[calc(100vh-9rem)] sm:h-[calc(100vh-9rem)] md:h-[calc(100vh-5rem)]  
       fixed lg:sticky top-[5rem] sm:top-[5rem] 
@@ -109,9 +109,9 @@ function createSignature(message:string) {
         w-[calc(100vw-1rem)] sm:w-[calc(100vw-2rem)] 
         md:w-[20rem] lg:w-[20rem] 4xl:w-[25rem] shadow-md
         p-2 sm:p-3 pt-1 sm:pt-2
-        flex flex-col h-full bg-white text-black rounded-[16px] sm:rounded-[24px]
+        flex flex-col h-full bg-white text-black  lg:rounded-[24px]
       ">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-start lg:mb-2">
           <h1 className={`
             text-xl sm:text-2xl 
             cursor-pointer ${isOrderOpen ? "text-zinc-400" : "text-black"}
