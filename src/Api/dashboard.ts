@@ -4,6 +4,10 @@ const token=getCookie('adminjwt')
 
 
 export async function getDataApi({startDate, endDate}:any){
+  console.log(startDate, endDate)
+  const start=startDate.toISOString()
+  const end=endDate.toISOString()
+  console.log(start, end)
     try{
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/dashboard/getdata`, {
         method: "POST",
@@ -12,7 +16,7 @@ export async function getDataApi({startDate, endDate}:any){
             'Authorization':`Bearer ${removeQuotes(token)}`
           
         },
-        body: JSON.stringify({startDate:startDate.toISOString(), endDate:endDate.toISOString()})
+        body: JSON.stringify({startDate:start, endDate:end})
 
       });
   

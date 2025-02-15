@@ -10,7 +10,7 @@ export function useGetData(dateRange:any) {
     isSuccess,
     refetch
   } = useQuery({
-    queryKey: ['dashboard'],
+    queryKey: ['selection'],
     queryFn: ()=>getDataApi(dateRange),
   });
 

@@ -17,6 +17,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { useGetData } from "../../Queries/useGetData";
 import Loading from "../../Components/UI/Loading";
 import IsError from "../../Components/UI/IsError";
+import Button from "../../Components/UI/Button";
 
 const Dashboard = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
@@ -29,7 +30,6 @@ const Dashboard = () => {
   const { data, isLoading, isError, refetch } = useGetData(dateRange);
   const handleSelect = (ranges: any) => {
     setDateRange(ranges.selection);
-    refetch()
   };
 
 
@@ -37,6 +37,7 @@ const Dashboard = () => {
 
   if (isError) return <IsError>Failed to get Data</IsError>;
 
+  console.log(data?.doc?.chartData)
   
   return (
     <div className="p-6 bg-gray-100">
@@ -45,13 +46,13 @@ const Dashboard = () => {
           <h1 className="text-2xl font-semibold text-gray-900">Dashboard</h1>
         </div>
 
-        <div className="relative">
+        <div className="relative w-fit flex gap-x-2">
           <button
             className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm hover:bg-gray-50"
             onClick={() => setShowDatePicker(!showDatePicker)}
           >
             <Icon icon="mdi:calendar" className="text-gray-500" />
-            <span className="text-sm text-gray-600">
+            <span className="text-sm text-gray-600 text-nowrap">
               {format(dateRange.startDate, "MMM dd, yyyy")} -{" "}
               {format(dateRange.endDate, "MMM dd, yyyy")}
             </span>
@@ -78,7 +79,9 @@ const Dashboard = () => {
               </div>
             </div>
           )}
+        <Button onClick={()=>refetch()}>Submit</Button>
         </div>
+
       </div>
 
       {/* Stats Grid */}
