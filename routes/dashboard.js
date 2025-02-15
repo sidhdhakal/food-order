@@ -3,10 +3,7 @@ const router = express.Router();
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 
-const User = require('../models/User');
-const Food = require('../models/Food');  
-const Order = require('../models/Order')
-const Feedback = require('../models/Feedback');
+
 const { getData } = require('../controllers/DashboardController');
 
 
@@ -16,7 +13,7 @@ router.get('/', (req, res) => {
   
 
 router.post('/getdata',
-//   protect,restrictTo('admin'),
+  protect,restrictTo('admin'),
   getData)
 
 

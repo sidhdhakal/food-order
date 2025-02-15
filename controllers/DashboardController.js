@@ -24,7 +24,6 @@ exports.getData = async (req, res) => {
       (order) => order.currentStatus.status === "Completed"
     ).length;
 
-    console.log(totalOrders, cancelledOrders, deliveredOrders);
 
     const items = orders.flatMap((order) => order.items);
 
