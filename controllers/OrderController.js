@@ -84,8 +84,8 @@ exports.updateCurrentOrder = async (req, res) => {
       let updatedStatusHistory = [
         ...order.statusHistory,
         {
-          status: order.currentStatus.status, // Previous status
-          time: order.currentStatus.time, // Previous time
+          status: order.currentStatus.status, 
+          time: order.currentStatus.time, 
         },
       ];
   
@@ -107,6 +107,7 @@ exports.updateCurrentOrder = async (req, res) => {
             time: Date.now(),
           },
           statusHistory: updatedStatusHistory,
+          cancelMessage:req.body.message
         },
         { new: true }
       );
@@ -302,3 +303,74 @@ exports.getTodaysOrder = async (req, res) => {
     }
   };
   
+
+  exports.cancelCurrentOrder = async (req, res) => {
+    try {
+      const order = await Order.findById(req.body._id);
+  
+      if (!order) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found!",
+        });
+      }
+  
+      let updatedStatusHistory = [
+        ...order.statusHistory,
+        {
+          status: order.currentStatus.status, // Previous status
+          time: order.currentStatus.time, // Previous time
+        },
+      ];
+  
+      if (req.body.status === "Completed") {
+        updatedStatusHistory = [
+          ...updatedStatusHistory,
+          {
+            status:"Cancelled",
+            time: Date.now(),
+          },
+        ];
+      }
+  
+      let updatedOrder = await Order.findByIdAndUpdate(
+        order.id,
+        {
+          currentStatus: {
+            status:"Cancelled",
+            time: Date.now(),
+          },
+          statusHistory: updatedStatusHistory,
+          cancelMessage:req.body.message
+        },
+        { new: true }
+      );
+  
+      if (!updatedOrder) {
+        return res.status(400).json({
+          success: false,
+          message: "Failed to Cancel order!",
+        });
+      }
+  
+      const user = await User.findById(order.userId).select("name email image");
+  
+      updatedOrder = {
+        ...updatedOrder.toObject(), // Convert Mongoose document to plain object
+        user: user || { name: "Unknown", email: "", image: "" },
+      };
+  
+  
+      res.status(200).json({
+        success: true,
+        message: "Order status updated successfully!",
+        order: updatedOrder,
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        message: "Internal Server Error!",
+      });
+    }
+  };

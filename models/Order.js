@@ -78,6 +78,10 @@ const orderSchema = new Schema({
     type:Boolean,
     required:false,
   },
+  cancelMessage:{
+    type:String,
+    required:false
+  },
   paymentMethod: {
     type: String,
     enum: ["esewa", "cash"],

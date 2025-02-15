@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order')
 
-const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders } = require('../controllers/OrderController');
+const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders, cancelCurrentOrder } = require('../controllers/OrderController');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 router.get('/', (req, res) => {
@@ -26,5 +26,8 @@ router.get('/getolderorders',protect, getOlderOrders)
 router.put('/updatecurrentorder',
   protect,restrictTo('admin'),
   updateCurrentOrder)
+router.put('/cancelorder',
+  protect,
+  cancelCurrentOrder)
 
 module.exports=router
