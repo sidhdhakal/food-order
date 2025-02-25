@@ -206,7 +206,6 @@ export async function getRecommendedFoodsApi() {
 
     const data = await res.json();
     if (data.success) {
-      console.log(data)
       return data;
     } else {
       throw new Error(data.message || "Error fetching data");

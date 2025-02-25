@@ -37,8 +37,6 @@ const Dashboard = () => {
 
   if (isError) return <IsError>Failed to get Data</IsError>;
 
-  console.log(data?.doc?.chartData)
-  
   return (
     <div className="p-6 bg-gray-100">
       <div className="flex justify-between items-center mb-8">
