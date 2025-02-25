@@ -90,6 +90,7 @@ const Orders = () => {
     }
   }, [isPrinting]);
 
+  // Filter orders based on search value
   const filteredOrders = useMemo(() => {
     if (!filteredData || filteredData.length === 0) return [];
 
@@ -105,14 +106,16 @@ const Orders = () => {
     });
   }, [searchValue, filteredData]);
 
+  // Get completed or cancelled orders for invoice
   const invoiceOrders = useMemo(() => {
-    return filteredOrders.filter(order => 
+    // First filter by search value (for specific user)
+    const userFilteredOrders = filteredOrders.filter(order => 
       order.currentStatus && 
       (order.currentStatus.status === 'Completed' || order.currentStatus.status === 'Cancelled')
     );
+    
+    return userFilteredOrders;
   }, [filteredOrders]);
-
- 
 
   const handleSelect = (ranges: any) => {
     setDateRange(ranges.selection);
@@ -156,12 +159,20 @@ const Orders = () => {
     }
   };
 
+  // Get the current search user's name for the invoice title
+  const searchUserName = useMemo(() => {
+    if (!searchValue || !filteredOrders.length) return null;
+    
+    // Extract user name from the first filtered order
+    return filteredOrders[0]?.user?.name || null;
+  }, [searchValue, filteredOrders]);
+
   return (
     <div className="w-full relative">
       <div className="auto w-full flex justify-between items-start">
         <SearchInput
           className="flex"
-          placeholder="Search Orders "
+          placeholder="Search Orders by User"
           value={searchValue}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
         />
@@ -170,6 +181,9 @@ const Orders = () => {
         <div className="pb-4 flex justify-between">
           <h1 className="text-[1.5rem] font-semibold">
             Orders ({filteredOrders?.length || 0})
+            {searchValue && searchUserName && <span className="ml-2 text-gray-500 text-sm">
+              for {searchUserName}
+            </span>}
           </h1>
 
           <div className="relative w-fit flex gap-x-2">
@@ -213,7 +227,7 @@ const Orders = () => {
               className="flex items-center gap-1 !text-nowrap"
             >
               <Icon icon="mdi:printer" className="text-white" />
-              {isPrinting ? "Printing..." : "Print Invoice"}
+              {isPrinting ? "Printing..." : searchValue ? `Print ${searchUserName || 'User'} Invoice` : "Print All Invoices"}
             </Button>
           </div>
         </div>

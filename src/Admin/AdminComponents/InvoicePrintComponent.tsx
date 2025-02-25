@@ -28,6 +28,13 @@ const InvoicePrintComponent = ({
 
   const totalAmount = calculateTotalAmount();
 
+  // Get unique users from the invoice orders
+  const uniqueUsers = Array.from(
+    new Set(invoiceOrders.map(order => order.user?.email))
+  ).map(email => {
+    return invoiceOrders.find(order => order.user?.email === email)?.user;
+  });
+
   return (
     <div className={`${isPrinting ? "block" : "hidden"}`}>
       <div className="p-8 bg-white max-w-full mx-auto">
@@ -40,16 +47,19 @@ const InvoicePrintComponent = ({
         <div className="flex justify-between mb-6">
           <div className="w-1/2">
             <p className="font-semibold">Customer Information:</p>
-            <p>
-              {invoiceOrders.length > 0 && invoiceOrders[0].user
-                ? invoiceOrders[0].user.name
-                : "N/A"}
-            </p>
-            <p>
-              {invoiceOrders.length > 0 && invoiceOrders[0].user
-                ? invoiceOrders[0].user.email
-                : "N/A"}
-            </p>
+            {uniqueUsers.length > 1 ? (
+              uniqueUsers.map((user, index) => (
+                <div key={index}>
+                  <p>{user?.name || "N/A"}</p>
+                  <p>{user?.email || "N/A"}</p>
+                </div>
+              ))
+            ) : (
+              <div>
+                <p>{uniqueUsers[0]?.name || "N/A"}</p>
+                <p>{uniqueUsers[0]?.email || "N/A"}</p>
+              </div>
+            )}
           </div>
           <div className="w-1/2 text-right">
             <p className="font-semibold">Date Range:</p>
