@@ -12,7 +12,6 @@ exports.uploadToCloudinary = (image, folder) => {
   });
 }
 
-
 exports.deleteImageFromCloudinary = (imageUrl, folder) => {
     return new Promise((resolve, reject) => {
       try {

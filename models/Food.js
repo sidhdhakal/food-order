@@ -50,6 +50,10 @@ const foodSchema = new Schema({
     type:Boolean,
     required:false
   },
+  isFeatured:{
+    type:Boolean,
+    required:false
+  },
   createdAt: {
     type: Date,
     default: Date.now,
