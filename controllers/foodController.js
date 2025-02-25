@@ -1,6 +1,7 @@
 const Food = require("../models/Food");
 const { optimizeBase64Image } = require("../Utils/optimizeImage");
 const { uploadToCloudinary, deleteImageFromCloudinary } = require("../Utils/cloudinary");
+const Order = require("../models/Order");
 
 exports.updateFoodTemp=async (req, res)=>{
     await Food.updateMany({raters: 0})
@@ -151,6 +152,50 @@ exports.deleteFood = async (req, res) => {
 
   } catch (err) {
     console.error(err); 
+    res.status(400).json({
+      success: false,
+      message: "Internal Server Error!",
+    });
+  }
+};
+
+
+exports.getRecommendedFoods = async (req, res) => {
+  try {
+    const orders = await Order.find({ userId: req.user._id });
+
+    if (orders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found for this user.",
+      });
+    }
+
+    const items = orders.flatMap((order) => order.items);
+    const orderedCategories = [...new Set(items.map(item => item.category))]; // Ensures unique categories
+
+    const recommendedItems = await Food.find({
+      category: { $in: orderedCategories },  // Filter by ordered categories
+    })
+      .limit(10)  // Limit the number of results to 10
+      .sort({ rating: -1 });  // Optional: Sort by rating (or other field like popularity)
+
+    if (recommendedItems.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No recommended foods found.",
+      });
+    }
+
+    console.log("Recommended items:", recommendedItems);
+
+    return res.status(200).json({
+      success: true,
+      results:recommendedItems.length,
+      doc:recommendedItems,
+    });
+  } catch (err) {
+    console.error("Error fetching recommended foods:", err);
     res.status(400).json({
       success: false,
       message: "Internal Server Error!",
