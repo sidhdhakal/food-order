@@ -21,6 +21,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
     const [available, setAvailable] = useState<any>(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price: 0 }]);
     const [isVeg, setIsVeg] = useState<boolean | null>();
+    const [isFeatured, setIsFeatured] = useState<boolean | null>();
 
     const { updateFood, isPending: isUpatePending } = useUpdateFood();
 
@@ -95,7 +96,7 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
             toast.error('Please fill in all size and price fields or remove empty ones');
             return;
         }
-        updateFood({ _id: product._id, name: productName, description, veg:isVeg,category, sizes, available, image });
+        updateFood({ _id: product._id, name: productName, description, veg:isVeg,category, sizes, available, image, isFeatured });
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,6 +194,11 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
                     <span>Available</span>
                 </label>
                 <ToggleSwitch checked={available} onChange={(e) => setAvailable(e)} />
+            </div>
+
+
+            <div className='flex justify-start gap-x-4'>
+                <Checkbox id='isFeatured' label='isFeatured' checked={isFeatured || false} onChange={() => setIsFeatured(!isFeatured)} />
             </div>
 
             <div>

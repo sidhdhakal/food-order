@@ -22,6 +22,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
     const [available, setAvailable] = useState(false);
     const [sizes, setSizes] = useState<Size[]>([{ name: '', price:0 }]);
     const [isVeg, setIsVeg] = useState<boolean | null>(false);
+    const [isFeatured, setIsFeatured] = useState<boolean | null>();
 
     const hasEmptyFields = () => {
         return sizes.some(size => size.name.trim() === '' || size.price === 0);
@@ -194,6 +195,10 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                     <span>Available</span>
                 </label>
                 <ToggleSwitch checked={available} onChange={(e) => setAvailable(e)} />
+            </div>
+
+            <div className='flex justify-start gap-x-4'>
+                <Checkbox id='isFeatured' label='isFeatured' checked={isFeatured || false} onChange={() => setIsFeatured(!isFeatured)} />
             </div>
 
             <div>
