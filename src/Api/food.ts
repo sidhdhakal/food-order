@@ -2,91 +2,122 @@ import convertBase64 from "../Utils/ConvertBase64";
 import { getCookie } from "../Utils/getCookie";
 import { removeQuotes } from "../Utils/removeQuotes";
 import { Food } from "../Utils/types";
-const token=getCookie('adminjwt')
-export async function addFoodApi(food:Food) {
+const token = getCookie("adminjwt");
 
-    const image=await convertBase64(food.image)
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/createfood`, {
+const userToken = getCookie("foodmateuser");
+
+export async function addFoodApi(food: Food) {
+  const image = await convertBase64(food.image);
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/createfood`,
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          'Authorization':`Bearer ${removeQuotes(token)}`
-
+          Authorization: `Bearer ${removeQuotes(token)}`,
         },
-        body: JSON.stringify({ ...food,image:image}),
-      });
-  
-      const data = await res.json();
-      if (data.success) {
-        return data;
-      } else {
-        throw new Error(data.message || "Error storing data");
+        body: JSON.stringify({ ...food, image: image }),
       }
-    } catch (error) {
-      console.error("Error sending data to the server:", error);
-      throw error;
-    }
-  }
+    );
 
-  export async function getFoodsApi(){
-    try{
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/getfoods`, {
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error storing data");
+    }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
+
+export async function getFoodsApi() {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/getfoods`,
+      {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-      });
-  
-      const data=await res.json();
-      if(data.success){
-        return data
-      }  else {
-        throw new Error(data.message || "Error fetching data");
       }
-    } catch (error) {
-      console.error("Error sending data to the server:", error);
-      throw error;
+    );
+
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error fetching data");
     }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
   }
-  export async function getAdminFoodsApi(){
-    try{
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/adminfoods`, {
+}
+export async function getAdminFoodsApi() {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/adminfoods`,
+      {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
-      });
-  
-      const data=await res.json();
-      if(data.success){
-        return data
-      }  else {
-        throw new Error(data.message || "Error fetching data");
       }
-    } catch (error) {
-      console.error("Error sending data to the server:", error);
-      throw error;
-    }
-  }
+    );
 
-export async function updateFoodApi({_id, name, description,veg, category, sizes, available, image, isFeatured}:any) {
-  let imageBase64=undefined
-  if(image instanceof File || image instanceof FileList)
-    imageBase64=await convertBase64(image)
-  else{
-    imageBase64=image
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error fetching data");
+    }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
+
+export async function updateFoodApi({
+  _id,
+  name,
+  description,
+  veg,
+  category,
+  sizes,
+  available,
+  image,
+  isFeatured,
+}: any) {
+  let imageBase64 = undefined;
+  if (image instanceof File || image instanceof FileList)
+    imageBase64 = await convertBase64(image);
+  else {
+    imageBase64 = image;
   }
   try {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/updatefood/${_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':`Bearer ${removeQuotes(token)}`
-
-      },
-      body: JSON.stringify({ name,image:imageBase64,veg, description, category, sizes, available, isFeatured}),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/updatefood/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${removeQuotes(token)}`,
+        },
+        body: JSON.stringify({
+          name,
+          image: imageBase64,
+          veg,
+          description,
+          category,
+          sizes,
+          available,
+          isFeatured,
+        }),
+      }
+    );
 
     const data = await res.json();
     if (data.success) {
@@ -100,25 +131,27 @@ export async function updateFoodApi({_id, name, description,veg, category, sizes
   }
 }
 
-
 export async function updateFoodAvailabilityApi({
   _id,
-    available
+  available,
 }: {
-  _id:string,
-    available:boolean
+  _id: string;
+  available: boolean;
 }) {
-  
   try {
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/updatefoodavailability/${_id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':`Bearer ${removeQuotes(token)}`
-
-      },
-      body: JSON.stringify({ available}),
-    });
+    const res = await fetch(
+      `${
+        import.meta.env.VITE_BACKEND_URL
+      }/api/food/updatefoodavailability/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${removeQuotes(token)}`,
+        },
+        body: JSON.stringify({ available }),
+      }
+    );
 
     const data = await res.json();
     if (data.success) {
@@ -132,16 +165,18 @@ export async function updateFoodAvailabilityApi({
   }
 }
 
-export async function deleteFoodApi(id:any){
-  try{
-    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/food/deletefood/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        'Authorization':`Bearer ${removeQuotes(token)}`
-      },
-
-    });
+export async function deleteFoodApi(id: any) {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/deletefood/${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${removeQuotes(token)}`,
+        },
+      }
+    );
 
     const data = await res.json();
     if (data.success) {
@@ -149,8 +184,35 @@ export async function deleteFoodApi(id:any){
     } else {
       throw new Error(data.message || "Error deleting data");
     }
-    } catch (error) {
-      console.error("Error sending data to the server:", error);
-      throw error;
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
+
+export async function getRecommendedFoodsApi() {
+  console.log('recommended foods')
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_BACKEND_URL}/api/food/getrecommendedfoods`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${removeQuotes(userToken)}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+    if (data.success) {
+      console.log(data)
+      return data;
+    } else {
+      throw new Error(data.message || "Error fetching data");
     }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
 }
