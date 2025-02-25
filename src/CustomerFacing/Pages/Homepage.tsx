@@ -26,7 +26,7 @@ const Homepage = ({setIsActiveComponent}:any) => {
             {isError && <IsError>Cannot get Todays Special</IsError>}
             {!isLoading && !isError && data?.doc && (
               <>
-                {data?.doc?.slice(5,8,3).map((item:any) => (
+                {data?.doc?.filter((data:any)=>data.isFeatured).map((item:any) => (
                   <ProductCard key={item._id} item={item} />
                 ))}
               </>
