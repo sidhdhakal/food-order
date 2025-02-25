@@ -13,7 +13,7 @@ const filterOptions = [
   //   { value: "Preparing", label: "Preparing", icon: "ph:cogs" },
   //   { value: "Ready for Pickup", label: "Ready to Pickup", icon: "ph:shopping-bag" },
   { value: "Completed", label: "Completed", icon: "ph:thumbs-up" },
-  { value: "Cancelled", label: "Completed", icon: "ph:thumbs-down" },
+  { value: "Cancelled", label: "Cancelled", icon: "ph:thumbs-down" },
 ];
 
 const PreviousOrders = () => {
