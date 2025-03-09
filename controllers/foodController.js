@@ -162,32 +162,73 @@ exports.deleteFood = async (req, res) => {
 
 exports.getRecommendedFoods = async (req, res) => {
   try {
-    const orders = await Order.find({ userId: req.user._id });
+    // const orders = await Order.find({ userId: req.user._id });
 
-    if (orders.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No orders found for this user.",
-      });
+    // if (orders.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "No orders found for this user.",
+    //   });
+    // }
+
+    // const items = orders.flatMap((order) => order.items);
+    // const orderedCategories = [...new Set(items.map(item => item.category))]; // Ensures unique categories
+
+    // const recommendedItems = await Food.find({
+    //   category: { $in: orderedCategories },  // Filter by ordered categories
+    // })
+    //   .limit(10)  // Limit the number of results to 10
+    //   .sort({ rating: -1 });  // Optional: Sort by rating (or other field like popularity)
+
+    // if (recommendedItems.length === 0) {
+    //   return res.status(404).json({
+    //     success: false,
+    //     message: "No recommended foods found.",
+    //   });
+    // }
+
+    // console.log("Recommended items:", recommendedItems);
+
+
+    const userId = req.user._id;
+
+    // Fetch last 5 orders of the user
+    const recentOrders = await Order.find({ userId })
+      .sort({ createdAt: -1 })
+      .limit(5);
+
+    if (!recentOrders.length) {
+      return res.json({ message: "No recent orders found", recommendations: [] });
     }
 
-    const items = orders.flatMap((order) => order.items);
-    const orderedCategories = [...new Set(items.map(item => item.category))]; // Ensures unique categories
-
-    const recommendedItems = await Food.find({
-      category: { $in: orderedCategories },  // Filter by ordered categories
-    })
-      .limit(10)  // Limit the number of results to 10
-      .sort({ rating: -1 });  // Optional: Sort by rating (or other field like popularity)
-
-    if (recommendedItems.length === 0) {
-      return res.status(404).json({
-        success: false,
-        message: "No recommended foods found.",
+    // Extract all ordered item IDs
+    let recentFoodIds = [];
+    recentOrders.forEach((order) => {
+      order.items.forEach((item) => {
+        if (item.itemId) recentFoodIds.push(item.itemId);
       });
+    });
+
+    if (!recentFoodIds.length) {
+      return res.json({ message: "No items found in recent orders", recommendations: [] });
     }
 
-    console.log("Recommended items:", recommendedItems);
+    // Find foods that are often ordered together
+    const recommendedFoodIds = await Order.aggregate([
+      { $match: { "items.itemId": { $in: recentFoodIds }, userId: { $ne: userId } } }, // Ignore the same user's orders
+      { $unwind: "$items" }, // Flatten the items array
+      { $match: { "items.itemId": { $nin: recentFoodIds } } }, // Exclude already ordered items
+      { $group: { _id: "$items.itemId", count: { $sum: 1 } } },
+      { $sort: { count: -1 } }, // Sort by most frequently ordered together
+      { $limit: 5 }, // Limit recommendations to 5 items
+    ]);
+
+    if (!recommendedFoodIds.length) {
+      return res.json({ message: "No recommendations found", recommendations: [] });
+    }
+
+    const recommendedItems = await Food.find({ _id: { $in: recommendedFoodIds.map((f) => f._id) } });
+
 
     return res.status(200).json({
       success: true,
