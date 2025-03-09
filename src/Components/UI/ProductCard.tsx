@@ -74,7 +74,7 @@ const ProductCard = ({ item }: any) => {
     );
   };
 
-  const defaultSize = item.sizes[0]?.name;
+  const defaultSize = item?.sizes[0]?.name;
   return (
     <div
       key={item.id}

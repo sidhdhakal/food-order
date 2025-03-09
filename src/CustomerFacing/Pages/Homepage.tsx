@@ -14,7 +14,6 @@ const Homepage = ({ setIsActiveComponent }: any) => {
     isError: recommendedError,
   } = getRecommendedFoods();
 
-  console.log(recommendedFoods);
   return (
     <div className="flex flex-col home gap-y-8 bg-zinc-100 flex-1 min-h-[calc(100vh-5rem)] overflow-y-auto text-black p-4">
       <div className="w-full md:h-[50vh]">
