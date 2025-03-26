@@ -29,6 +29,7 @@ const OrderCard = ({ order }: {order:any}) => {
     st: string | null;
   }>({ id: null, st: null });
   const[message, setMessage]=useState<string | null>(null)
+  const [isHovered, setIsHovered] = useState(false);
 
 
   const currentStatusIndex = filterOptions.findIndex(
@@ -86,14 +87,14 @@ const OrderCard = ({ order }: {order:any}) => {
         <td className="p-2 w-[10%]">
           <Avatar name={order?.user?.name} picture={order?.user?.picture || ''} />
         </td>
-        <td className="p-2 w-[20%]">
+        <td className="p-2 w-[12%]">
           {order?.user?.name}
           <br />
           <span className="text-zinc-500">{order?.user?.email}</span>
         </td>
 
         
-        <td className="p-2 w-[25%]">
+        <td className="p-2 w-[20%]">
           {order.items.map((item: Item) => (
             <div key={item._id} className="w-full h-full">
               <h1>
@@ -107,7 +108,7 @@ const OrderCard = ({ order }: {order:any}) => {
           ))}
           <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
         </td>
-        <td className="p-2 w-[5%]">
+        <td className="p-2 w-[3%]">
           {formatDateTime(order.createdAt).split(',')[0]}
         </td>
         <td className="p-4 w-[15%]">
@@ -146,7 +147,7 @@ const OrderCard = ({ order }: {order:any}) => {
             </select>
           </div>
         </td>
-        <td className="p-2 w-[10%]">
+        {/* <td className="p-2 w-[20%]">
           <div className="flex gap-x-2 justify-start items-center">
             <Icon
               icon={
@@ -158,6 +159,88 @@ const OrderCard = ({ order }: {order:any}) => {
             />
             <span className="text-sm md:text-md lg:text-lg capitalize">
               {order?.paymentMethod}
+              <span className="text-sm md:text-md lg:text-lg">
+  {order?.paymentDetails && (
+    <div
+      className={
+        `inline-block px-2 py-1 ml-2 rounded-full  text-xs font-semibold " +
+        ${order?.paymentDetails?.status === "COMPLETE" ? "bg-green-300 text-green-800" :
+         order?.paymentDetails?.status === "PENDING" ? "bg-yellow-300 text-yellow-800" :
+         order?.paymentDetails?.status === "FULL_REFUND" ? "bg-blue-300 text-blue-800" :
+         order?.paymentDetails?.status === "PARTIAL_REFUND" ? "bg-purple-300 text-purple-800" :
+         order?.paymentDetails?.status === "AMBIGUOUS" ? "bg-gray-300 text-gray-800" :
+         order?.paymentDetails?.status === "NOT_FOUND" ? "bg-red-300 text-red-800" :
+         order?.paymentDetails?.status === "CANCELLED" ? "bg-black text-gray-200" : "bg-gray-300"}`
+      }
+    >
+      Status: {order?.paymentDetails?.status || 'null'}
+    </div>
+  )}
+</span>
+            </span>
+          </div>
+        </td> */}
+
+
+<td className="p-2 w-[20%] relative">
+          <div className="flex gap-x-2 justify-start items-center">
+            <Icon
+              icon={order?.paymentMethod === "cash" ? "ph:money" : "duo-icons:credit-card"}
+              className="text-primary-600 text-xl lg:text-2xl"
+            />
+            <span
+              className="text-sm md:text-md lg:text-lg capitalize relative"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {order?.paymentMethod}
+
+              {/* Status Badge */}
+              {order?.paymentDetails && (
+                <div
+                  className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-semibold ${
+                    order?.paymentDetails?.status === "COMPLETE"
+                      ? "bg-green-300 text-green-800"
+                      : order?.paymentDetails?.status === "PENDING"
+                      ? "bg-yellow-300 text-yellow-800"
+                      : order?.paymentDetails?.status === "FULL_REFUND"
+                      ? "bg-blue-300 text-blue-800"
+                      : order?.paymentDetails?.status === "PARTIAL_REFUND"
+                      ? "bg-purple-300 text-purple-800"
+                      : order?.paymentDetails?.status === "AMBIGUOUS"
+                      ? "bg-gray-300 text-gray-800"
+                      : order?.paymentDetails?.status === "NOT_FOUND"
+                      ? "bg-red-300 text-red-800"
+                      : order?.paymentDetails?.status === "CANCELLED"
+                      ? "bg-black text-gray-200"
+                      : "bg-gray-300 text-gray-800"
+                  }`}
+                >
+                  Status: {order?.paymentDetails?.status || "null"}
+                </div>
+              )}
+
+              {/* eSewa Payment Details Tooltip on Hover */}
+              {order?.paymentMethod === "esewa" && order?.paymentDetails && isHovered && (
+                <div className="absolute left-0 mt-2 w-[250px] bg-white shadow-lg border p-3 rounded-lg z-10">
+                  <h3 className="font-semibold text-gray-700">Payment Details</h3>
+                  <p className="text-sm text-gray-600">
+                    <strong>Transaction Code:</strong> {order.paymentDetails.transaction_code || "N/A"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Status:</strong> {order.paymentDetails.status || "N/A"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Total Amount:</strong> Rs {order.paymentDetails.total_amount || "N/A"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Transaction UUID:</strong> {order.paymentDetails.transaction_uuid || "N/A"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Product Code:</strong> {order.paymentDetails.product_code || "N/A"}
+                  </p>
+                </div>
+              )}
             </span>
           </div>
         </td>
