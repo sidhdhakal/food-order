@@ -3,7 +3,6 @@ import { Order } from "../Utils/types";
 
 const OrderStatus = ({ setIsActiveComponent }: {setIsActiveComponent:(name:string)=>void}) => {
   const { data, isLoading } = useGetCurrentOrder();
-
   return (
     <div onClick={() => setIsActiveComponent("Orders")} className="flex flex-col justify-start items-start gap-y-2">
       {data?.doc?.slice(0, 2).map((data: Order) => {

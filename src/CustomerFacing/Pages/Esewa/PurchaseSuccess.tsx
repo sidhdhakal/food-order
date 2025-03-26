@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 // import { useSearchParams } from "react-router-dom";
 import { useCreateOrder } from "../../../Queries/order/useCreateOrder";
+import { useSearchParams } from "react-router-dom";
 
 const PurchaseSuccess = () => {
-  // const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
 
   // const transactionId = searchParams.get("uuid");
   // const amount = searchParams.get("amount");
-  // const productCode = searchParams.get("code");
-
+  const esewaData = searchParams.get("data");
   const savedCartData = window.localStorage.getItem('Cart');
   
   let parsedCartData = null;
@@ -27,7 +27,7 @@ const PurchaseSuccess = () => {
       // console.log(res)
       if (savedCartData) {
         try {
-          await createOrder(parsedCartData); 
+          await createOrder({...parsedCartData, esewaData}); 
         } catch (error) {
           console.error("Order creation failed:", error);
         } finally {

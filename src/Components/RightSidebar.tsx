@@ -8,6 +8,7 @@ import OrderStatus from "./OrderStatus";
 import toast from "react-hot-toast";
 import CryptoJS from "crypto-js";
 import CheckLogin from "../Utils/CheckLogin";
+import { useGetCurrentOrder } from "../Queries/order/useGetCurrentOrder";
 // import createSignature from "../Utils/createSignature";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
@@ -15,6 +16,9 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   const {createOrder, isPending}=useCreateOrder();
   const [paymentMethod, setPaymentMethod] = useState("esewa");
   const [message, setMessage]=useState('')
+
+  const { data:CurrentOrder} = useGetCurrentOrder();
+  console.log(CurrentOrder)
 
   const cartItems = Object.values(cart);
   const subtotal = cartItems.reduce(
@@ -57,7 +61,7 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
           "signature": "",
           "signed_field_names": "total_amount,transaction_uuid,product_code",
        
-          "success_url": `${import.meta.env.VITE_URL}/esewa/purchase_success?uuid=${uuid}&amount=${totalPayment.toFixed(2)}&code=EPAYTEST&`,
+          "success_url": `${import.meta.env.VITE_URL}/esewa/purchase_success`,
           "tax_amount": "0",
           "total_amount": totalPayment.toFixed(2).toString(),
           "transaction_uuid":uuid
@@ -200,7 +204,7 @@ function createSignature(message:string) {
               </div>
             </div>
             <Button
-            disabled={isPending}
+            disabled={isPending || CurrentOrder?.doc?.length>=2}
             onClick={handlePlaceOrder}
             className="
             py-3 lg:py-3 text-center 
@@ -211,7 +215,7 @@ function createSignature(message:string) {
              text-sm sm:text-md lg:text-md 4xl:text-[1rem] disabled:bg-zinc-300
           ">
             <Icon icon="icon-park-twotone:buy" className="text-base sm:text-[1.6rem]" />
-            {isPending?'Placing Order...':'Place Order'}
+            {CurrentOrder?.doc?.length>=2?'You have 2 Pending Order':isPending?'Placing Order...':'Place Order'}
             </Button>
           </div>
         </div>

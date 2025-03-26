@@ -191,7 +191,6 @@ export async function deleteFoodApi(id: any) {
 }
 
 export async function getRecommendedFoodsApi() {
-  console.log('recommended foods')
   try {
     const res = await fetch(
       `${import.meta.env.VITE_BACKEND_URL}/api/food/getrecommendedfoods`,

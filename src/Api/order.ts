@@ -7,7 +7,7 @@ const userToken=getCookie('foodmateuser')
  const encryptData = (data:any) => {
         return CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_RSA_SECRET_KEY).toString();
     };
-export async function createOrderApi({items,message, paymentMethod}:any) {
+export async function createOrderApi({items,message, paymentMethod, esewaData}:any) {
     if(!userToken){
         throw new Error("You are not Logged In! Please Login to Place Order")
     }
@@ -19,7 +19,7 @@ export async function createOrderApi({items,message, paymentMethod}:any) {
           "Content-Type": "application/json",
           'Authorization':`Bearer ${removeQuotes(userToken)}`
         },
-        body: JSON.stringify({data:encryptedData})
+        body: JSON.stringify({data:encryptedData, esewaData})
       });
   
       const data = await res.json();
