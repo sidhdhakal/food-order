@@ -1,5 +1,6 @@
 const Order = require("../models/Order");
 const User = require("../models/User");
+const { decodeBase64 } = require("../Utils/decodeBase64");
 const { decryptData } = require('../Utils/decryptData');
 exports.createOrder = async (req, res) => {
   try {
@@ -43,12 +44,31 @@ exports.createOrder = async (req, res) => {
       ({  image, ...rest }) => rest
     );
 
+    let paymentDetails=null;
+    console.log("PaymentMethod",decryptedData.paymentMethod)
+    if(decryptedData.paymentMethod=='esewa'){
+      const data=req.body.esewaData
+      console.log("Data",data)
+      const decryptedEsewaData=decodeBase64(data)
+      console.log(decryptedEsewaData)
+      paymentDetails={
+        transaction_code:decryptedEsewaData.transaction_code,
+        status:decryptedEsewaData.status,
+        total_amount:decryptedEsewaData.total_amount,
+        transaction_uuid:decryptedEsewaData.transaction_uuid,
+        product_code:decryptedEsewaData.product_code,
+      }
+    }
+
+    console.log(paymentDetails)
+
     const orderData = {
       userId: user._id,
       items: updatedItems,
       message: decryptedData.message,
       paymentMethod: decryptedData.paymentMethod,
       currentStatus: { status: "Order Placed", time: Date.now() },
+      paymentDetails
     };
     
     const newOrder = await Order.create(orderData);
@@ -374,3 +394,10 @@ exports.getTodaysOrder = async (req, res) => {
       });
     }
   };
+
+
+  exports.verifyEsewa = async(req,res)=>{
+    const data=req.params.data
+    const decryptedData=decodeBase64(data)
+    res.status(200).json({success:true, data:decryptedData})
+  }

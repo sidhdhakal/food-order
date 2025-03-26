@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order')
 
-const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders, cancelCurrentOrder } = require('../controllers/OrderController');
+const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders, cancelCurrentOrder, verifyEsewa } = require('../controllers/OrderController');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 router.get('/', (req, res) => {
@@ -29,5 +29,7 @@ router.put('/updatecurrentorder',
 router.put('/cancelorder',
   protect,
   cancelCurrentOrder)
+
+router.post('/verifyesewa/:data',verifyEsewa)
 
 module.exports=router
