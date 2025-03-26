@@ -155,9 +155,25 @@ const CurrentOrderCard = () => {
                     }
                     className="text-primary-600 text-xl lg:text-2xl"
                   />
-                  <span className="text-sm md:text-md lg:text-lg">
-                    {currentOrder?.paymentMethod}
-                  </span>
+<span className="text-sm md:text-md lg:text-lg">
+  {currentOrder?.paymentMethod}
+  {currentOrder?.paymentDetails && (
+    <div
+      className={
+        `inline-block px-2 py-1 ml-2 rounded-full  text-xs font-semibold " +
+        ${currentOrder?.paymentDetails?.status === "COMPLETE" ? "bg-green-300 text-green-800" :
+         currentOrder?.paymentDetails?.status === "PENDING" ? "bg-yellow-300 text-yellow-800" :
+         currentOrder?.paymentDetails?.status === "FULL_REFUND" ? "bg-blue-300 text-blue-800" :
+         currentOrder?.paymentDetails?.status === "PARTIAL_REFUND" ? "bg-purple-300 text-purple-800" :
+         currentOrder?.paymentDetails?.status === "AMBIGUOUS" ? "bg-gray-300 text-gray-800" :
+         currentOrder?.paymentDetails?.status === "NOT_FOUND" ? "bg-red-300 text-red-800" :
+         currentOrder?.paymentDetails?.status === "CANCELLED" ? "bg-black text-gray-200" : "bg-gray-300"}`
+      }
+    >
+      Status: {currentOrder?.paymentDetails?.status}
+    </div>
+  )}
+</span>
                 </div>
                   
                 {currentOrder?.statusHistory?.length < 2 &&

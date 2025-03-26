@@ -18,7 +18,6 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   const [message, setMessage]=useState('')
 
   const { data:CurrentOrder} = useGetCurrentOrder();
-  console.log(CurrentOrder)
 
   const cartItems = Object.values(cart);
   const subtotal = cartItems.reduce(
