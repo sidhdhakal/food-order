@@ -74,6 +74,28 @@ const orderSchema = new Schema({
       required:false
     },
   },
+  paymentDetails:{
+    transaction_code:{
+      type:String,
+      required:false
+    },
+    status:{
+      type:String,
+      required:false
+    },
+    total_amount:{
+      type:String,
+      required:false
+    },
+    transaction_uuid:{
+      type:String,
+      required:false
+    },
+    product_code:{
+      type:String,
+      required:false
+    },
+  },
   feedback:{
     type:Boolean,
     required:false,
