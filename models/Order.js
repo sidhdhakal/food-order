@@ -106,7 +106,7 @@ const orderSchema = new Schema({
   },
   paymentMethod: {
     type: String,
-    enum: ["esewa", "cash"],
+    enum: ["esewa", "cash",'Not Paid'],
     required:false
   },
   createdAt: {

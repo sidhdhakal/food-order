@@ -401,3 +401,77 @@ exports.getTodaysOrder = async (req, res) => {
     const decryptedData=decodeBase64(data)
     res.status(200).json({success:true, data:decryptedData})
   }
+
+
+  exports.updatePayment = async (req, res)=>{
+    const paymentMethod=req.body.paymentMethod
+    let paymentDetails=null
+    if(paymentMethod=='esewa'){
+      const data=req.body.esewaData
+      console.log("Data",data)
+      const decryptedEsewaData=decodeBase64(data)
+      console.log(decryptedEsewaData)
+      paymentDetails={
+        transaction_code:decryptedEsewaData.transaction_code,
+        status:decryptedEsewaData.status,
+        total_amount:decryptedEsewaData.total_amount,
+        transaction_uuid:decryptedEsewaData.transaction_uuid,
+        product_code:decryptedEsewaData.product_code,
+      }
+    }
+    let updatedOrder = await Order.findByIdAndUpdate(
+      req.body._id,
+      {
+        paymentMethod: req.body.paymentMethod,
+        paymentDetails
+      },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(400).json({
+        success: false,
+        message: "Failed to Cancel order!",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Payed Successfully",
+    });
+  }
+
+
+  exports.getNotPaidOrders = async (req, res) => {
+    try {
+      const user = await User.findById( req.user._id );
+  
+      if (!user) {
+        return res.status(404).json({
+          success: true,
+          message: "User Not Found",
+        });
+      }
+      const order = await Order.find({
+        paymentMethod:'Not Paid'
+      }).sort({ createdAt: -1 });
+  
+      if (order) {
+        return res.status(200).json({
+          success: true,
+          message: "Got Unpaid Order",
+          doc: order,
+        });
+      }
+      return res.status(400).json({
+        success: true,
+        message: "No Unpaid Order",
+      });
+    } catch (err) {
+      console.log(err);
+      res.status(400).json({
+        success: false,
+        message: "Internal Server Error!",
+      });
+    }
+  };

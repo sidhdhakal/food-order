@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order')
 
-const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders, cancelCurrentOrder, verifyEsewa } = require('../controllers/OrderController');
+const { createOrder, getCurrentOrder, updateCurrentOrder, getTodaysOrder, getOlderOrders, getAllOrders, cancelCurrentOrder, verifyEsewa, updatePayment, getNotPaidOrders } = require('../controllers/OrderController');
 const { protect } = require('../Utils/Protect');
 const { restrictTo } = require('../Utils/RestrictTo');
 router.get('/', (req, res) => {
@@ -31,5 +31,8 @@ router.put('/cancelorder',
   cancelCurrentOrder)
 
 router.post('/verifyesewa/:data',verifyEsewa)
+
+router.put('/updatepayment',protect,updatePayment)
+router.get('/getnotpaidorders',protect,getNotPaidOrders)
 
 module.exports=router
