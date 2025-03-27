@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import DialogModal from "../../Components/DialogModal";
 import { Item } from "../../Utils/types";
 import formatDateTime from "../../Utils/formatDateTime";
+import { useUpdateOrderToPaid } from "../../Queries/order/useUpdatetoPaid";
 
 const filterOptions = [
   { value: "Order Placed", label: "Order Placed", icon: "ph:clock" },
@@ -37,6 +38,7 @@ const OrderCard = ({ order }: {order:any}) => {
   );
 
   const { updateOrder, isPending , isSuccess} = useUpdateOrder();
+  const { updateOrderToPaid, isPending :payPending, isSuccess:paySuccess} = useUpdateOrderToPaid();
 
   const handleChange = ({ _id, status }: { _id: string; status: string }) => {
     if (status === "Cancelled")
@@ -44,6 +46,9 @@ const OrderCard = ({ order }: {order:any}) => {
     updateOrder({ _id, status });
   };
 
+  const handleUpdateToPaid=({_id}:any)=>{
+      updateOrderToPaid({_id, paymentMethod:'cash'})
+  }
   useEffect(()=>{
     if(isSuccess)
         setDeleteDialogOpen((prev) => ({ ...prev, id: null, st: null }))
@@ -94,7 +99,7 @@ const OrderCard = ({ order }: {order:any}) => {
         </td>
 
         
-        <td className="p-2 w-[20%]">
+        <td className="p-2 w-[15%]">
           {order.items.map((item: Item) => (
             <div key={item._id} className="w-full h-full">
               <h1>
@@ -108,10 +113,10 @@ const OrderCard = ({ order }: {order:any}) => {
           ))}
           <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
         </td>
-        <td className="p-2 w-[3%]">
+        <td className="p-2 w-[2%]">
           {formatDateTime(order.createdAt).split(',')[0]}
         </td>
-        <td className="p-4 w-[15%]">
+        <td className="p-4 w-[10%]">
           {order.message==""?'-':order.message}
           {order?.cancelMessage &&
           <div className="mt-2">
@@ -182,7 +187,7 @@ const OrderCard = ({ order }: {order:any}) => {
         </td> */}
 
 
-<td className="p-2 w-[20%] relative">
+<td className="p-2 w-[25%] relative">
           <div className="flex gap-x-2 justify-start items-center">
             <Icon
               icon={order?.paymentMethod === "cash" ? "ph:money" : "duo-icons:credit-card"}
@@ -194,6 +199,9 @@ const OrderCard = ({ order }: {order:any}) => {
               onMouseLeave={() => setIsHovered(false)}
             >
               {order?.paymentMethod}
+
+              {order?.paymentMethod=='Not Paid' &&
+              <button onClick={()=>handleUpdateToPaid({_id:order._id})} className="text-sm mx-2 bg-green-600 text-white px-2 py-1 rounded-md">Update to Paid</button>}
 
               {/* Status Badge */}
               {order?.paymentDetails && (
