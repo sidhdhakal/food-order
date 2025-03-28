@@ -6,18 +6,17 @@ import DialogModal from "../DialogModal";
 import { useCancelOrder } from "../../Queries/order/useCancelOrder";
 import { useState } from "react";
 import Button from "../UI/Button";
+import PayViaEsewa from "../../CustomerFacing/Features/PayViaEsewa";
 
 const CurrentOrderCard = () => {
   const { data, isLoading, isError } = useGetCurrentOrder();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("");
   const { cancelOrder, isPending } = useCancelOrder();
 
-  if (isLoading)
-    return <Loading>Loading...</Loading>
+  if (isLoading) return <Loading>Loading...</Loading>;
 
-  if (isError)
-    return <IsError>Cannot Get Your Current Order</IsError>
+  if (isError) return <IsError>Cannot Get Your Current Order</IsError>;
 
   if (data?.doc?.length === 0)
     return (
@@ -27,19 +26,19 @@ const CurrentOrderCard = () => {
     );
 
   const handleCancelUser = () => {
-    if (message === "")
-      return
-    cancelOrder({ _id: deleteDialogOpen, message })
-  }
+    if (message === "") return;
+    cancelOrder({ _id: deleteDialogOpen, message });
+    setDeleteDialogOpen(null)
+  };
 
   return (
     <div className="w-full">
       {deleteDialogOpen !== null && (
         <DialogModal
           message={`Do you really want to Cancel Current Order?`}
-          btntext="Delete"
+          btntext="Cancel"
           isPending={isPending}
-          pendingText="Deleting..."
+          pendingText="Cancelling..."
           onConfirm={handleCancelUser}
           showInput={true}
           inputMessage={message}
@@ -82,7 +81,9 @@ const CurrentOrderCard = () => {
           steps = [
             {
               name: "Cancelled",
-              time: new Date(currentOrder?.currentStatus?.time).toLocaleTimeString(),
+              time: new Date(
+                currentOrder?.currentStatus?.time
+              ).toLocaleTimeString(),
               status: "cancelled",
             },
           ];
@@ -101,7 +102,9 @@ const CurrentOrderCard = () => {
                   </h2>
                   <div
                     className={`px-3 py-1 rounded-full text-sm md:text-md lg:text-lg ${
-                      isCancelled ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"
+                      isCancelled
+                        ? "bg-red-100 text-red-800"
+                        : "bg-yellow-100 text-yellow-800"
                     }`}
                   >
                     {currentOrder?.currentStatus?.status}
@@ -155,35 +158,58 @@ const CurrentOrderCard = () => {
                     }
                     className="text-primary-600 text-xl lg:text-2xl"
                   />
-<span className="text-sm md:text-md lg:text-lg">
-  {currentOrder?.paymentMethod}
-  {currentOrder?.paymentDetails && (
-    <div
-      className={
-        `inline-block px-2 py-1 ml-2 rounded-full  text-xs font-semibold " +
-        ${currentOrder?.paymentDetails?.status === "COMPLETE" ? "bg-green-300 text-green-800" :
-         currentOrder?.paymentDetails?.status === "PENDING" ? "bg-yellow-300 text-yellow-800" :
-         currentOrder?.paymentDetails?.status === "FULL_REFUND" ? "bg-blue-300 text-blue-800" :
-         currentOrder?.paymentDetails?.status === "PARTIAL_REFUND" ? "bg-purple-300 text-purple-800" :
-         currentOrder?.paymentDetails?.status === "AMBIGUOUS" ? "bg-gray-300 text-gray-800" :
-         currentOrder?.paymentDetails?.status === "NOT_FOUND" ? "bg-red-300 text-red-800" :
-         currentOrder?.paymentDetails?.status === "CANCELLED" ? "bg-black text-gray-200" : "bg-gray-300"}`
-      }
-    >
-      Status: {currentOrder?.paymentDetails?.status}
-    </div>
-  )}
-</span>
+                  <span className="text-sm md:text-md lg:text-lg">
+                    {currentOrder?.paymentMethod}
+                    {currentOrder?.paymentDetails && (
+                      <div
+                        className={`inline-block px-2 py-1 ml-2 rounded-full  text-xs font-semibold " +
+        ${
+          currentOrder?.paymentDetails?.status === "COMPLETE"
+            ? "bg-green-200 text-green-800"
+            : currentOrder?.paymentDetails?.status === "PENDING"
+            ? "bg-yellow-300 text-yellow-800"
+            : currentOrder?.paymentDetails?.status === "FULL_REFUND"
+            ? "bg-blue-300 text-blue-800"
+            : currentOrder?.paymentDetails?.status === "PARTIAL_REFUND"
+            ? "bg-purple-300 text-purple-800"
+            : currentOrder?.paymentDetails?.status === "AMBIGUOUS"
+            ? "bg-gray-300 text-gray-800"
+            : currentOrder?.paymentDetails?.status === "NOT_FOUND"
+            ? "bg-red-300 text-red-800"
+            : currentOrder?.paymentDetails?.status === "CANCELLED"
+            ? "bg-black text-gray-200"
+            : "bg-gray-300"
+        }`}
+                      >
+                        Status: {currentOrder?.paymentDetails?.status}
+                      </div>
+                    )}
+                  </span>
+                  {currentOrder.paymentMethod === "Not Paid" &&
+                    currentOrder?.currentStatus?.status !== "Cancelled" && (
+                      <PayViaEsewa
+                        id={currentOrder._id}
+                        totalPayment={Number(
+                          currentOrder?.items
+                            ?.reduce(
+                              (acc: number, item: any) =>
+                                acc + item.price * item.qty,
+                              0
+                            )
+                            .toFixed(2)
+                        )}
+                      />
+                    )}
                 </div>
-                  
-                {currentOrder?.statusHistory?.length < 2 &&
-                  <Button 
-                    onClick={() => setDeleteDialogOpen(currentOrder._id)} 
+
+                {currentOrder?.statusHistory?.length < 2 && (
+                  <Button
+                    onClick={() => setDeleteDialogOpen(currentOrder._id)}
                     className="!w-fit !mt-4 !bg-zinc-100 !text-black !hover:bg-zinc-200"
                   >
                     Cancel Order
                   </Button>
-                }
+                )}
               </div>
 
               {/* Order Progress */}
@@ -243,15 +269,16 @@ const CurrentOrderCard = () => {
                             {step.time}
                           </span>
                         </div>
-                        {index < steps.length - 1 && step.status !== "cancelled" && (
-                          <div
-                            className={`w-px h-4 ml-3 ${
-                              step.status === "completed"
-                                ? "bg-green-500"
-                                : "bg-gray-200"
-                            }`}
-                          />
-                        )}
+                        {index < steps.length - 1 &&
+                          step.status !== "cancelled" && (
+                            <div
+                              className={`w-px h-4 ml-3 ${
+                                step.status === "completed"
+                                  ? "bg-green-500"
+                                  : "bg-gray-200"
+                              }`}
+                            />
+                          )}
                       </div>
                     </div>
                   ))}

@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useMemo } from 'react';
 import { Item } from "../../Utils/types";
+import PayViaEsewa from "../../CustomerFacing/Features/PayViaEsewa";
 
 
 
@@ -77,8 +78,20 @@ const OrderCard = ({ order, setOrder, setfeedbackOpen }: {order:any, setOrder:an
 
       <div className="border-t pt-2 mt-2 flex justify-between items-center">
         <div className="text-sm">Payment Method</div>
-        <div className="flex items-center gap-1">
-          <Icon icon={icon} className="text-primary-600" />
+        <div className="flex items-center gap-1 text-nowrap">
+        {order.paymentMethod=='Not Paid' && order?.currentStatus?.status!='Cancelled' &&
+                <PayViaEsewa id={order._id} 
+                totalPayment={Number(
+                  order?.items
+                    ?.reduce(
+                      (acc: number, item: any) =>
+                        acc + item.price * item.qty,
+                      0
+                    )
+                    .toFixed(2)
+                )}/>
+        }
+          <Icon icon={icon} className="text-primary-600 " />
           {order.paymentMethod}
         </div>
       </div>
