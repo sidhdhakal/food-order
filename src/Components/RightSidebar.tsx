@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import CryptoJS from "crypto-js";
 import CheckLogin from "../Utils/CheckLogin";
 import { useGetCurrentOrder } from "../Queries/order/useGetCurrentOrder";
+import { useGetNotPaidOrders } from "../Queries/order/useGetNotPaidOrders";
 // import createSignature from "../Utils/createSignature";
 
 const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, setIsActiveComponent:any}) => {
@@ -18,6 +19,8 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
   const [message, setMessage]=useState('')
 
   const { data:CurrentOrder} = useGetCurrentOrder();
+  const { data:notPaidOrders} = useGetNotPaidOrders();
+  console.log(notPaidOrders)
 
   const cartItems = Object.values(cart);
   const subtotal = cartItems.reduce(
@@ -171,7 +174,7 @@ function createSignature(message:string) {
               <div className="grid grid-cols-3 gap-x-2 rounded-[16px] sm:rounded-[20px]">
                 {["esewa", "cash", "Not Paid"].map((method) => (
                   <button
-                    // disabled={method=='paylater'}
+                    disabled={method=='Not Paid' && notPaidOrders?.doc?.length>=2}
                     key={method}
                     onClick={() => setPaymentMethod(method)}
                     className={`
@@ -185,6 +188,7 @@ function createSignature(message:string) {
                       ${paymentMethod === method 
                         ? "bg-primary-100/80 border-primary-400" 
                         : "border-transparent bg-white"}
+                       ${(method=='Not Paid' && notPaidOrders?.doc?.length>=2)?'text-gray-500':''}
                     `}
                   >
                     <Icon 
@@ -195,7 +199,7 @@ function createSignature(message:string) {
                         :
                         "solar:cash-out-bold-duotone"
                       } 
-                      className="text-base sm:text-[1.5rem]" 
+                      className={`text-base sm:text-[1.5rem]  ${(method=='Not Paid' && notPaidOrders?.doc?.length>=2)?'text-gray-500':''}`}
                     />
                     {method=='Not Paid'?'Pay later':method}
                   </button>
