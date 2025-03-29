@@ -13,6 +13,7 @@ import ProtectedRoute from './Admin/Pages/Main'
 import PurchaseFail from './CustomerFacing/Pages/Esewa/PurchaseFail'
 import PurchaseSuccess from './CustomerFacing/Pages/Esewa/PurchaseSuccess'
 import { CartProvider } from './Utils/CartContext'
+import PaymentSuccess from './CustomerFacing/Pages/Esewa/PaymentSuccess'
 
 function App() {
   const queryClient = new QueryClient()
@@ -37,6 +38,7 @@ function App() {
             <Route path='/resetpassword' element={<ResetPassword />}/>
             <Route path='/esewa/purchase_fail' element={<PurchaseFail />}/>
             <Route path='/esewa/purchase_success' element={<PurchaseSuccess />}/>
+            <Route path='/esewa/payment_success' element={<PaymentSuccess />}/>
 
             <Route path='/admin'>
             <Route path='' element={<ProtectedRoute />}/>
