@@ -128,10 +128,15 @@ const OrderCard = ({ order }: {order:any}) => {
           {formatDateTime(order.createdAt).split(',')[0]}
         </td>
         <td className="p-4 w-[10%]">
+        {order?.message ?
+          <div className="mt-2">
+          {order?.message}
+          </div>:'-'
+          }
           {order?.cancelMessage ?
           <div className="mt-2">
-          Cancel Reason: {order?.cancelMessage}
-          </div>:'-'
+          <span className="font-semibold">Cancel Reason:</span> {order?.cancelMessage}
+          </div>:''
           }
         </td>
         <td className="p-4 w-[10%]">
