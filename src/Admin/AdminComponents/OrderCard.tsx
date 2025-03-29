@@ -6,6 +6,7 @@ import DialogModal from "../../Components/DialogModal";
 import { Item } from "../../Utils/types";
 import formatDateTime from "../../Utils/formatDateTime";
 import { useUpdateOrderToPaid } from "../../Queries/order/useUpdatetoPaid";
+import { useRefund } from "../../Queries/useRefund";
 
 const filterOptions = [
   { value: "Order Placed", label: "Order Placed", icon: "ph:clock" },
@@ -38,7 +39,7 @@ const OrderCard = ({ order }: {order:any}) => {
   );
 
   const { updateOrder, isPending , isSuccess} = useUpdateOrder();
-  const { updateOrderToPaid, isPending :payPending, isSuccess:paySuccess} = useUpdateOrderToPaid();
+  const { updateOrderToPaid, } = useUpdateOrderToPaid();
 
   const handleChange = ({ _id, status }: { _id: string; status: string }) => {
     if (status === "Cancelled")
@@ -55,6 +56,16 @@ const OrderCard = ({ order }: {order:any}) => {
   },[isSuccess])
 
   const price=order.items.reduce((total:number, currentItem:any) => total + currentItem.price * currentItem.qty, 0)
+
+
+
+
+
+  const {refund} = useRefund()
+  const handleRefund = (_id:string)=>{
+    refund({_id})
+  }
+
   return (
     <>
       {deleteDialogOpen.id !== null && (
@@ -117,11 +128,10 @@ const OrderCard = ({ order }: {order:any}) => {
           {formatDateTime(order.createdAt).split(',')[0]}
         </td>
         <td className="p-4 w-[10%]">
-          {order.message==""?'-':order.message}
-          {order?.cancelMessage &&
+          {order?.cancelMessage ?
           <div className="mt-2">
           Cancel Reason: {order?.cancelMessage}
-          </div>
+          </div>:'-'
           }
         </td>
         <td className="p-4 w-[10%]">
@@ -201,14 +211,14 @@ const OrderCard = ({ order }: {order:any}) => {
               {order?.paymentMethod}
 
               {order?.paymentMethod=='Not Paid' &&
-              <button onClick={()=>handleUpdateToPaid({_id:order._id})} className="text-sm mx-2 bg-green-600 text-white px-2 py-1 rounded-md">Update to Paid</button>}
+              <button onClick={()=>handleUpdateToPaid({_id:order._id})} className="text-sm mx-2 bg-green-500 text-white px-2 py-1 rounded-md">Update to Paid</button>}
 
               {/* Status Badge */}
               {order?.paymentDetails && (
                 <div
                   className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-semibold ${
                     order?.paymentDetails?.status === "COMPLETE"
-                      ? "bg-green-300 text-green-800"
+                      ? "bg-green-200 text-green-800"
                       : order?.paymentDetails?.status === "PENDING"
                       ? "bg-yellow-300 text-yellow-800"
                       : order?.paymentDetails?.status === "FULL_REFUND"
@@ -250,6 +260,8 @@ const OrderCard = ({ order }: {order:any}) => {
                 </div>
               )}
             </span>
+            {order?.paymentMethod=='esewa' && order.currentStatus.status=='Cancelled' && order?.paymentDetails?.status=='COMPLETE' &&
+            <button onClick={()=>handleRefund(order._id)} className="mx-2  hover:underline">Refund</button>}
           </div>
         </td>
       </tr>
