@@ -453,9 +453,12 @@ exports.getTodaysOrder = async (req, res) => {
         });
       }
       const order = await Order.find({
-        paymentMethod:'Not Paid'
+        paymentMethod: 'Not Paid',
+        'currentStatus.status': { $ne: 'Cancelled' }
       }).sort({ createdAt: -1 });
-  
+      
+      
+      console.log(order)
       if (order) {
         return res.status(200).json({
           success: true,
@@ -475,3 +478,28 @@ exports.getTodaysOrder = async (req, res) => {
       });
     }
   };
+
+
+  exports.refund = async (req, res)=>{
+    let updatedOrder = await Order.findByIdAndUpdate(
+      req.body._id,
+      {
+        paymentDetails:{
+          status:'FULL_REFUND'
+        }
+      },
+      { new: true }
+    );
+
+    if (!updatedOrder) {
+      return res.status(400).json({
+        success: false,
+        message: "Failed Refund!",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Refund Successfully",
+    });
+  }
