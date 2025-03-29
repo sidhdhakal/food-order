@@ -6,6 +6,7 @@ export interface Food {
     sizes: FoodSize[];
     category: string;
     rating?: number; // Should be between 0-5 when provided
+    raters?:number;
     available?: boolean;
     veg?:boolean | null,
     createdAt?: Date; // Will be automatically set by the schema
