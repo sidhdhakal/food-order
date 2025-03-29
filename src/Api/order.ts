@@ -58,6 +58,29 @@ export async function createOrderApi({items,message, paymentMethod, esewaData}:a
     }
   }
 
+  export async function getNotPaidOrdersApi(){
+
+    try{
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/getnotpaidorders`, {
+        method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(token)}`
+        },
+      });
+  
+      const data=await res.json();
+      if(data.success){
+        return data
+      }  else {
+        throw new Error(data.message || "Error fetching data");
+      }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+  }
+
   export async function getCurrentOrderApi(){
     if(!userToken)
       return 
@@ -161,6 +184,31 @@ export async function createOrderApi({items,message, paymentMethod, esewaData}:a
   }
 
 
+  export async function updateOrderToPaidApi({_id,paymentMethod, esewaData }:any) {
+   
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updatepayment`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(token)}`
+        },
+        body: JSON.stringify({_id, paymentMethod, esewaData}),
+      });
+  
+      const data = await res.json();
+      if (data.success) {
+        return data;
+      } else {
+        throw new Error(data.message || "Error updating Category");
+      }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+  }
+
+
 
   export async function cancelOrderApi({_id, message}:any) {
    
@@ -179,6 +227,31 @@ export async function createOrderApi({items,message, paymentMethod, esewaData}:a
         return data;
       } else {
         throw new Error(data.message || "Error updating Category");
+      }
+    } catch (error) {
+      console.error("Error sending data to the server:", error);
+      throw error;
+    }
+  }
+
+
+  export async function refundApi({_id}:any) {
+   
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/refund`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization':`Bearer ${removeQuotes(userToken)}`
+        },
+        body: JSON.stringify({_id}),
+      });
+  
+      const data = await res.json();
+      if (data.success) {
+        return data;
+      } else {
+        throw new Error(data.message || "Error Refunding");
       }
     } catch (error) {
       console.error("Error sending data to the server:", error);
