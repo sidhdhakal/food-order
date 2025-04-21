@@ -5,12 +5,14 @@ const orderSchema = new Schema({
   userId: {
     type: String,
     required: true,
+    ref:"User"
   },
   items: [
     {
       itemId:{
         type:String,
-        required:false
+        required:false,
+        ref:"Food"
       },
       name: {
         type: String,

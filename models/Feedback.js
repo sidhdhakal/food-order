@@ -5,10 +5,12 @@ const feedbackSchema = new Schema({
   orderId: {
     type: String,
     required: true,
+    ref:"Order"
   },
   userId: {
     type: String,
     required: true,
+    ref:"User"
   },
   ratings: [
     {

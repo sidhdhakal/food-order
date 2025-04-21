@@ -29,6 +29,7 @@ const foodSchema = new Schema({
   category: {
     type: String,
     required: true,
+    ref:"Category"
   },
   rating: {
     type: Number,

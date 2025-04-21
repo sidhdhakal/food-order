@@ -195,7 +195,7 @@ exports.getRecommendedFoods = async (req, res) => {
     // Fetch last 5 orders of the user
     const recentOrders = await Order.find({ userId })
       .sort({ createdAt: -1 })
-      .limit(5);
+      // .limit(50);
 
     if (!recentOrders.length) {
       return res.json({ message: "No recent orders found", recommendations: [] });
