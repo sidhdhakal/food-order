@@ -4,10 +4,10 @@ exports.deleteOne = Model => async (req, res) => {
     const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {
-      res.status(401).json({ success: false, message: 'No Document of that ID' });
+      return res.status(401).json({ success: false, message: 'No Document of that ID' });
     }
 
-    res.status(204).json({
+    return res.status(200).json({
       success: true,
       message:"Deleted Successfully",
       doc
