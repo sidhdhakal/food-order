@@ -22,13 +22,6 @@ const Login = () => {
       setLoginError("Please fill out both fields");
       return;
     }
-  
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
-    if (!passwordRegex.test(password)) {
-      setLoginError("Password must be at least 8 characters long and contain at least one digit");
-      return;
-    }
-  
     login({ email, password });
   };
   

@@ -20,7 +20,7 @@ export function useDeleteCustomer() {
 
     },
     onError: (error) => {
-      console.error("Error Customer Category:", error);
+      console.error("Error Deleting Customer:", error);
       toast.error(` ${error.message}`);
     },
   });

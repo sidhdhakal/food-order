@@ -18,9 +18,9 @@ const SignUp = () => {
     if(!nameRegex.test(name))
       return toast.error("Name should not contain numbers or special characters")
 
-    const passwordRegex = /^(?=.*\d)[A-Za-z\d]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
     if (!passwordRegex.test(password)) {
-      return toast.error("Password must be at least 8 characters long and contain at least one number.");
+      return toast.error("Password must be at least 8 characters long and include uppercase, lowercase letters, and numbers");
     }
     signup({ name, email, password });
   };
