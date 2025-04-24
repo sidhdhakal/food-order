@@ -102,6 +102,13 @@ const EditProductForm = ({ onClose, product }: { onClose: () => void, product: F
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (files && files[0]) {
+        const allowedTypes = ['image/jpeg', 'image/png', 'image/svg+xml', 'image/webp'];
+
+             // Check if the file type is one of the allowed types
+        if (!allowedTypes.includes(files[0].type)) {
+            toast.error('Please upload a valid image file (JPG, JPEG, PNG, SVG, or WEBP)');
+            return;
+          }
             setImage(files[0]);
         }
     };
