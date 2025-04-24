@@ -8,12 +8,11 @@ import IsError from "../UI/IsError";
 
 const filterOptions = [
   { value: "All Orders", label: "All Orders", icon: "ph:list" },
-  //   { value: "Order Placed", label: "Order Placed", icon: "ph:clock" },
-  //   { value: "Order Confirmed", label: "Order Confirmed", icon: "ph:check-circle" },
-  //   { value: "Preparing", label: "Preparing", icon: "ph:cogs" },
-  //   { value: "Ready for Pickup", label: "Ready to Pickup", icon: "ph:shopping-bag" },
   { value: "Completed", label: "Completed", icon: "ph:thumbs-up" },
   { value: "Cancelled", label: "Cancelled", icon: "ph:thumbs-down" },
+  { value: "Not Paid", label: "Not Paid", icon: "ph:warning" },
+  { value: "esewa", label: "Esewa", icon: "ph:credit-card" },
+  { value: "cash", label: "Cash", icon: "ph:money" },
 ];
 
 const PreviousOrders = () => {
@@ -23,8 +22,9 @@ const PreviousOrders = () => {
   const filteredOrders =
     filterOption === "All Orders"
       ? data?.doc
+      : filterOption === "Not Paid" || filterOption === "esewa" || filterOption === "cash"
+      ? data?.doc?.filter((order: any) => order?.paymentMethod === filterOption)
       : data?.doc?.filter((order: any) => order?.currentStatus?.status === filterOption);
-
 
   return (
     <div className="w-full">
@@ -46,25 +46,17 @@ const PreviousOrders = () => {
         </div>
       </div>
 
-      {isLoading &&
-          <Loading>Loading...</Loading>
-        }
-        {isError &&
-          <IsError>Cannot get your Older orders</IsError>
-        }
-      {!isLoading && !isError &&
+      {isLoading && <Loading>Loading...</Loading>}
+      {isError && <IsError>Cannot get your Older orders</IsError>}
+      {!isLoading && !isError && (
         <div className="flex flex-col gap-3 mt-4">
-          {!filteredOrders || filteredOrders.length === 0
-            ?
+          {!filteredOrders || filteredOrders.length === 0 ? (
             <div className="py-5 text-xl text-zinc-400">There are no Older Orders</div>
-            :
-            filteredOrders.map((order: any) => (
-              <OrderListItem key={order._id} order={order} />
-            ))}
+          ) : (
+            filteredOrders.map((order: any) => <OrderListItem key={order._id} order={order} />)
+          )}
         </div>
-      }
-
-
+      )}
     </div>
   );
 };

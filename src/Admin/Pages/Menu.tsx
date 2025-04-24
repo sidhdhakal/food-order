@@ -199,6 +199,7 @@ const Menu = () => {
               <th className="p-4 pl-2 text-left"></th>
               <th className="p-4 pl-2 text-left">Name</th>
               <th className="p-4 pl-2 text-left">Description</th>
+              <th className="p-4 pl-2 text-left">Rating</th>
               <th className="p-4 pl-2 text-left">Category</th>
               <th className="p-4 pl-2 text-left">Sizes & Prices</th>
               <th className="p-4 pl-2 text-left">Availability</th>

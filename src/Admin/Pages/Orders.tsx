@@ -36,16 +36,18 @@ const Orders = () => {
     endDate: new Date(),
     key: "selection",
   });
-  
+
   const [submittedDateRange, setSubmittedDateRange] = useState({
     startDate: new Date(),
     endDate: new Date(),
   });
-  
+
   const { data, isLoading, isError } = useGetAllOrders();
   const [searchValue, setSearchValue] = useState("");
   const [filteredData, setFilteredData] = useState<Order[]>([]);
-  
+  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [paymentFilter, setPaymentFilter] = useState<string | null>(null);
+
   const [isPrinting, setIsPrinting] = useState(false);
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Orders = () => {
       startDate: dateRange.startDate,
       endDate: dateRange.endDate,
     });
-    
+
     if (data?.doc) {
       setFilteredData(data.doc);
     }
@@ -61,8 +63,8 @@ const Orders = () => {
 
   useEffect(() => {
     if (isPrinting) {
-      const style = document.createElement('style');
-      style.id = 'print-styles';
+      const style = document.createElement("style");
+      style.id = "print-styles";
       style.innerHTML = `
         @media print {
           body * {
@@ -80,9 +82,9 @@ const Orders = () => {
         }
       `;
       document.head.appendChild(style);
-      
+
       window.print();
-      
+
       setTimeout(() => {
         document.head.removeChild(style);
         setIsPrinting(false);
@@ -90,30 +92,55 @@ const Orders = () => {
     }
   }, [isPrinting]);
 
-  // Filter orders based on search value
   const filteredOrders = useMemo(() => {
     if (!filteredData || filteredData.length === 0) return [];
-
+  
     return filteredData.filter((order) => {
-      if (!order.user || typeof order.user !== 'object') return false;
+      if (!order.user || typeof order.user !== "object") return false;
+  
+      const name = order.user.name || "";
+      const email = order.user.email || "";
       
-      const name = order.user.name || '';
-      const email = order.user.email || '';
-      
-      return !searchValue || 
-        name.toLowerCase().includes(searchValue.toLowerCase()) ||
+      const matchesSearch = !searchValue || 
+        name.toLowerCase().includes(searchValue.toLowerCase()) || 
         email.toLowerCase().includes(searchValue.toLowerCase());
+  
+      const matchesStatus = !statusFilter || order.currentStatus?.status === statusFilter;
+      const matchesPayment = !paymentFilter || order.paymentMethod === paymentFilter;
+  
+      return matchesSearch && matchesStatus && matchesPayment;
     });
-  }, [searchValue, filteredData]);
+  }, [searchValue, filteredData, statusFilter, paymentFilter]);
+  
+
+  // Filter orders based on search value
+  // const filteredOrders = useMemo(() => {
+  //   if (!filteredData || filteredData.length === 0) return [];
+
+  //   return filteredData.filter((order) => {
+  //     if (!order.user || typeof order.user !== "object") return false;
+
+  //     const name = order.user.name || "";
+  //     const email = order.user.email || "";
+
+  //     return (
+  //       !searchValue ||
+  //       name.toLowerCase().includes(searchValue.toLowerCase()) ||
+  //       email.toLowerCase().includes(searchValue.toLowerCase())
+  //     );
+  //   });
+  // }, [searchValue, filteredData]);
 
   // Get completed or cancelled orders for invoice
   const invoiceOrders = useMemo(() => {
     // First filter by search value (for specific user)
-    const userFilteredOrders = filteredOrders.filter(order => 
-      order.currentStatus && 
-      (order.currentStatus.status === 'Completed' || order.currentStatus.status === 'Cancelled')
+    const userFilteredOrders = filteredOrders.filter(
+      (order) =>
+        order.currentStatus &&
+        (order.currentStatus.status === "Completed" ||
+          order.currentStatus.status === "Cancelled")
     );
-    
+
     return userFilteredOrders;
   }, [filteredOrders]);
 
@@ -126,30 +153,30 @@ const Orders = () => {
       startDate: dateRange.startDate,
       endDate: dateRange.endDate,
     });
-    
+
     if (data?.doc && Array.isArray(data.doc)) {
-      const filtered = data.doc.filter((order:any) => {
+      const filtered = data.doc.filter((order: any) => {
         if (!order.createdAt) return false;
-        
+
         const orderDate = new Date(order.createdAt);
-        
+
         const startDate = new Date(dateRange.startDate);
         startDate.setHours(0, 0, 0, 0);
-        
+
         const endDate = new Date(dateRange.endDate);
         endDate.setHours(23, 59, 59, 999);
-        
+
         if (isNaN(orderDate.getTime())) return false;
-        
+
         return isWithinInterval(orderDate, {
           start: startDate,
           end: endDate,
         });
       });
-      
+
       setFilteredData(filtered);
     }
-    
+
     setShowDatePicker(false);
   };
 
@@ -159,13 +186,13 @@ const Orders = () => {
     }
   };
 
-  // Get the current search user's name for the invoice title
   const searchUserName = useMemo(() => {
     if (!searchValue || !filteredOrders.length) return null;
-    
-    // Extract user name from the first filtered order
+
     return filteredOrders[0]?.user?.name || null;
   }, [searchValue, filteredOrders]);
+
+  
 
   return (
     <div className="w-full relative">
@@ -174,19 +201,50 @@ const Orders = () => {
           className="flex"
           placeholder="Search Orders by User"
           value={searchValue}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setSearchValue(e.target.value)
+          }
         />
       </div>
       <div className="w-full h-auto min-h-[70vh] productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4 flex justify-between">
           <h1 className="text-[1.5rem] font-semibold">
             Orders ({filteredOrders?.length || 0})
-            {searchValue && searchUserName && <span className="ml-2 text-gray-500 text-sm">
-              for {searchUserName}
-            </span>}
+            {searchValue && searchUserName && (
+              <span className="ml-2 text-gray-500 text-sm">
+                for {searchUserName}
+              </span>
+            )}
           </h1>
 
           <div className="relative w-fit flex gap-x-2">
+          <div className="flex gap-4">
+            <select
+              className="px-4 py-2 border rounded-md bg-white"
+              value={statusFilter || ""}
+              onChange={(e) => setStatusFilter(e.target.value || null)}
+            >
+              <option value="">All Statuses</option>
+              <option value="Order Placed">Order Placed</option>
+              <option value="Order Confirmed">Order Confirmed</option>
+              <option value="Preparing">Preparing</option>
+              <option value="Ready for Pickup">Ready for Pickup</option>
+              <option value="Completed">Completed</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+
+            {/* Payment Method Filter */}
+            <select
+              className="px-4 py-2 border rounded-md bg-white"
+              value={paymentFilter || ""}
+              onChange={(e) => setPaymentFilter(e.target.value || null)}
+            >
+              <option value="">All Payment Methods</option>
+              <option value="esewa">Esewa</option>
+              <option value="Not Paid">Not Paid</option>
+              <option value="cash">Cash</option>
+            </select>
+          </div>
             <button
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm hover:bg-gray-50"
               onClick={() => setShowDatePicker(!showDatePicker)}
@@ -221,13 +279,17 @@ const Orders = () => {
               </div>
             )}
             <Button onClick={handleSubmit}>Submit</Button>
-            <Button 
+            <Button
               onClick={handlePrint}
               disabled={invoiceOrders.length === 0 || isPrinting}
               className="flex items-center gap-1 !text-nowrap"
             >
               <Icon icon="mdi:printer" className="text-white" />
-              {isPrinting ? "Printing..." : searchValue ? `Print ${searchUserName || 'User'} Invoice` : "Print All Invoices"}
+              {isPrinting
+                ? "Printing..."
+                : searchValue
+                ? `Print ${searchUserName || "User"} Invoice`
+                : "Print All Invoices"}
             </Button>
           </div>
         </div>
@@ -273,9 +335,9 @@ const Orders = () => {
       </div>
 
       <div className="print-section">
-        <InvoicePrintComponent 
-          invoiceOrders={invoiceOrders} 
-          submittedDateRange={submittedDateRange} 
+        <InvoicePrintComponent
+          invoiceOrders={invoiceOrders}
+          submittedDateRange={submittedDateRange}
           isPrinting={isPrinting}
         />
       </div>

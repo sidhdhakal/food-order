@@ -17,13 +17,21 @@ const Login = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     if (!email || !password) {
       setLoginError("Please fill out both fields");
       return;
     }
-    login({email, password})
+  
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+    if (!passwordRegex.test(password)) {
+      setLoginError("Password must be at least 8 characters long and contain at least one digit");
+      return;
+    }
+  
+    login({ email, password });
   };
+  
 
   const {passwordResetEmail, isPending:isEmailPending}=usePasswordResetEmail()
 

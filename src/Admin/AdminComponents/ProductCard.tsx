@@ -18,6 +18,7 @@ const ProductCard = ({ product, setIsDialogOpen, setEditProductForm, isDeletePen
       </td>
       <td className="p-2 ">{product.name}</td>
       <td className="p-2 ">{product.description}</td>
+      <td className="p-2 ">{product.raters==0?'Not Rated Yet':`${product.rating?.toFixed(1)} By ${product?.raters} Users`}</td>
       <td className="p-2 ">{product.category}</td>
       <td className="p-2 ">
         {product.sizes.map((size: FoodSize) => (
