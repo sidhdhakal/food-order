@@ -61,6 +61,7 @@ const AddCategoryForm = () => {
           <div className="relative border-2 border-dashed rounded-lg p-2 transition-colors">
             <Input
               type="file"
+              accept=".jpg, .jpeg, .png, .svg, .webp"
               disabled={isPending}
               onChange={(e) => handleNewImage(e)}
               id='newCategoryIcon'

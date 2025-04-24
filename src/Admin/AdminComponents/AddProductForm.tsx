@@ -157,6 +157,7 @@ const AddProductForm = ({ onClose }: { onClose: () => void }) => {
                 <div className="relative border-2 border-dashed rounded-lg p-4 transition-colors">
                     <Input
                         type="file"
+                        accept=".jpg, .jpeg, .png, .svg, .webp"
                         onChange={handleImageChange}
                         id="new-image"
                         className="w-full hidden"

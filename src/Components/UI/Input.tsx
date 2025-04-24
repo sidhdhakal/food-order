@@ -1,7 +1,8 @@
 
-const Input = ({type='text',checked,disabled, step, min, placeholder, className, id, required, value, onChange}:{type:string, placeholder?:string, className?:string, id?:string, required?:boolean, value?:any, onChange?:(e:any)=>void, checked?:boolean, min?:any, step?:string, disabled?:boolean}) => {
+const Input = ({type='text',checked,disabled,accept, step, min, placeholder, className, id, required, value, onChange}:{type:string, accept?:string, placeholder?:string, className?:string, id?:string, required?:boolean, value?:any, onChange?:(e:any)=>void, checked?:boolean, min?:any, step?:string, disabled?:boolean}) => {
   return (
     <input
+    accept={accept}
     type={type}
     placeholder={placeholder}
     id={id}
