@@ -45,12 +45,9 @@ exports.createOrder = async (req, res) => {
     );
 
     let paymentDetails=null;
-    console.log("PaymentMethod",decryptedData.paymentMethod)
     if(decryptedData.paymentMethod=='esewa'){
       const data=req.body.esewaData
-      console.log("Data",data)
       const decryptedEsewaData=decodeBase64(data)
-      console.log(decryptedEsewaData)
       paymentDetails={
         transaction_code:decryptedEsewaData.transaction_code,
         status:decryptedEsewaData.status,
@@ -60,7 +57,6 @@ exports.createOrder = async (req, res) => {
       }
     }
 
-    console.log(paymentDetails)
 
     const orderData = {
       userId: user._id,
@@ -408,9 +404,7 @@ exports.getTodaysOrder = async (req, res) => {
     let paymentDetails=null
     if(paymentMethod=='esewa'){
       const data=req.body.esewaData
-      console.log("Data",data)
       const decryptedEsewaData=decodeBase64(data)
-      console.log(decryptedEsewaData)
       paymentDetails={
         transaction_code:decryptedEsewaData.transaction_code,
         status:decryptedEsewaData.status,
@@ -458,7 +452,6 @@ exports.getTodaysOrder = async (req, res) => {
       }).sort({ createdAt: -1 });
       
       
-      console.log(order)
       if (order) {
         return res.status(200).json({
           success: true,
