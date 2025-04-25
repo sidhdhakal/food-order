@@ -47,7 +47,6 @@ export async function AddCategoryApi({
   
       const data = await res.json();
       if (data.success) {
-        console.log(data.message || "New Category created successfully");
         return data;
       } else {
         throw new Error(data.message || "Error storing data");

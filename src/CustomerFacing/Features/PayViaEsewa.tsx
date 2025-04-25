@@ -4,9 +4,7 @@ import CryptoJS from "crypto-js";
 
 const PayViaEsewa = ({ id, totalPayment }: { id: string, totalPayment:number }) => {
   const handlePayViaEsewa = () => {
-    console.log(id);
     window.localStorage.setItem("orderId", id);
-    console.log(totalPayment)
     try {
       const uuid = new Date().getTime().toString().slice(-6);
       const jsonData: any = {
