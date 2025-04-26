@@ -43,7 +43,7 @@ const Homepage = ({ setIsActiveComponent }: any) => {
       </div>
 
       <div>
-        <Title>Based on Your Recents</Title>
+        <Title>Recommended for You!</Title>
         <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 4xl:grid-cols-3 gap-4 mt-4">
           {recommendedLoading && <Loading>Loading...</Loading>}
           {recommendedError && <IsError>Cannot get foods</IsError>}
