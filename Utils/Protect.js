@@ -16,7 +16,6 @@ exports.protect = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'You are not logged in!' });
     }
 
-    console.log('Extracted Token:', token);
 
     if(token==undefined) return 
 
@@ -29,7 +28,6 @@ exports.protect = async (req, res, next) => {
     req.user = freshUser;
     next();
   } catch (err) {
-    console.error('JWT Error:', err.message);
     res.status(400).json({
       success: false,
       message: err.message,

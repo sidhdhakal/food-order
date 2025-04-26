@@ -61,7 +61,6 @@ exports.createFood = async (req, res) => {
 
 
 exports.updateFood = async (req, res) => {
-  console.log(req.body)
   try {
     const foodToUpdate = await Food.findById(req.params.id);
     if (!foodToUpdate) {
