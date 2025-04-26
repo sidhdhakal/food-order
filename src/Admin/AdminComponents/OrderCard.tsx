@@ -215,7 +215,7 @@ const OrderCard = ({ order }: {order:any}) => {
             >
               {order?.paymentMethod}
 
-              {order?.paymentMethod=='Not Paid' &&
+              {order?.paymentMethod=='Not Paid' &&  order?.currentStatus.status!=='Cancelled' && 
               <button onClick={()=>handleUpdateToPaid({_id:order._id})} className="text-sm mx-2 bg-green-500 text-white px-2 py-1 rounded-md">Update to Paid</button>}
 
               {/* Status Badge */}
