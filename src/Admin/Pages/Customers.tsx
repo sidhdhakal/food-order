@@ -88,6 +88,7 @@ const Customers = () => {
               <th className="p-4 pl-2 text-left w-[10%]"></th>
               <th className="p-4 pl-2 text-left w-[25%]">Name</th>
               <th className="p-4 pl-2 text-left w-[25%]">Email</th>
+              <th className="p-4 pl-2 text-left w-[25%]">Joined On</th>
               <th className="p-4 pl-2 text-left w-[10%]">isVerified</th>
               <th className="p-4 pl-2 text-left w-[10%]">Status</th>
               <th className="p-4 pl-2 text-left w-[20%]">Actions</th>
