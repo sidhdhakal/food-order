@@ -24,7 +24,7 @@ const CustomerCard = ({ customer, setDeleteDialogOpen, isPending, handleUserStat
                       <img src='/Icons/uncheck.png' className='w-6' />
                     }
                     </td> */}
-      <td className="p-2 w-[10%]">
+      <td className="p-2 w-[20%] ">
         <span
           className={`px-2 py-1 rounded text-sm ${customer.isActive
               ? "bg-green-100 text-green-800"
@@ -36,8 +36,8 @@ const CustomerCard = ({ customer, setDeleteDialogOpen, isPending, handleUserStat
       </td>
 
 
-      <td className="p-2 w-[30%] min-w-[30%]">
-        <div className="flex items-center justify-between gap-2 max-w-[12rem]">
+      <td className="p-2 w-[20%] ">
+        <div className="flex items-center justify-between gap-4 max-w-[12rem]">
           <button
             disabled={isupdateCustomerPending}
             onClick={() => handleUserStatus(customer._id, !customer.isActive)}
@@ -50,7 +50,7 @@ const CustomerCard = ({ customer, setDeleteDialogOpen, isPending, handleUserStat
           </button>
           <button
             onClick={() => setDeleteDialogOpen(customer._id)}
-            className={` ${isPending ? 'text-zinc-400' : 'text-red-600 hover:text-red-800'}`}
+            className={` mx-2 ${isPending ? 'text-zinc-400' : 'text-red-600 hover:text-red-800'}`}
           >
             <Icon
               icon="fluent:delete-32-regular"
