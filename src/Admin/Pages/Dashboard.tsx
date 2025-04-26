@@ -73,7 +73,7 @@ const Dashboard = () => {
               </div>
             </div>
           )}
-          <Button onClick={() => refetch()}>Submit</Button>
+          <Button onClick={() => {refetch(); if(showDatePicker) setShowDatePicker(false)}}>Submit</Button>
         </div>
       </div>
 

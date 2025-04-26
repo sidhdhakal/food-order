@@ -125,7 +125,7 @@ const OrderCard = ({ order }: {order:any}) => {
           <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
         </td>
         <td className="p-2 w-[2%]">
-          {formatDateTime(order.createdAt).split(',')[0]}
+          {formatDateTime(order.createdAt)}
         </td>
         <td className="p-4 w-[10%]">
         {order?.message ?
