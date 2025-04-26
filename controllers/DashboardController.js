@@ -154,9 +154,15 @@ exports.getData = async (req, res) => {
     
     const foodFrequencyMap = {};
     const foodTotalQuantityMap = {};
-    const foodTotalRevenueMap = {}; // New map to track revenue for each food item
-
-    orders.forEach(order => {
+    const foodTotalRevenueMap = {}; 
+    
+    // Filter only completed orders
+    const completedOrders = orders.filter(
+      (order) => order.currentStatus.status === "Completed"
+    );
+    
+    // Use completedOrders instead of all orders
+    completedOrders.forEach(order => {
       order.items.forEach(item => {
         if (!foodFrequencyMap[item.name]) {
           foodFrequencyMap[item.name] = 0;
@@ -165,7 +171,7 @@ exports.getData = async (req, res) => {
         }
         foodFrequencyMap[item.name] += 1;
         foodTotalQuantityMap[item.name] += item.qty;
-        foodTotalRevenueMap[item.name] += item.price * item.qty; // Calculate revenue for this item
+        foodTotalRevenueMap[item.name] += item.price * item.qty;
       });
     });
 
