@@ -162,84 +162,181 @@ exports.deleteFood = async (req, res) => {
 
 exports.getRecommendedFoods = async (req, res) => {
   try {
-    // const orders = await Order.find({ userId: req.user._id });
-
-    // if (orders.length === 0) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "No orders found for this user.",
-    //   });
-    // }
-
-    // const items = orders.flatMap((order) => order.items);
-    // const orderedCategories = [...new Set(items.map(item => item.category))]; // Ensures unique categories
-
-    // const recommendedItems = await Food.find({
-    //   category: { $in: orderedCategories },  // Filter by ordered categories
-    // })
-    //   .limit(10)  // Limit the number of results to 10
-    //   .sort({ rating: -1 });  // Optional: Sort by rating (or other field like popularity)
-
-    // if (recommendedItems.length === 0) {
-    //   return res.status(404).json({
-    //     success: false,
-    //     message: "No recommended foods found.",
-    //   });
-    // }
-
-    // console.log("Recommended items:", recommendedItems);
-
-
     const userId = req.user._id;
+    
+    // Fetch user's orders
+    const userOrders = await Order.find({ userId }).sort({ createdAt: -1 });
 
-    // Fetch last 5 orders of the user
-    const recentOrders = await Order.find({ userId })
-      .sort({ createdAt: -1 })
-      // .limit(50);
-
-    if (!recentOrders.length) {
-      return res.json({ message: "No recent orders found", recommendations: [] });
-    }
-
-    // Extract all ordered item IDs
-    let recentFoodIds = [];
-    recentOrders.forEach((order) => {
-      order.items.forEach((item) => {
-        if (item.itemId) recentFoodIds.push(item.itemId);
+    if (userOrders.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No orders found for this user."
       });
-    });
-
-    if (!recentFoodIds.length) {
-      return res.json({ message: "No items found in recent orders", recommendations: [] });
     }
 
-    // Find foods that are often ordered together
-    const recommendedFoodIds = await Order.aggregate([
-      { $match: { "items.itemId": { $in: recentFoodIds }, userId: { $ne: userId } } }, // Ignore the same user's orders
-      { $unwind: "$items" }, // Flatten the items array
-      { $match: { "items.itemId": { $nin: recentFoodIds } } }, // Exclude already ordered items
-      { $group: { _id: "$items.itemId", count: { $sum: 1 } } },
-      { $sort: { count: -1 } }, // Sort by most frequently ordered together
-      { $limit: 5 }, // Limit recommendations to 5 items
-    ]);
-
-    if (!recommendedFoodIds.length) {
-      return res.json({ message: "No recommendations found", recommendations: [] });
+    // Extract user's preferences
+    const userPreferences = extractUserPreferences(userOrders);
+    
+    // Use different recommendation strategies based on the amount of data available
+    let recommendedItems;
+    
+    if (userOrders.length >= 5) {
+      // If user has many orders, use collaborative filtering
+      recommendedItems = await getCollaborativeFilteringRecommendations(userId, userPreferences);
+    } else {
+      // For new users with few orders, use content-based filtering
+      recommendedItems = await getContentBasedRecommendations(userPreferences);
+    }
+    
+    // If we still don't have enough recommendations, add popular items
+    if (recommendedItems.length < 5) {
+      const popularItems = await getPopularItems(userPreferences.orderedItemIds);
+      recommendedItems = [...recommendedItems, ...popularItems.slice(0, 10 - recommendedItems.length)];
     }
 
-    const recommendedItems = await Food.find({ _id: { $in: recommendedFoodIds.map((f) => f._id) } });
-
+    if (recommendedItems.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No recommended foods found."
+      });
+    }
 
     return res.status(200).json({
       success: true,
-      results:recommendedItems.length,
-      doc:recommendedItems,
+      results: recommendedItems.length,
+      doc: recommendedItems
     });
   } catch (err) {
     console.error("Error fetching recommended foods:", err);
-    res.status(400).json({
+    return res.status(500).json({
       success: false,
-      message: "Internal Server Error!",
+      message: "Internal Server Error!"
     });
   }
 };
+
+// Helper function to extract user preferences from orders
+function extractUserPreferences(orders) {
+  const categoryFrequency = {};
+  const orderedItemIds = new Set();
+  const recentCategories = [];
+  
+  // Process orders from newest to oldest (they're already sorted)
+  orders.forEach(order => {
+    order.items.forEach(item => {
+      // Track ordered item IDs
+      if (item.itemId) {
+        orderedItemIds.add(item.itemId);
+      }
+      
+      // Track category frequency
+      if (item.category) {
+        categoryFrequency[item.category] = (categoryFrequency[item.category] || 0) + 1;
+        
+        // Keep track of recent categories (avoid duplicates in the most recent order)
+        if (recentCategories.length < 3 && !recentCategories.includes(item.category)) {
+          recentCategories.push(item.category);
+        }
+      }
+    });
+  });
+  
+  // Sort categories by frequency
+  const sortedCategories = Object.entries(categoryFrequency)
+    .sort((a, b) => b[1] - a[1])
+    .map(entry => entry[0]);
+  
+  return {
+    orderedItemIds: Array.from(orderedItemIds),
+    favoriteCategories: sortedCategories,
+    recentCategories
+  };
+}
+
+// Collaborative filtering: Find foods that users with similar tastes ordered
+async function getCollaborativeFilteringRecommendations(userId, userPreferences) {
+  try {
+    // Find users who ordered similar items
+    const similarUserOrders = await Order.find({
+      userId: { $ne: userId },
+      "items.category": { $in: userPreferences.favoriteCategories.slice(0, 3) }
+    }).limit(50);
+    
+    // Extract item IDs from similar users that current user hasn't ordered
+    const potentialRecommendationIds = new Set();
+    const itemScores = {};
+    
+    similarUserOrders.forEach(order => {
+      order.items.forEach(item => {
+        if (item.itemId && !userPreferences.orderedItemIds.includes(item.itemId)) {
+          potentialRecommendationIds.add(item.itemId);
+          
+          // Score items higher if they're in user's favorite categories
+          const categoryScore = userPreferences.favoriteCategories.includes(item.category) ? 2 : 1;
+          itemScores[item.itemId] = (itemScores[item.itemId] || 0) + categoryScore;
+        }
+      });
+    });
+    
+    // Sort by score and convert to array
+    const recommendationIds = Array.from(potentialRecommendationIds)
+      .sort((a, b) => (itemScores[b] || 0) - (itemScores[a] || 0))
+      .slice(0, 10);
+    
+    // Fetch the actual food items
+    if (recommendationIds.length > 0) {
+      return await Food.find({ _id: { $in: recommendationIds } }).limit(10);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error("Error in collaborative filtering:", error);
+    return [];
+  }
+}
+
+// Content-based approach for users with fewer orders
+async function getContentBasedRecommendations(userPreferences) {
+  try {
+    // Get foods in user's favorite categories that they haven't ordered yet
+    const recommendations = await Food.find({
+      category: { $in: userPreferences.favoriteCategories.slice(0, 3) },
+      _id: { $nin: userPreferences.orderedItemIds }
+    })
+    .sort({ rating: -1 })
+    .limit(10);
+    
+    return recommendations;
+  } catch (error) {
+    console.error("Error in content-based recommendations:", error);
+    return [];
+  }
+}
+
+// Get generally popular items as fallback
+async function getPopularItems(excludeIds) {
+  try {
+    // Aggregate to find most frequently ordered items
+    const popularItemsAggregation = await Order.aggregate([
+      { $unwind: "$items" },
+      { $match: { "items.itemId": { $exists: true, $ne: null, $nin: excludeIds } } },
+      { $group: { _id: "$items.itemId", count: { $sum: 1 } } },
+      { $sort: { count: -1 } },
+      { $limit: 10 }
+    ]);
+    
+    const popularItemIds = popularItemsAggregation.map(item => item._id);
+    
+    if (popularItemIds.length > 0) {
+      return await Food.find({ _id: { $in: popularItemIds } });
+    }
+    
+    // If aggregation didn't work, fall back to highest-rated items
+    return await Food.find({ _id: { $nin: excludeIds } })
+      .sort({ rating: -1 })
+      .limit(10);
+  } catch (error) {
+    console.error("Error getting popular items:", error);
+    return [];
+  }
+}
