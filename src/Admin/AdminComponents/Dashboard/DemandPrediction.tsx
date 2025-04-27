@@ -41,7 +41,7 @@ const DemandPrediction = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["demandPrediction"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/predict");
+      const response = await axios.get(`${import.meta.env.VITE_PREDICTION_URL}/predict`);
       return response.data as PredictionResponse;
     }
   });
