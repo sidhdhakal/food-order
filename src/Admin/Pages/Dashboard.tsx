@@ -97,7 +97,7 @@ const Dashboard = () => {
         {/* Most Loved Food */}
         <MostLovedFood data={data} />
 
-        <div>
+        <div className="col-span-2">
           <DemandPrediction />
         </div>
       </div>

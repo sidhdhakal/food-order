@@ -6,8 +6,8 @@ const MostLovedFood = ({data}:{data:any}) => {
   <h2 className="font-semibold text-gray-900 mb-4">Most Popular Items</h2>
   
   {/* Header Row - Table-like structure */}
-  <div className="grid grid-cols-5 gap-2 mb-2 px-4 py-2 bg-gray-100 rounded-lg">
-    <div className="text-sm font-medium text-gray-600">Item</div>
+  <div className="grid grid-cols-6 gap-2 mb-2 px-4 py-2 bg-gray-100 rounded-lg">
+    <div className="text-sm font-medium text-gray-600 col-span-2">Item</div>
     <div className="text-sm font-medium text-gray-600">Category</div>
     <div className="text-sm font-medium text-gray-600 text-right">Orders</div>
     <div className="text-sm font-medium text-gray-600 text-right">Quantity</div>
@@ -19,17 +19,17 @@ const MostLovedFood = ({data}:{data:any}) => {
     {data?.doc?.mostLovedFood?.map((item:any, index:number) => (
       <div 
         key={index} 
-        className="grid grid-cols-5 gap-2 px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+        className="grid grid-cols-6 gap-2 px-4 py-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
       >
         {/* Item Name with Icon */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 col-span-2">
           <div className={`p-1.5 rounded-full ${foodCategoryColors[index % foodCategoryColors.length].bg}`}>
             <Icon 
               icon="fluent:food-16-filled" 
               className={`text-lg ${foodCategoryColors[index % foodCategoryColors.length].text}`} 
             />
           </div>
-          <span className="font-medium text-gray-900 truncate">{item.name}</span>
+          <span className="font-medium text-gray-900 text-nowrap">{item.name}</span>
         </div>
         
         {/* Category */}

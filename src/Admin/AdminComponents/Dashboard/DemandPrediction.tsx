@@ -8,15 +8,16 @@ interface PredictionItem {
   itemName: string;
   itemCategory: string;
   predicted_quantity: number;
-  model_rmse: number;
+  confidence: string;
   data_points: number;
+  insight: string;
 }
 
 interface PredictionResponse {
   predictions: PredictionItem[];
   prediction_date: string;
-  data_window: string;
   items_analyzed: number;
+  orders_analyzed: number;
 }
 
 // Category color mapping function
@@ -40,7 +41,7 @@ const DemandPrediction = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["demandPrediction"],
     queryFn: async () => {
-      const response = await axios.get("http://localhost:5000/top-products-demand");
+      const response = await axios.get("http://localhost:5000/predict");
       return response.data as PredictionResponse;
     }
   });
@@ -76,7 +77,7 @@ const DemandPrediction = () => {
           <h2 className="font-semibold text-gray-900">Today's Demand Forecast</h2>
           {data && (
             <p className="text-xs text-gray-500 mt-1">
-              Based on {data.data_window} • {data.items_analyzed} items analyzed
+              {data.orders_analyzed} orders • {data.items_analyzed} items analyzed
             </p>
           )}
         </div>
@@ -111,7 +112,8 @@ const DemandPrediction = () => {
                   >
                     <div className="flex flex-col">
                       <span className="font-medium text-gray-800">{item.itemName}</span>
-                      <span className="text-xs text-gray-500">Confidence: {getConfidenceLabel(item.model_rmse)} • {item.data_points} data points</span>
+                      <span className="text-xs text-gray-500">Confidence: {item.confidence} • {item.data_points} data points</span>
+                      {item.insight && <span className="text-xs italic text-gray-600 mt-1">{item.insight}</span>}
                     </div>
                     <DemandIndicator quantity={item.predicted_quantity} />
                   </div>
@@ -133,7 +135,8 @@ const DemandPrediction = () => {
                       </div>
                       <span className="font-medium text-gray-800">{item.itemName}</span>
                     </div>
-                    <span className="text-xs text-gray-500 mt-1 ml-1">Confidence: {getConfidenceLabel(item.model_rmse)} • {item.data_points} data points</span>
+                    <span className="text-xs text-gray-500 mt-1 ml-1">Confidence: {item.confidence} • {item.data_points} data points</span>
+                    {item.insight && <span className="text-xs italic text-gray-600 mt-1 ml-1">{item.insight}</span>}
                   </div>
                   <DemandIndicator quantity={item.predicted_quantity} />
                 </div>
@@ -153,13 +156,6 @@ const DemandPrediction = () => {
   );
 };
 
-// Helper function to determine confidence level based on RMSE
-const getConfidenceLabel = (rmse: number): string => {
-  if (rmse < 1) return "High";
-  if (rmse < 2) return "Medium";
-  return "Low";
-};
-
 // Updated helper component for visual demand indicator
 const DemandIndicator = ({ quantity }: { quantity: number }) => {
   // Color and text based on demand level
@@ -167,11 +163,11 @@ const DemandIndicator = ({ quantity }: { quantity: number }) => {
   let textColor = "text-gray-700";
   let description = "Low";
   
-  if (quantity >= 5) {
+  if (quantity >= 25) {
     color = "bg-red-100";
     textColor = "text-red-700";
     description = "High";
-  } else if (quantity >= 2) {
+  } else if (quantity >= 10) {
     color = "bg-yellow-100";
     textColor = "text-yellow-700";
     description = "Medium";
