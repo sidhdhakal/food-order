@@ -61,22 +61,30 @@ const DemandPrediction = () => {
     acc[item.itemCategory].push(item);
     return acc;
   }, {} as Record<string, PredictionItem[]>);
-  
+
   if (isLoading) {
-    return null;
+    return (
+      <div className="flex justify-center items-center h-full">
+        <span className="text-lg font-semibold text-gray-500">Loading prediction data...</span>
+      </div>
+    );
   }
   
   if (isError) {
-    return null;
+    return (
+      <div className="flex justify-center items-center h-full">
+        <span className="text-lg font-semibold text-red-600">Error loading prediction data. Please try again later.</span>
+      </div>
+    );
   }
   
   return (
-    <div className="bg-white p-6 rounded-xl shadow-sm">
-      <div className="flex justify-between items-center mb-5">
+    <div className="bg-white p-6 rounded-xl shadow-md">
+      <div className="flex justify-between items-center mb-4">
         <div>
-          <h2 className="font-semibold text-gray-900">Today's Demand Forecast</h2>
+          <h2 className="text-xl font-semibold text-gray-900">Today's Demand Forecast</h2>
           {data && (
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               {data.orders_analyzed} orders • {data.items_analyzed} items analyzed
             </p>
           )}
@@ -86,8 +94,7 @@ const DemandPrediction = () => {
           <select 
             className="text-xs border border-gray-200 rounded-md px-2 py-1 bg-white"
             value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as "category" | "demand")}
-          >
+            onChange={(e) => setSortBy(e.target.value as "category" | "demand")}>
             <option value="demand">Sort by Demand</option>
             <option value="category">Sort by Category</option>
           </select>
@@ -95,25 +102,19 @@ const DemandPrediction = () => {
       </div>
       
       {sortedData.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No prediction data available
-        </div>
+        <div className="text-center py-8 text-gray-500">No prediction data available</div>
       ) : (
         <div className="space-y-4">
           {sortBy === "category" ? (
-            // Display grouped by category
             Object.entries(groupedByCategory).map(([category, items]) => (
               <div key={category} className="space-y-2">
-                <div className="text-sm font-medium text-gray-600">{category}</div>
+                <div className="text-lg font-medium text-gray-700">{category}</div>
                 {items.map((item, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                  >
+                  <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
                     <div className="flex flex-col">
-                      <span className="font-medium text-gray-800">{item.itemName}</span>
-                      <span className="text-xs text-gray-500">Confidence: {item.confidence} • {item.data_points} data points</span>
-                      {item.insight && <span className="text-xs italic text-gray-600 mt-1">{item.insight}</span>}
+                      <span className="text-md font-semibold text-gray-800">{item.itemName}</span>
+                      <span className="text-sm text-gray-500 mt-1">Confidence: <span className={getConfidenceClass(item.confidence)}>{item.confidence}</span> • {item.data_points} data points</span>
+                      {item.insight && <span className="text-sm italic text-gray-600 mt-2">{item.insight}</span>}
                     </div>
                     <DemandIndicator quantity={item.predicted_quantity} />
                   </div>
@@ -121,22 +122,18 @@ const DemandPrediction = () => {
               </div>
             ))
           ) : (
-            // Display flat list sorted by demand
             <div className="space-y-3">
               {sortedData.slice(0,5).map((item, index) => (
-                <div 
-                  key={index} 
-                  className="flex items-center justify-between p-3 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                >
+                <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
                   <div className="flex flex-col">
                     <div className="flex items-center space-x-3">
-                      <div className={`px-2 py-1 rounded-full text-xs ${getCategoryColor(item.itemCategory).bg} ${getCategoryColor(item.itemCategory).text}`}>
+                      <div className={`px-3 py-1 rounded-full text-xs ${getCategoryColor(item.itemCategory).bg} ${getCategoryColor(item.itemCategory).text}`}>
                         {item.itemCategory}
                       </div>
-                      <span className="font-medium text-gray-800">{item.itemName}</span>
+                      <span className="text-md font-semibold text-gray-800">{item.itemName}</span>
                     </div>
-                    <span className="text-xs text-gray-500 mt-1 ml-1">Confidence: {item.confidence} • {item.data_points} data points</span>
-                    {item.insight && <span className="text-xs italic text-gray-600 mt-1 ml-1">{item.insight}</span>}
+                    <span className="text-sm text-gray-500 mt-1 ml-1">Confidence: <span className={getConfidenceClass(item.confidence)}>{item.confidence}</span> • {item.data_points} data points</span>
+                    {item.insight && <span className="text-sm italic text-gray-600 mt-1 ml-1">{item.insight}</span>}
                   </div>
                   <DemandIndicator quantity={item.predicted_quantity} />
                 </div>
@@ -156,9 +153,18 @@ const DemandPrediction = () => {
   );
 };
 
+// Helper function to determine confidence class
+const getConfidenceClass = (confidence: string) => {
+  if (confidence=='low') {
+    return 'text-red-600'; // Low confidence
+  } else if (confidence=='medium') {
+    return 'text-yellow-600'; // Medium confidence
+  }
+  return 'text-green-600'; // High confidence
+};
+
 // Updated helper component for visual demand indicator
 const DemandIndicator = ({ quantity }: { quantity: number }) => {
-  // Color and text based on demand level
   let color = "bg-gray-100";
   let textColor = "text-gray-700";
   let description = "Low";
@@ -173,13 +179,12 @@ const DemandIndicator = ({ quantity }: { quantity: number }) => {
     description = "Medium";
   }
   
-  // Round to 1 decimal place for display
   const displayQuantity = Math.round(quantity * 10) / 10;
   
   return (
     <div className="flex items-center space-x-2">
-      <span className="font-semibold">{displayQuantity}</span>
-      <div className={`px-2 py-1 rounded-full text-xs ${color} ${textColor}`}>
+      <span className="text-lg font-semibold">{displayQuantity}</span>
+      <div className={`px-3 py-1 rounded-full text-xs ${color} ${textColor}`}>
         {description} Demand
       </div>
     </div>
