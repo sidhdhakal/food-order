@@ -76,6 +76,11 @@ const orderSchema = new Schema({
       required:false
     },
   },
+  isUpdated:{
+    type:Boolean,
+    required:false,
+    detfault:false
+  },
   paymentDetails:{
     transaction_code:{
       type:String,
