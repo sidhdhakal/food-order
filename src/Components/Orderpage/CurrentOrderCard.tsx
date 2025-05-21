@@ -7,12 +7,19 @@ import { useCancelOrder } from "../../Queries/order/useCancelOrder";
 import { useState } from "react";
 import Button from "../UI/Button";
 import PayViaEsewa from "../../CustomerFacing/Features/PayViaEsewa";
+import { useUpdateOrderItems } from "../../Queries/order/useUpdateOrderItems";
+import { OrderItem } from "../../Queries/order/useUpdateOrderItems";
 
 const CurrentOrderCard = () => {
   const { data, isLoading, isError } = useGetCurrentOrder();
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const { cancelOrder, isPending } = useCancelOrder();
+  const { updateOrderItems, isPending: isUpdatingItems } = useUpdateOrderItems();
+  
+  // State to track item quantities for editing
+  const [editingItems, setEditingItems] = useState<boolean>(false);
+  const [itemQuantities, setItemQuantities] = useState<{ [key: number]: number }>({});
 
   if (isLoading) return <Loading>Loading...</Loading>;
 
@@ -28,7 +35,60 @@ const CurrentOrderCard = () => {
   const handleCancelUser = () => {
     if (message === "") return;
     cancelOrder({ _id: deleteDialogOpen, message });
-    setDeleteDialogOpen(null)
+    setDeleteDialogOpen(null);
+  };
+
+  // Initialize item quantities when entering edit mode
+  const startEditingItems = (items: OrderItem[]) => {
+    const initialQuantities: { [key: number]: number } = {};
+    items.forEach((item, index) => {
+      initialQuantities[index] = item.qty;
+    });
+    setItemQuantities(initialQuantities);
+    setEditingItems(true);
+  };
+
+  // Update item quantity
+  const updateItemQuantity = (index: number, newQty: number) => {
+    if (newQty < 1) return; // Prevent quantities less than 1
+    setItemQuantities({
+      ...itemQuantities,
+      [index]: newQty
+    });
+  };
+
+  // Remove item
+  const removeItem = (index: number) => {
+    setItemQuantities({
+      ...itemQuantities,
+      [index]: 0 // Set to 0 to indicate removal
+    });
+  };
+
+  // Save updated items
+  const saveUpdatedItems = (orderId: string, originalItems: OrderItem[]) => {
+    // Filter out removed items and update quantities
+    const updatedItems = originalItems
+      .filter((_, index) => itemQuantities[index] > 0)
+      .map((item, index) => {
+        if (itemQuantities[index] !== undefined) {
+          return {...item, qty: itemQuantities[index]};
+        }
+        return item;
+      });
+    
+    // Only update if there are changes
+    if (updatedItems.length > 0) {
+      updateOrderItems({ _id: orderId, items: updatedItems });
+    }
+    
+    setEditingItems(false);
+  };
+
+  // Cancel editing
+  const cancelEditing = () => {
+    setEditingItems(false);
+    setItemQuantities({});
   };
 
   return (
@@ -56,6 +116,7 @@ const CurrentOrderCard = () => {
         ];
 
         const isCancelled = currentOrder?.currentStatus?.status === "Cancelled";
+        const canEditItems = ["Order Placed", "Order Confirmed"].includes(currentOrder?.currentStatus?.status);
 
         let steps = allSteps.map((status: string) => {
           const foundStatus = currentOrder?.statusHistory?.find(
@@ -129,25 +190,101 @@ const CurrentOrderCard = () => {
             <div className="flex flex-col md:flex-row gap-8">
               {/* Order Items */}
               <div className="flex-1">
-                <h3 className="font-medium mb-3 text-md lg:text-xl 4xl:text-2xl">
-                  Order Items
-                </h3>
-                <div className="space-y-2 text-sm md:text-md lg:text-lg">
-                  {currentOrder?.items?.map((item: any, index: number) => (
-                    <div
-                      key={index}
-                      className="flex justify-between items-center"
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-medium text-md lg:text-xl 4xl:text-2xl">
+                    Order Items
+                  </h3>
+                  {canEditItems && !editingItems && (
+                    <Button 
+                      onClick={() => startEditingItems(currentOrder?.items)}
+                      className="!w-fit !px-3 flex justify-center items-center !py-1 !text-sm !bg-blue-100 !text-blue-800 !hover:bg-blue-200"
                     >
-                      <div>
-                        <span className="font-medium">{item.qty}x</span>{" "}
-                        {item.name}
-                        <span className="text-sm md:text-md lg:text-lg text-gray-500 ml-2">
-                          ({item.size})
-                        </span>
-                      </div>
-                      <div>Rs {item.price.toFixed(2)}</div>
+                      <Icon icon="ph:pencil" className="mr-1" /> Edit Items
+                    </Button>
+                  )}
+                  {editingItems && (
+                    <div className="flex gap-2">
+                      <Button 
+                        onClick={() => saveUpdatedItems(currentOrder._id, currentOrder?.items)}
+                        className="!w-fit !px-3 !py-1 !text-sm !bg-green-100 !text-green-800 !hover:bg-green-200"
+                        disabled={isUpdatingItems}
+                      >
+                        {isUpdatingItems ? "Saving..." : "Save Changes"}
+                      </Button>
+                      <Button 
+                        onClick={cancelEditing}
+                        className="!w-fit !px-3 !py-1 !text-sm !bg-gray-100 !text-gray-800 !hover:bg-gray-200"
+                        disabled={isUpdatingItems}
+                      >
+                        Cancel
+                      </Button>
                     </div>
-                  ))}
+                  )}
+                </div>
+                <div className="space-y-2 text-sm md:text-md lg:text-lg">
+                  {currentOrder?.items?.map((item: any, index: number) => {
+                    const isEditing = editingItems && itemQuantities[index] !== undefined;
+                    const currentQty = isEditing ? itemQuantities[index] : item.qty;
+                    const isRemoved = isEditing && currentQty === 0;
+                    
+                    // Skip rendering removed items
+                    if (isRemoved) return null;
+                    
+                    return (
+                      <div
+                        key={index}
+                        className={`flex justify-between items-center ${isEditing ? "bg-gray-50 p-2 rounded" : ""}`}
+                      >
+                        <div className="flex items-center">
+                          {!isEditing ? (
+                            <>
+                              <span className="font-medium">{item.qty} x </span>{" "}
+                               {item.name}
+                              <span className="text-sm md:text-md lg:text-lg text-gray-500 ml-2">
+                                ({item.size})
+                              </span>
+                            </>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              <div className="flex items-center border rounded-md">
+                                <button
+                                  onClick={() => updateItemQuantity(index, currentQty - 1)}
+                                  className="px-2 py-1 text-gray-500 hover:bg-gray-100"
+                                >
+                                  -
+                                </button>
+                                <span className="px-2">{currentQty}</span>
+                                <button
+                                  onClick={() => updateItemQuantity(index, currentQty + 1)}
+                                  className="px-2 py-1 text-gray-500 hover:bg-gray-100"
+                                >
+                                  +
+                                </button>
+                              </div>
+                              <span className="flex-1">
+                                {item.name}
+                                <span className="text-sm md:text-md lg:text-lg text-gray-500 ml-2">
+                                  ({item.size})
+                                </span>
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <div>Rs {(item.price * currentQty).toFixed(2)}</div>
+                          {isEditing && (
+                            <button
+                              onClick={() => removeItem(index)}
+                              className="text-red-500 hover:bg-red-50 p-1 rounded"
+                              title="Remove item"
+                            >
+                              <Icon icon="ph:trash" />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
                 <div className="mt-4 flex items-center gap-2">
                   <Icon
@@ -162,24 +299,23 @@ const CurrentOrderCard = () => {
                     {currentOrder?.paymentMethod}
                     {currentOrder?.paymentDetails && (
                       <div
-                        className={`inline-block px-2 py-1 ml-2 rounded-full  text-xs font-semibold " +
-        ${
-          currentOrder?.paymentDetails?.status === "COMPLETE"
-            ? "bg-green-200 text-green-800"
-            : currentOrder?.paymentDetails?.status === "PENDING"
-            ? "bg-yellow-300 text-yellow-800"
-            : currentOrder?.paymentDetails?.status === "FULL_REFUND"
-            ? "bg-blue-300 text-blue-800"
-            : currentOrder?.paymentDetails?.status === "PARTIAL_REFUND"
-            ? "bg-purple-300 text-purple-800"
-            : currentOrder?.paymentDetails?.status === "AMBIGUOUS"
-            ? "bg-gray-300 text-gray-800"
-            : currentOrder?.paymentDetails?.status === "NOT_FOUND"
-            ? "bg-red-300 text-red-800"
-            : currentOrder?.paymentDetails?.status === "CANCELLED"
-            ? "bg-black text-gray-200"
-            : "bg-gray-300"
-        }`}
+                        className={`inline-block px-2 py-1 ml-2 rounded-full text-xs font-semibold ${
+                          currentOrder?.paymentDetails?.status === "COMPLETE"
+                            ? "bg-green-200 text-green-800"
+                            : currentOrder?.paymentDetails?.status === "PENDING"
+                            ? "bg-yellow-300 text-yellow-800"
+                            : currentOrder?.paymentDetails?.status === "FULL_REFUND"
+                            ? "bg-blue-300 text-blue-800"
+                            : currentOrder?.paymentDetails?.status === "PARTIAL_REFUND"
+                            ? "bg-purple-300 text-purple-800"
+                            : currentOrder?.paymentDetails?.status === "AMBIGUOUS"
+                            ? "bg-gray-300 text-gray-800"
+                            : currentOrder?.paymentDetails?.status === "NOT_FOUND"
+                            ? "bg-red-300 text-red-800"
+                            : currentOrder?.paymentDetails?.status === "CANCELLED"
+                            ? "bg-black text-gray-200"
+                            : "bg-gray-300"
+                        }`}
                       >
                         Status: {currentOrder?.paymentDetails?.status}
                       </div>
@@ -202,7 +338,7 @@ const CurrentOrderCard = () => {
                     )}
                 </div>
 
-                {currentOrder?.statusHistory?.length < 2 && (
+                {currentOrder?.statusHistory?.length < 2 && !editingItems && (
                   <Button
                     onClick={() => setDeleteDialogOpen(currentOrder._id)}
                     className="!w-fit !mt-4 !bg-zinc-100 !text-black !hover:bg-zinc-200"

@@ -183,6 +183,30 @@ export async function createOrderApi({items,message, paymentMethod, esewaData}:a
     }
   }
 
+export async function updateOrderItemsApi({ _id, items }: { _id: string, items: any[] }) {
+  
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/order/updateorderitems`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        'Authorization': `Bearer ${removeQuotes(userToken)}`
+      },
+      body: JSON.stringify({ _id, items }),
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      return data;
+    } else {
+      throw new Error(data.message || "Error updating order items");
+    }
+  } catch (error) {
+    console.error("Error sending data to the server:", error);
+    throw error;
+  }
+}
+
 
   export async function updateOrderToPaidApi({_id,paymentMethod, esewaData }:any) {
    
