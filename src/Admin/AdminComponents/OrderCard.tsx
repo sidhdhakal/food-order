@@ -25,21 +25,20 @@ const filterOptions = [
   { value: "Cancelled", label: "Cancelled", icon: "ph:thumbs-down" },
 ];
 
-const OrderCard = ({ order }: {order:any}) => {
+const OrderCard = ({ order }: { order: any }) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState<{
     id: string | null;
     st: string | null;
   }>({ id: null, st: null });
-  const[message, setMessage]=useState<string | null>(null)
+  const [message, setMessage] = useState<string | null>(null);
   const [isHovered, setIsHovered] = useState(false);
-
 
   const currentStatusIndex = filterOptions.findIndex(
     (option) => option.value === order?.currentStatus?.status
   );
 
-  const { updateOrder, isPending , isSuccess} = useUpdateOrder();
-  const { updateOrderToPaid, } = useUpdateOrderToPaid();
+  const { updateOrder, isPending, isSuccess } = useUpdateOrder();
+  const { updateOrderToPaid } = useUpdateOrderToPaid();
 
   const handleChange = ({ _id, status }: { _id: string; status: string }) => {
     if (status === "Cancelled")
@@ -47,24 +46,24 @@ const OrderCard = ({ order }: {order:any}) => {
     updateOrder({ _id, status });
   };
 
-  const handleUpdateToPaid=({_id}:any)=>{
-      updateOrderToPaid({_id, paymentMethod:'cash'})
-  }
-  useEffect(()=>{
-    if(isSuccess)
-        setDeleteDialogOpen((prev) => ({ ...prev, id: null, st: null }))
-  },[isSuccess])
+  const handleUpdateToPaid = ({ _id }: any) => {
+    updateOrderToPaid({ _id, paymentMethod: "cash" });
+  };
+  useEffect(() => {
+    if (isSuccess)
+      setDeleteDialogOpen((prev) => ({ ...prev, id: null, st: null }));
+  }, [isSuccess]);
 
-  const price=order.items.reduce((total:number, currentItem:any) => total + currentItem.price * currentItem.qty, 0)
+  const price = order.items.reduce(
+    (total: number, currentItem: any) =>
+      total + currentItem.price * currentItem.qty,
+    0
+  );
 
-
-
-
-
-  const {refund} = useRefund()
-  const handleRefund = (_id:string)=>{
-    refund({_id})
-  }
+  const { refund } = useRefund();
+  const handleRefund = (_id: string) => {
+    refund({ _id });
+  };
 
   return (
     <>
@@ -81,7 +80,7 @@ const OrderCard = ({ order }: {order:any}) => {
             updateOrder({
               _id: deleteDialogOpen.id,
               status: deleteDialogOpen.st,
-              message
+              message,
             })
           }
           onCancel={() =>
@@ -101,16 +100,20 @@ const OrderCard = ({ order }: {order:any}) => {
         }`}
       >
         <td className="p-2 w-[10%]">
-          <Avatar name={order?.user?.name} picture={order?.user?.picture || ''} />
+          <Avatar
+            name={order?.user?.name}
+            picture={order?.user?.picture || ""}
+          />
         </td>
         <td className="p-2 w-[12%]">
           {order?.user?.name}
+         
           <br />
           <span className="text-zinc-500">{order?.user?.email}</span>
         </td>
 
-        
         <td className="p-2 w-[15%]">
+         
           {order.items.map((item: Item) => (
             <div key={item._id} className="w-full h-full">
               <h1>
@@ -120,24 +123,28 @@ const OrderCard = ({ order }: {order:any}) => {
                 </span>
               </h1>
             </div>
-            
           ))}
-          <div className="text-nowrap">Total Payment: <span className="font-semibold">Rs {price}</span></div>
+          <div className="text-nowrap">
+            Total Payment: <span className="font-semibold">Rs {price}</span>
+          </div>
+           {order?.isUpdated && (
+            <span className=" px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800 font-medium">
+              Updated
+            </span>
+          )}
         </td>
-        <td className="p-2 w-[2%]">
-          {formatDateTime(order.createdAt)}
-        </td>
+        <td className="p-2 w-[2%]">{formatDateTime(order.createdAt)}</td>
         <td className="p-4 w-[10%]">
-        {order?.message ?
-          <div className="mt-2">
-          {order?.message}
-          </div>:'-'
-          }
-          {order?.cancelMessage ?
-          <div className="mt-2">
-          <span className="font-semibold">Cancel Reason:</span> {order?.cancelMessage}
-          </div>:''
-          }
+          {order?.message ? <div className="mt-2">{order?.message}</div> : "-"}
+          {order?.cancelMessage ? (
+            <div className="mt-2">
+              <span className="font-semibold">Cancel Reason:</span>{" "}
+              {order?.cancelMessage}
+            </div>
+          ) : (
+            ""
+          )}
+          
         </td>
         <td className="p-4 w-[10%]">
           <div className="border rounded-lg">
@@ -155,7 +162,7 @@ const OrderCard = ({ order }: {order:any}) => {
                     (option.value !== "Cancelled" &&
                       index !== currentStatusIndex + 1) ||
                     (["Ready for Pickup", "Completed"].includes(
-                      order?.currentStatus?.status 
+                      order?.currentStatus?.status
                     ) &&
                       option.value === "Cancelled")
                   }
@@ -201,11 +208,14 @@ const OrderCard = ({ order }: {order:any}) => {
           </div>
         </td> */}
 
-
-<td className="p-2 w-[25%] relative">
+        <td className="p-2 w-[25%] relative">
           <div className="flex gap-x-2 justify-start items-center">
             <Icon
-              icon={order?.paymentMethod === "cash" ? "ph:money" : "duo-icons:credit-card"}
+              icon={
+                order?.paymentMethod === "cash"
+                  ? "ph:money"
+                  : "duo-icons:credit-card"
+              }
               className="text-primary-600 text-xl lg:text-2xl"
             />
             <span
@@ -215,8 +225,15 @@ const OrderCard = ({ order }: {order:any}) => {
             >
               {order?.paymentMethod}
 
-              {order?.paymentMethod=='Not Paid' &&  order?.currentStatus.status!=='Cancelled' && 
-              <button onClick={()=>handleUpdateToPaid({_id:order._id})} className="text-sm mx-2 bg-green-500 text-white px-2 py-1 rounded-md">Update to Paid</button>}
+              {order?.paymentMethod == "Not Paid" &&
+                order?.currentStatus.status !== "Cancelled" && (
+                  <button
+                    onClick={() => handleUpdateToPaid({ _id: order._id })}
+                    className="text-sm mx-2 bg-green-500 text-white px-2 py-1 rounded-md"
+                  >
+                    Update to Paid
+                  </button>
+                )}
 
               {/* Status Badge */}
               {order?.paymentDetails && (
@@ -244,29 +261,46 @@ const OrderCard = ({ order }: {order:any}) => {
               )}
 
               {/* eSewa Payment Details Tooltip on Hover */}
-              {order?.paymentMethod === "esewa" && order?.paymentDetails && isHovered && (
-                <div className="absolute left-0 mt-2 w-[250px] bg-white shadow-lg border p-3 rounded-lg z-10">
-                  <h3 className="font-semibold text-gray-700">Payment Details</h3>
-                  <p className="text-sm text-gray-600">
-                    <strong>Transaction Code:</strong> {order.paymentDetails.transaction_code || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Status:</strong> {order.paymentDetails.status || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Total Amount:</strong> Rs {order.paymentDetails.total_amount || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Transaction UUID:</strong> {order.paymentDetails.transaction_uuid || "N/A"}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    <strong>Product Code:</strong> {order.paymentDetails.product_code || "N/A"}
-                  </p>
-                </div>
-              )}
+              {order?.paymentMethod === "esewa" &&
+                order?.paymentDetails &&
+                isHovered && (
+                  <div className="absolute left-0 mt-2 w-[250px] bg-white shadow-lg border p-3 rounded-lg z-10">
+                    <h3 className="font-semibold text-gray-700">
+                      Payment Details
+                    </h3>
+                    <p className="text-sm text-gray-600">
+                      <strong>Transaction Code:</strong>{" "}
+                      {order.paymentDetails.transaction_code || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <strong>Status:</strong>{" "}
+                      {order.paymentDetails.status || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <strong>Total Amount:</strong> Rs{" "}
+                      {order.paymentDetails.total_amount || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <strong>Transaction UUID:</strong>{" "}
+                      {order.paymentDetails.transaction_uuid || "N/A"}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      <strong>Product Code:</strong>{" "}
+                      {order.paymentDetails.product_code || "N/A"}
+                    </p>
+                  </div>
+                )}
             </span>
-            {order?.paymentMethod=='esewa' && order.currentStatus.status=='Cancelled' && order?.paymentDetails?.status=='COMPLETE' &&
-            <button onClick={()=>handleRefund(order._id)} className="mx-2  hover:underline">Refund</button>}
+            {order?.paymentMethod == "esewa" &&
+              order.currentStatus.status == "Cancelled" &&
+              order?.paymentDetails?.status == "COMPLETE" && (
+                <button
+                  onClick={() => handleRefund(order._id)}
+                  className="mx-2  hover:underline"
+                >
+                  Refund
+                </button>
+              )}
           </div>
         </td>
       </tr>

@@ -20,6 +20,9 @@ const Menu = () => {
   const { data: categories } = useGetCategory();
   const {deleteFood, isPending:isDeletePending, isSuccess}=useDeleteFood()
 
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const [searchValue, setSearchValue] = useState("");
 
@@ -50,6 +53,54 @@ const Menu = () => {
     });
   }, [selectedCategory, searchValue, products]);
 
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchValue, selectedCategory, products]);
+
+  // Pagination calculations
+  const totalItems = filteredProducts?.length || 0;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentProducts = filteredProducts?.slice(startIndex, endIndex) || [];
+
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 5;
+    
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= maxVisible; i++) {
+          pages.push(i);
+        }
+      } else if (currentPage >= totalPages - 2) {
+        for (let i = totalPages - maxVisible + 1; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+          pages.push(i);
+        }
+      }
+    }
+    
+    return pages;
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (items: number) => {
+    setItemsPerPage(items);
+    setCurrentPage(1);
+  };
 
   useEffect(()=>{
     if(isSuccess){
@@ -176,7 +227,7 @@ const Menu = () => {
       <div className="w-full h-auto productlist mt-7 rounded-xl overflow-hidden bg-white p-6">
         <div className="pb-4 flex justify-between">
           <h1 className="text-[1.5rem] font-semibold">
-            All Products ({filteredProducts?.length})
+            All Products ({filteredProducts?.length || 0})
           </h1>
 
           <select
@@ -193,6 +244,28 @@ const Menu = () => {
           </select>
         </div>
 
+        {/* Items per page and pagination info */}
+        <div className="pb-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Show</span>
+            <select
+              className="px-3 py-1 border rounded-md bg-white text-sm"
+              value={itemsPerPage}
+              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+            <span className="text-sm text-gray-600">entries</span>
+          </div>
+          
+          <div className="text-sm text-gray-600">
+            Showing {totalItems === 0 ? 0 : startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} entries
+          </div>
+        </div>
+
         <table className="w-full border-collapse ">
           <thead className="bg-zinc-100 ">
             <tr>
@@ -207,17 +280,94 @@ const Menu = () => {
             </tr>
           </thead>
           <tbody>
-            {isLoading && 
-            <div className="w-full flex justify-center items-center">Loading...</div>
-            }
-            {isError && 
-            <div className="w-full flex justify-center items-center">Failed to Fetch Foods</div>
-            }
-            {!isLoading && !isError && filteredProducts?.map((product: Food) => (
-              <ProductCard product={product} setIsDialogOpen={setIsDialogOpen} isDeletePending={isDeletePending}  setEditProductForm={setEditProductForm} />
-            ))}
+            {isLoading ? (
+              <tr>
+                <td colSpan={8} className="text-center py-4">
+                  Loading...
+                </td>
+              </tr>
+            ) : isError ? (
+              <tr>
+                <td colSpan={8} className="text-center py-4 text-red-500">
+                  Failed to Fetch Foods
+                </td>
+              </tr>
+            ) : currentProducts.length === 0 ? (
+              <tr>
+                <td colSpan={8} className="text-center py-4">
+                  No products found for the selected criteria
+                </td>
+              </tr>
+            ) : (
+              currentProducts.map((product: Food) => (
+                <ProductCard 
+                  key={product._id}
+                  product={product} 
+                  setIsDialogOpen={setIsDialogOpen} 
+                  isDeletePending={isDeletePending}  
+                  setEditProductForm={setEditProductForm} 
+                />
+              ))
+            )}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-6 flex justify-center items-center gap-2">
+            {/* Previous Button */}
+              <button
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-double-left" className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-left" className="w-4 h-4" />
+            </button>
+
+            {/* Page Numbers */}
+            {getPageNumbers().map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`px-3 py-2 text-sm border rounded-md ${
+                  currentPage === pageNum
+                    ? 'bg-primary-500 text-white border-primary-500'
+                    : 'bg-white text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                {pageNum}
+              </button>
+            ))}
+
+            {/* Show ellipsis if there are more pages */}
+            {totalPages > 5 && currentPage < totalPages - 2 && (
+              <span className="px-2 text-gray-400">...</span>
+            )}
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-right" className="w-4 h-4" />
+            </button>
+              <button
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-double-right" className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

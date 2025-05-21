@@ -23,6 +23,7 @@ interface Order {
   currentStatus: {
     status: string;
   };
+  isUpdated?:boolean
   items: any[];
   paymentMethod: string;
   message?: string;
@@ -41,6 +42,10 @@ const Orders = () => {
     startDate: new Date(),
     endDate: new Date(),
   });
+
+  // Pagination states
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(20);
 
   const { data, isLoading, isError } = useGetAllOrders();
   const [searchValue, setSearchValue] = useState("");
@@ -92,6 +97,11 @@ const Orders = () => {
     }
   }, [isPrinting]);
 
+  // Reset to first page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchValue, statusFilter, paymentFilter, filteredData]);
+
   const filteredOrders = useMemo(() => {
     if (!filteredData || filteredData.length === 0) return [];
   
@@ -111,25 +121,41 @@ const Orders = () => {
       return matchesSearch && matchesStatus && matchesPayment;
     });
   }, [searchValue, filteredData, statusFilter, paymentFilter]);
-  
 
-  // Filter orders based on search value
-  // const filteredOrders = useMemo(() => {
-  //   if (!filteredData || filteredData.length === 0) return [];
+  // Pagination calculations
+  const totalItems = filteredOrders.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = filteredOrders.slice(startIndex, endIndex);
 
-  //   return filteredData.filter((order) => {
-  //     if (!order.user || typeof order.user !== "object") return false;
-
-  //     const name = order.user.name || "";
-  //     const email = order.user.email || "";
-
-  //     return (
-  //       !searchValue ||
-  //       name.toLowerCase().includes(searchValue.toLowerCase()) ||
-  //       email.toLowerCase().includes(searchValue.toLowerCase())
-  //     );
-  //   });
-  // }, [searchValue, filteredData]);
+  // Generate page numbers for pagination
+  const getPageNumbers = () => {
+    const pages = [];
+    const maxVisible = 5;
+    
+    if (totalPages <= maxVisible) {
+      for (let i = 1; i <= totalPages; i++) {
+        pages.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= maxVisible; i++) {
+          pages.push(i);
+        }
+      } else if (currentPage >= totalPages - 2) {
+        for (let i = totalPages - maxVisible + 1; i <= totalPages; i++) {
+          pages.push(i);
+        }
+      } else {
+        for (let i = currentPage - 2; i <= currentPage + 2; i++) {
+          pages.push(i);
+        }
+      }
+    }
+    
+    return pages;
+  };
 
   // Get completed or cancelled orders for invoice
   const invoiceOrders = useMemo(() => {
@@ -192,7 +218,14 @@ const Orders = () => {
     return filteredOrders[0]?.user?.name || null;
   }, [searchValue, filteredOrders]);
 
-  
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handleItemsPerPageChange = (items: number) => {
+    setItemsPerPage(items);
+    setCurrentPage(1);
+  };
 
   return (
     <div className="w-full relative">
@@ -294,6 +327,28 @@ const Orders = () => {
           </div>
         </div>
 
+        {/* Items per page and pagination info */}
+        <div className="pb-4 flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-600">Show</span>
+            <select
+              className="px-3 py-1 border rounded-md bg-white text-sm"
+              value={itemsPerPage}
+              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+            >
+              <option value={10}>10</option>
+              <option value={20}>20</option>
+              <option value={50}>50</option>
+              <option value={100}>100</option>
+            </select>
+            <span className="text-sm text-gray-600">entries</span>
+          </div>
+          
+          <div className="text-sm text-gray-600">
+            Showing {totalItems === 0 ? 0 : startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} entries
+          </div>
+        </div>
+
         <table className="w-full border-collapse">
           <thead className="bg-zinc-100">
             <tr>
@@ -319,19 +374,76 @@ const Orders = () => {
                   Failed to Fetch Orders
                 </td>
               </tr>
-            ) : filteredOrders.length === 0 ? (
+            ) : currentOrders.length === 0 ? (
               <tr>
                 <td colSpan={7} className="text-center py-4">
                   No orders found for the selected criteria
                 </td>
               </tr>
             ) : (
-              filteredOrders.map((order) => (
+              currentOrders.map((order) => (
                 <OrderCard key={order._id} order={order} />
               ))
             )}
           </tbody>
         </table>
+
+        {/* Pagination Controls */}
+        {totalPages > 1 && (
+          <div className="mt-6 flex justify-center items-center gap-2">
+            {/* Previous Button */}
+              <button
+              onClick={() => handlePageChange(1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-double-left" className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-left" className="w-4 h-4" />
+            </button>
+
+            {/* Page Numbers */}
+            {getPageNumbers().map((pageNum) => (
+              <button
+                key={pageNum}
+                onClick={() => handlePageChange(pageNum)}
+                className={`px-3 py-2 text-sm border rounded-md ${
+                  currentPage === pageNum
+                    ? 'bg-primary-500 text-white border-primary-500'
+                    : 'bg-white text-gray-600 hover:bg-gray-50'
+                }`}
+              >
+                {pageNum}
+              </button>
+            ))}
+
+            {/* Show ellipsis if there are more pages */}
+            {totalPages > 5 && currentPage < totalPages - 2 && (
+              <span className="px-2 text-gray-400">...</span>
+            )}
+
+            {/* Next Button */}
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-right" className="w-4 h-4" />
+            </button>
+              <button
+              onClick={() => handlePageChange(totalPages)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <Icon icon="mdi:chevron-double-right" className="w-4 h-4" />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="print-section">
