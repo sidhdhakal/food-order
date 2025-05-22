@@ -41,8 +41,12 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
       const itemId=Object.keys(cart)[index].split('-')[0]
       return {...item, itemId}
     })
-    if(!user)
-        return toast.error('You are not logged In!')
+    if(!user){
+       toast.error('Please login to place Order!')
+        setTimeout(()=>{
+        return window.location.href = "/login";
+        },1500)
+    }
     if(paymentMethod=='esewa')
       return handlePayButtonClick(items)
     createOrder({items, message, paymentMethod})

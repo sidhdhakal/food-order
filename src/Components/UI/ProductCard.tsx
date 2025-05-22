@@ -108,14 +108,14 @@ const ProductCard = ({ item }: any) => {
           
           {renderStarRating(item.rating)}
           
-          <div className="flex gap-x-3 justify-start items-center mt-1">
-            <h1>Sizes:</h1>
+          <div className="flex gap-x-2 justify-start items-center mt-1">
+            <h1 className="text-sm">Sizes:</h1>
             <div className="flex gap-x-2 mt-1">
               {item.sizes.map((size: any) => (
                 <div
                   key={size.name}
                   onClick={() => handleSizeChange(item._id, size.name)}
-                  className={`text-[0.9rem] sm:text-xs capitalize md:text-sm lg:text-sm px-2 py-1 rounded-full border cursor-pointer ${
+                  className={`text-[0.9rem] sm:text-xs text-nowrap capitalize md:text-xs px-2 py-1 rounded-full border cursor-pointer ${
                     selectedSizes[item._id] === size.name
                       ? "bg-primary-300/30 border-primary-400"
                       : "border-zinc-200"

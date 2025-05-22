@@ -49,8 +49,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       }
   
       if (updatedCart[cartKey]) {
-        if (updatedCart[cartKey].qty >= 3) {
-          toast.error("Maximum quantity per item is 3.");
+        if (updatedCart[cartKey].qty >= 5) {
+          toast.error("Maximum quantity per item is 5.");
           return prevCart;
         }
         updatedCart[cartKey].qty += 1;

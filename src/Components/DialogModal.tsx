@@ -18,7 +18,7 @@ interface DialogModalProps {
 const DialogModal = ({  onConfirm, showInput, inputMessage, setInputMessage, onCancel, message, btntext, isPending, pendingText }: DialogModalProps) => {
     return (
         <div onClick={onCancel} className='fixed top-0 animate-fadeIn left-0 w-full h-full z-50 bg-black bg-opacity-30 flex justify-center items-center'>
-            <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-xl shadow-lg p-6 relative'>
+            <div onClick={(e:any)=>e.stopPropagation()} className='bg-white max-w-[25rem] w-full rounded-2xl shadow-lg p-6 relative'>
 
                     <Icon
                         icon='maki:cross'
@@ -55,9 +55,8 @@ const DialogModal = ({  onConfirm, showInput, inputMessage, setInputMessage, onC
                     <div className='flex justify-center space-x-4 pt-4'>
                         <button
                         disabled={isPending}
-
                             onClick={onCancel}
-                            className='px-4 py-2 border border-gray-300 rounded-md hover:bg-gray-50'
+                            className='px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50'
                         >
                             Cancel
                         </button>
@@ -65,7 +64,7 @@ const DialogModal = ({  onConfirm, showInput, inputMessage, setInputMessage, onC
                         <button
                         disabled={isPending}
                             onClick={onConfirm}
-                            className='px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 disabled:bg-zinc-400'
+                            className='px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:bg-zinc-400'
                         >
                             {isPending?pendingText:btntext}
                         </button>
