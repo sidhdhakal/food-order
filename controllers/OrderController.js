@@ -24,12 +24,12 @@ exports.createOrder = async (req, res) => {
     }
 
     const invalidQuantityItems = decryptedData.items.filter(
-      (item) => !item.qty || item.qty > 3
+      (item) => !item.qty || item.qty > 5
     );
     if (invalidQuantityItems.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Maximum quantity per item is 3.",
+        message: "Maximum quantity per item is 5.",
       });
     }
 
@@ -181,13 +181,13 @@ exports.updateOrderItems = async (req, res) => {
 
     // ✅ Quantity validation
     const invalidQuantityItems = req.body.items.filter(
-      (item) => !item.qty || item.qty > 3
+      (item) => !item.qty || item.qty > 5
     );
 
     if (invalidQuantityItems.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Maximum quantity per item is 3.",
+        message: "Maximum quantity per item is 5.",
       });
     }
 
@@ -228,7 +228,6 @@ exports.updateOrderItems = async (req, res) => {
     });
   }
 };
-
 
 exports.getCurrentOrder = async (req, res) => {
   try {
