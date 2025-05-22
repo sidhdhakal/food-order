@@ -100,7 +100,7 @@ const Orders = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchValue, statusFilter, paymentFilter, filteredData]);
+  }, [searchValue, statusFilter]);
 
   const filteredOrders = useMemo(() => {
     if (!filteredData || filteredData.length === 0) return [];

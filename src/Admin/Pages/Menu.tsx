@@ -56,7 +56,7 @@ const Menu = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchValue, selectedCategory, products]);
+  }, [searchValue, selectedCategory]);
 
   // Pagination calculations
   const totalItems = filteredProducts?.length || 0;

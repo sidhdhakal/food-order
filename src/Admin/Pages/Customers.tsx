@@ -33,7 +33,7 @@ const Customers = () => {
   // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchValue, data]);
+  }, [searchValue]);
 
   // Pagination calculations
   const totalItems = filteredCustomers.length;
