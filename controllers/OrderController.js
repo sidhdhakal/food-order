@@ -15,11 +15,11 @@ exports.createOrder = async (req, res) => {
     if (
       !decryptedData.items ||
       !Array.isArray(decryptedData.items) ||
-      decryptedData.items.length > 2
+      decryptedData.items.length > 4
     ) {
       return res.status(400).json({
         success: false,
-        message: "Order must contain 2 or less 2 items.",
+        message: "You can only have up to 4 different items in your cart.",
       });
     }
 
@@ -29,7 +29,7 @@ exports.createOrder = async (req, res) => {
     if (invalidQuantityItems.length > 0) {
       return res.status(400).json({
         success: false,
-        message: "Each item quantity must be between 1 and 3.",
+        message: "Maximum quantity per item is 3.",
       });
     }
 
@@ -179,12 +179,24 @@ exports.updateOrderItems = async (req, res) => {
       });
     }
 
+    // ✅ Quantity validation
+    const invalidQuantityItems = req.body.items.filter(
+      (item) => !item.qty || item.qty > 3
+    );
+
+    if (invalidQuantityItems.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Maximum quantity per item is 3.",
+      });
+    }
+
     let updatedOrder = await Order.findByIdAndUpdate(
       order.id,
       {
         items: req.body.items,
         updatedAt: Date.now(),
-        isUpdated:true
+        isUpdated: true,
       },
       { new: true }
     );
@@ -216,6 +228,7 @@ exports.updateOrderItems = async (req, res) => {
     });
   }
 };
+
 
 exports.getCurrentOrder = async (req, res) => {
   try {
