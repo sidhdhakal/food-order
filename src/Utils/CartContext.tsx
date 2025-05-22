@@ -43,8 +43,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
       const updatedCart = { ...prevCart };
       const totalUniqueItems = Object.keys(updatedCart).length;
   
-      if (!updatedCart[cartKey] && totalUniqueItems >= 5) {
-        toast.error("You can only have up to 5 different items in your cart.");
+      if (!updatedCart[cartKey] && totalUniqueItems >= 4) {
+        toast.error("You can only have up to 4 different items in your cart.");
         return prevCart;
       }
   
