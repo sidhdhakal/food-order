@@ -32,25 +32,32 @@ const RightSidebar = ({sidebarOpen, setIsActiveComponent}:{sidebarOpen:boolean, 
 
   const [isOrderOpen, _] = useState(false);
 
-  const handlePlaceOrder=async ()=>{
-    const user=await CheckLogin()
-    const items=Object.values(cart)
-    if(items.length===0)
-        return 
-    items.map((item,index)=>{
-      const itemId=Object.keys(cart)[index].split('-')[0]
-      return {...item, itemId}
-    })
-    if(!user){
-       toast.error('Please login to place Order!')
-        setTimeout(()=>{
-        return window.location.href = "/login";
-        },1500)
-    }
-    if(paymentMethod=='esewa')
-      return handlePayButtonClick(items)
-    createOrder({items, message, paymentMethod})
+ const handlePlaceOrder = async () => {
+  const user = await CheckLogin();
+  const itemsArray = Object.values(cart);
+
+  if (itemsArray.length === 0) return;
+
+  if (!user) {
+    toast.error('Please login to place Order!');
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 1500);
+    return; 
   }
+
+  const items = itemsArray.map((item, index) => {
+    const itemId = Object.keys(cart)[index].split('-')[0];
+    return { ...item, itemId };
+  });
+
+  if (paymentMethod === 'esewa') {
+    return handlePayButtonClick(items);
+  }
+
+  createOrder({ items, message, paymentMethod });
+};
+
 
 
   async function handlePayButtonClick(items:any) {

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import toast from 'react-hot-toast';
 
 type CartItem = {
@@ -6,14 +6,14 @@ type CartItem = {
   name: string;
   image: string;
   itemId: number;
-  category:string;
+  category: string;
   size: string; 
   price: number; 
 };
 
 interface CartContextType {
   cart: { [key: string]: CartItem }; 
-  addToCart: (itemId: number, name: string, image: string, category:string, size: string, price: number) => void;
+  addToCart: (itemId: number, name: string, image: string, category: string, size: string, price: number) => void;
   removeFromCart: (itemId: number, size: string) => void;
   decreaseQuantity: (itemId: number, size: string) => void;
   clearCart: () => void;
@@ -33,10 +33,37 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
+const getCartFromStorage = (): { [key: string]: CartItem } => {
+  try {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : {};
+  } catch (error) {
+    console.error('Error loading cart from localStorage:', error);
+    return {};
+  }
+};
+
+const saveCartToStorage = (cart: { [key: string]: CartItem }) => {
+  try {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  } catch (error) {
+    console.error('Error saving cart to localStorage:', error);
+  }
+};
+
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<{ [key: string]: CartItem }>({});
 
-  const addToCart = (itemId: number, name: string, image: string,category:string, size: string, price: number) => {
+  useEffect(() => {
+    const savedCart = getCartFromStorage();
+    setCart(savedCart);
+  }, []);
+
+  useEffect(() => {
+    saveCartToStorage(cart);
+  }, [cart]);
+
+  const addToCart = (itemId: number, name: string, image: string, category: string, size: string, price: number) => {
     const cartKey = `${itemId}-${size}`;
     
     setCart((prevCart) => {
@@ -55,13 +82,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         }
         updatedCart[cartKey].qty += 1;
       } else {
-        updatedCart[cartKey] = { qty: 1, name, itemId, image,category, size, price };
+        updatedCart[cartKey] = { qty: 1, name, itemId, image, category, size, price };
       }
   
       return updatedCart;
     });
   };
-  
 
   const removeFromCart = (itemId: number, size: string) => {
     const cartKey = `${itemId}-${size}`;
@@ -89,9 +115,8 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     });
   };
 
-  // Function to clear the entire cart
   const clearCart = () => {
-    setCart({}); // Reset cart to an empty object
+    setCart({}); 
   };
 
   return (
