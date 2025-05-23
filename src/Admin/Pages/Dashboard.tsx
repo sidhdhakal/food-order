@@ -90,7 +90,7 @@ const Dashboard = () => {
       </div>
 
       {/* Additional Data Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         {/* Peak Hours */}
         <PeakHours data={data} />
 

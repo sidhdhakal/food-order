@@ -12,6 +12,7 @@ import { Category, Food} from "../../Utils/types";
 import ProductCard from "../AdminComponents/ProductCard";
 import { useDeleteFood } from "../../Queries/food/useDeleteFood";
 import { useGetAdminFoods } from "../../Queries/food/useGetAdminFoods";
+import paginationOptions from '../../Data/paginationvalues.json'
 
 const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -229,19 +230,17 @@ const Menu = () => {
           <h1 className="text-[1.5rem] font-semibold">
             All Products ({filteredProducts?.length || 0})
           </h1>
-
-          <select
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value)}
-            className="px-4 py-2 border rounded-md bg-white"
-          >
-            <option value="">All Categories</option>
-            {categories?.doc?.map((category: Category) => (
-              <option key={category._id} value={category.name}>
-                {category.name}
-              </option>
-            ))}
-          </select>
+         <select
+              className="px-3 py-1 border rounded-md bg-white text-sm"
+              value={itemsPerPage}
+              onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
+            >
+              {paginationOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
         </div>
 
         {/* Items per page and pagination info */}

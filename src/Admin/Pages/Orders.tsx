@@ -10,6 +10,7 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import Button from "../../Components/UI/Button";
 import InvoicePrintComponent from "../AdminComponents/InvoicePrintComponent";
+import paginationOptions from '../../Data/paginationvalues.json'
 
 // Define a basic type for orders
 interface Order {
@@ -23,7 +24,7 @@ interface Order {
   currentStatus: {
     status: string;
   };
-  isUpdated?:boolean
+  isUpdated?: boolean;
   items: any[];
   paymentMethod: string;
   message?: string;
@@ -104,20 +105,23 @@ const Orders = () => {
 
   const filteredOrders = useMemo(() => {
     if (!filteredData || filteredData.length === 0) return [];
-  
+
     return filteredData.filter((order) => {
       if (!order.user || typeof order.user !== "object") return false;
-  
+
       const name = order.user.name || "";
       const email = order.user.email || "";
-      
-      const matchesSearch = !searchValue || 
-        name.toLowerCase().includes(searchValue.toLowerCase()) || 
+
+      const matchesSearch =
+        !searchValue ||
+        name.toLowerCase().includes(searchValue.toLowerCase()) ||
         email.toLowerCase().includes(searchValue.toLowerCase());
-  
-      const matchesStatus = !statusFilter || order.currentStatus?.status === statusFilter;
-      const matchesPayment = !paymentFilter || order.paymentMethod === paymentFilter;
-  
+
+      const matchesStatus =
+        !statusFilter || order.currentStatus?.status === statusFilter;
+      const matchesPayment =
+        !paymentFilter || order.paymentMethod === paymentFilter;
+
       return matchesSearch && matchesStatus && matchesPayment;
     });
   }, [searchValue, filteredData, statusFilter, paymentFilter]);
@@ -133,7 +137,7 @@ const Orders = () => {
   const getPageNumbers = () => {
     const pages = [];
     const maxVisible = 5;
-    
+
     if (totalPages <= maxVisible) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -153,7 +157,7 @@ const Orders = () => {
         }
       }
     }
-    
+
     return pages;
   };
 
@@ -251,33 +255,33 @@ const Orders = () => {
           </h1>
 
           <div className="relative w-fit flex gap-x-2">
-          <div className="flex gap-4">
-            <select
-              className="px-4 py-2 border rounded-md bg-white"
-              value={statusFilter || ""}
-              onChange={(e) => setStatusFilter(e.target.value || null)}
-            >
-              <option value="">All Statuses</option>
-              <option value="Order Placed">Order Placed</option>
-              <option value="Order Confirmed">Order Confirmed</option>
-              <option value="Preparing">Preparing</option>
-              <option value="Ready for Pickup">Ready for Pickup</option>
-              <option value="Completed">Completed</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
+            <div className="flex gap-4">
+              <select
+                className="px-4 py-2 border rounded-md bg-white"
+                value={statusFilter || ""}
+                onChange={(e) => setStatusFilter(e.target.value || null)}
+              >
+                <option value="">All Statuses</option>
+                <option value="Order Placed">Order Placed</option>
+                <option value="Order Confirmed">Order Confirmed</option>
+                <option value="Preparing">Preparing</option>
+                <option value="Ready for Pickup">Ready for Pickup</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
 
-            {/* Payment Method Filter */}
-            <select
-              className="px-4 py-2 border rounded-md bg-white"
-              value={paymentFilter || ""}
-              onChange={(e) => setPaymentFilter(e.target.value || null)}
-            >
-              <option value="">All Payment Methods</option>
-              <option value="esewa">Esewa</option>
-              <option value="Not Paid">Not Paid</option>
-              <option value="cash">Cash</option>
-            </select>
-          </div>
+              {/* Payment Method Filter */}
+              <select
+                className="px-4 py-2 border rounded-md bg-white"
+                value={paymentFilter || ""}
+                onChange={(e) => setPaymentFilter(e.target.value || null)}
+              >
+                <option value="">All Payment Methods</option>
+                <option value="esewa">Esewa</option>
+                <option value="Not Paid">Not Paid</option>
+                <option value="cash">Cash</option>
+              </select>
+            </div>
             <button
               className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow-sm hover:bg-gray-50"
               onClick={() => setShowDatePicker(!showDatePicker)}
@@ -336,16 +340,18 @@ const Orders = () => {
               value={itemsPerPage}
               onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
             >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
+              {paginationOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <span className="text-sm text-gray-600">entries</span>
           </div>
-          
+
           <div className="text-sm text-gray-600">
-            Showing {totalItems === 0 ? 0 : startIndex + 1} to {Math.min(endIndex, totalItems)} of {totalItems} entries
+            Showing {totalItems === 0 ? 0 : startIndex + 1} to{" "}
+            {Math.min(endIndex, totalItems)} of {totalItems} entries
           </div>
         </div>
 
@@ -392,7 +398,7 @@ const Orders = () => {
         {totalPages > 1 && (
           <div className="mt-6 flex justify-center items-center gap-2">
             {/* Previous Button */}
-              <button
+            <button
               onClick={() => handlePageChange(1)}
               disabled={currentPage === 1}
               className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -414,8 +420,8 @@ const Orders = () => {
                 onClick={() => handlePageChange(pageNum)}
                 className={`px-3 py-2 text-sm border rounded-md ${
                   currentPage === pageNum
-                    ? 'bg-primary-500 text-white border-primary-500'
-                    : 'bg-white text-gray-600 hover:bg-gray-50'
+                    ? "bg-primary-500 text-white border-primary-500"
+                    : "bg-white text-gray-600 hover:bg-gray-50"
                 }`}
               >
                 {pageNum}
@@ -435,7 +441,7 @@ const Orders = () => {
             >
               <Icon icon="mdi:chevron-right" className="w-4 h-4" />
             </button>
-              <button
+            <button
               onClick={() => handlePageChange(totalPages)}
               disabled={currentPage === totalPages}
               className="px-3 py-2 text-sm border rounded-md bg-white hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"

@@ -6,6 +6,7 @@ import CustomerCard from "../AdminComponents/CustomerCard";
 import { useGetCustomers } from "../../Queries/useGetCustomers";
 import { useDeleteCustomer } from "../../Queries/useDeleteCustomer";
 import { useUpdateCustomer } from "../../Queries/useUpdateCustomer";
+import paginationOptions from '../../Data/paginationvalues.json'
 
 const Customers = () => {
   const { data, isLoading, error, isError} = useGetCustomers();
@@ -139,15 +140,16 @@ const Customers = () => {
         <div className="pb-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-600">Show</span>
-            <select
+          <select
               className="px-3 py-1 border rounded-md bg-white text-sm"
               value={itemsPerPage}
               onChange={(e) => handleItemsPerPageChange(Number(e.target.value))}
             >
-              <option value={10}>10</option>
-              <option value={20}>20</option>
-              <option value={50}>50</option>
-              <option value={100}>100</option>
+              {paginationOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
             </select>
             <span className="text-sm text-gray-600">entries</span>
           </div>

@@ -2,7 +2,7 @@ import { Icon } from '@iconify/react/dist/iconify.js'
 
 const StatsGrid = ({data}:{data:any}) => {
   return (
-     <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-8">
+     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-6 mb-8">
             {data?.doc?.stats.map((stat:any, index:number) => (
               <div key={index} className={`bg-white p-4 rounded-xl shadow-sm border-t-2 ${stats[index].borderColor}`}>
                 <div className="flex items-start gap-4">
