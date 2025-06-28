@@ -216,7 +216,7 @@ exports.sendPasswordResetLink = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
     if (!user) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "User With that email doesn't Exists",
       });
