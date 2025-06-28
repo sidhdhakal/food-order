@@ -89,9 +89,9 @@ exports.createFeedback = async (req, res) => {
           return {
             ...item.toObject(),  
             user:{
-              _id:user._id,
-              name:user.name,
-              email:user.email
+              _id:user?._id || null,
+              name:user?.name || null,
+              email:user?.email || null
             },
             items:order.items,
           };
