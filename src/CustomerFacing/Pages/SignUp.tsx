@@ -4,6 +4,7 @@ import { useSignUp } from "../../Queries/useSignUp";
 import GoogleLogin from "../Features/GoogleLogin";
 import Button from "../../Components/UI/Button";
 import toast from "react-hot-toast";
+import Logo from "../../Components/UI/Logo";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -51,9 +52,7 @@ const SignUp = () => {
       >
         <div className="flex flex-col justify-center items-center mb-2">
           <p className="self-center ">Welcome to</p>
-          <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
-            Food<span className="text-primary-300">Mate</span>
-          </h1>
+          <Logo className="!text-[1.5rem] 4xl:text-[2.6rem]"/>
         </div>
         <div>
           <label htmlFor="name">Full Name:</label>
@@ -96,6 +95,7 @@ const SignUp = () => {
         <Button 
          type="submit"
          disabled={isPending}
+         className="mt-4"
         >
         {isPending?'Signing Up...':'Signup'}
         </Button>

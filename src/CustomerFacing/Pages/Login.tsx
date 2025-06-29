@@ -6,6 +6,7 @@ import { useLogin } from "../../Queries/useLogin";
 import Button from "../../Components/UI/Button";
 import toast from "react-hot-toast";
 import { usePasswordResetEmail } from "../../Queries/usePasswordResetEmail";
+import Logo from "../../Components/UI/Logo";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -46,9 +47,10 @@ const Login = () => {
     >
       <div className="flex flex-col justify-center items-center  mb-2">
         <p className="self-center ">Welcome to</p>
-        <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
+        {/* <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
           Food<span className="text-primary-300">Mate</span>
-        </h1>
+        </h1> */}
+        <Logo className="!text-[1.5rem] 4xl:text-[2.6rem]"/>
       </div>
       <div>
         <label htmlFor="email">Email:</label>
@@ -86,9 +88,10 @@ const Login = () => {
   >
     <div className="flex flex-col justify-center items-center  mb-2">
       <p className="self-center ">Welcome to</p>
-      <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
+      {/* <h1 className="font-bold text-[1.5rem] 4xl:text-[2.6rem] text-primary-600 leading-[1] self-center">
         Food<span className="text-primary-300">Mate</span>
-      </h1>
+      </h1> */}
+      <Logo className="!text-[1.5rem] 4xl:text-[2.6rem]"/>
     </div>
     <div>
       <label htmlFor="email">Email:</label>

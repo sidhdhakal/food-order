@@ -129,12 +129,12 @@ const Menupage = ({ searchValue, setSearchValue }: MenuPageProps) => {
       />
 
       <div className="w-full">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between flex-col md:flex-row items-start md:items-center gap-y-2">
           <h2 className="text-lg md:text-xl lg:text-3xl text-nowrap font-semibold">
             {selectedCategory || "All"} ({getSortedOffers()?.length || 0})
           </h2>
-          <div className="w-full mx-4">
-            <div className="flex gap-2 justify-end">
+          <div className="w-full md:mx-4">
+            <div className="flex gap-2 justify-start md:justify-end">
               <button
                 onClick={() => setVegFilter("all")}
                 className={`px-4 py-2 rounded-xl text-xs font-medium transition-colors ${
