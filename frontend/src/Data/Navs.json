@@ -1,0 +1,31 @@
+[
+    {
+      "name": "Home",
+      "id": 1,
+      "icon": "si:home-duotone",
+      "activeIcon": "solar:home-2-bold",
+      "link": "/homepage"
+    },
+    {
+      "name": "Menu",
+      "id": 2,
+      "icon": "ph:hamburger-duotone",
+      "activeIcon": "material-symbols-light:menu-book",
+      "link": "/menu"
+    },
+    {
+      "name": "Orders",
+      "id": 3,
+      "icon": "lets-icons:order-duotone-line",
+      "activeIcon": "material-symbols-light:order-approve-rounded",
+      "link": "/orders"
+    },
+    {
+      "name": "Feedback",
+      "id": 4,
+      "icon": "ic:twotone-feedback",
+      "activeIcon": "fluent:person-feedback-32-filled",
+      "link": "/feedback"
+    }
+  ]
+  

@@ -1,0 +1,37 @@
+[
+    {
+    "id": 1,
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "picture": "https://www.example.com/images/john_doe.jpg",
+    "isActive": true
+    },
+    {
+    "id": 2,
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "picture": "https://www.example.com/images/jane_smith.jpg",
+    "isActive": false
+    },
+    {
+    "id": 3,
+    "name": "Michael Johnson",
+    "email": "michael.johnson@example.com",
+    "picture": "https://www.example.com/images/michael_johnson.jpg",
+    "isActive": true
+    },
+    {
+    "id": 4,
+    "name": "Emily White",
+    "email": "emily.white@example.com",
+    "picture": "https://www.example.com/images/emily_white.jpg",
+    "isActive": true
+    },
+    {
+    "id": 5,
+    "name": "David Brown",
+    "email": "david.brown@example.com",
+    "picture": "https://www.example.com/images/david_brown.jpg",
+    "isActive": false
+    }
+]

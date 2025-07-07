@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "Beverages",
+    "icon": "/Icons/cocktail.png"
+  },
+  {
+    "id": 2,
+    "name": "Fast Food",
+    "icon": "/Icons/fast-food.png"
+  },
+  {
+    "id": 3,
+    "name": "Main Course",
+    "icon": "/Icons/main-course.png"
+
+  },
+  {
+    "id": 4,
+    "name": "Snacks",
+    "icon": "/Icons/popcorn.png"
+
+  },
+  {
+    "id": 5,
+    "name": "Desserts",
+    "icon": "/Icons/cake.png"
+
+  },
+  {
+    "id": 6,
+    "name": "Healthy Options",
+    "icon": "/Icons/healthy-food.png"
+
+  }
+]

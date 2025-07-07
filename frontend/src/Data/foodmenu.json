@@ -1,0 +1,457 @@
+[
+	{
+	  "id": 101,
+	  "name": "Black Tea",
+	  "description": "Black tea with special garam masala.",
+	  "image": "/foods/blacktea.png",
+	  "veg":true,
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 15
+		},
+		{
+		  "name": "Large",
+		  "price": 20
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.5,
+	  "available": false
+	},
+	{
+	  "id": 102,
+	  "name": "Milk Tea",
+	  "description": "Hot boiled milk.",
+	  "image": "/foods/milk.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 25
+		},
+		{
+		  "name": "Large",
+		  "price": 30
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.7,
+	  "available": true
+	},
+	{
+	  "id": 103,
+	  "name": "Lemon Tea",
+	  "description": "Refreshing tea infused with fresh lemon juice.",
+	  "image": "/foods/lemontea.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 25
+		},
+		{
+		  "name": "Large",
+		  "price": 30
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.8,
+	  "available": true
+	},
+	{
+	  "id": 104,
+	  "name": "Green Tea",
+	  "description": "A healthy and soothing cup of green tea.",
+	  "image": "/foods/greentea.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 30
+		},
+		{
+		  "name": "Large",
+		  "price": 35
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 105,
+	  "name": "Chicken Burger",
+	  "description": "Juicy chicken patty in a soft bun with lettuce and mayo.",
+	  "image": "/foods/chickenburger.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 150
+		},
+		{
+		  "name": "Large",
+		  "price": 180
+		}
+	  ],
+	  "category": "Fast Food",
+	  "rating": 4.7,
+	  "available": true
+	},
+	{
+	  "id": 106,
+	  "name": "Veg Burger",
+	  "description": "Crispy vegetable patty in a bun with fresh veggies and sauces.",
+	  "image": "/foods/vegburger.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 120
+		},
+		{
+		  "name": "Large",
+		  "price": 140
+		}
+	  ],
+	  "category": "Fast Food",
+	  "rating": 4.4,
+	  "available": true
+	},
+	{
+	  "id": 107,
+	  "name": "Chicken Khana Set",
+	  "description": "A complete meal with rice, chicken curry, and side dishes.",
+	  "image": "/foods/chickenkhana.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 200
+		}
+	  ],
+	  "category": "Main Course",
+	  "rating": 4.9,
+	  "available": true
+	},
+	{
+	  "id": 108,
+	  "name": "Veg Khana Set",
+	  "description": "A vegetarian meal with rice, dal, vegetables, and pickle.",
+	  "image": "/foods/vegkhana.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 150
+		}
+	  ],
+	  "category": "Main Course",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 109,
+	  "name": "Egg Chowmin",
+	  "description": "Stir-fried noodles with egg and mixed vegetables.",
+	  "image": "/foods/eggchowmein.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 130
+		},
+		{
+		  "name": "Large",
+		  "price": 160
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.7,
+	  "available": true
+	},
+	{
+	  "id": 110,
+	  "name": "Veg Chowmin",
+	  "description": "Stir-fried noodles with mixed vegetables.",
+	  "image": "/foods/vegchowmein.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 100
+		},
+		{
+		  "name": "Large",
+		  "price": 130
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.5,
+	  "available": true
+	},
+	{
+	  "id": 111,
+	  "name": "Chicken Momo",
+	  "description": "Steamed dumplings filled with spiced chicken.",
+	  "image": "/foods/chickenmomo.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 120
+		},
+		{
+		  "name": "Large",
+		  "price": 150
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.8,
+	  "available": true
+	},
+	{
+	  "id": 112,
+	  "name": "Veg Momo",
+	  "description": "Steamed dumplings filled with fresh vegetables.",
+	  "image": "/foods/vegmomo.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 80
+		},
+		{
+		  "name": "Large",
+		  "price": 100
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.4,
+	  "available": true
+	},
+	{
+	  "id": 113,
+	  "name": "Donut",
+	  "description": "Soft and fluffy fried dough topped with icing.",
+	  "image": "/foods/donut.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 50
+		}
+	  ],
+	  "category": "Desserts",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 114,
+	  "name": "Fried Potato",
+	  "description": "Crispy fried potato sticks served with ketchup.",
+	  "image": "/foods/friedpotato.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 40
+		},
+		{
+		  "name": "Large",
+		  "price": 60
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.5,
+	  "available": true
+	},
+	{
+	  "id": 115,
+	  "name": "Fried Rice",
+	  "description": "Rice stir-fried with vegetables and spices.",
+	  "image": "/foods/friedrice.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 140
+		},
+		{
+		  "name": "Large",
+		  "price": 180
+		}
+	  ],
+	  "category": "Main Course",
+	  "rating": 4.8,
+	  "available": true
+	},
+	{
+	  "id": 116,
+	  "name": "Fruit Salad",
+	  "description": "A mix of fresh seasonal fruits.",
+	  "image": "/foods/fruitsalad.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 70
+		}
+	  ],
+	  "category": "Healthy Options",
+	  "rating": 4.7,
+	  "available": true
+	},
+	{
+	  "id": 117,
+	  "name": "Veg Salad",
+	  "description": "Fresh vegetable salad with a tangy dressing.",
+	  "image": "/foods/vegsalad.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 50
+		}
+	  ],
+	  "category": "Healthy Options",
+	  "rating": 4.5,
+	  "available": true
+	},
+	{
+	  "id": 118,
+	  "name": "Aalu Paratha",
+	  "description": "Flatbread stuffed with spiced mashed potatoes.",
+	  "image": "/foods/paratha.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 30
+		}
+	  ],
+	  "category": "Breakfast",
+	  "rating": 4.4,
+	  "available": true
+	},
+	{
+	  "id": 119,
+	  "name": "Roti",
+	  "description": "Soft whole wheat flatbread.",
+	  "image": "/foods/roti.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 20
+		}
+	  ],
+	  "category": "Main Course",
+	  "rating": 4.3,
+	  "available": true
+	},
+	{
+	  "id": 120,
+	  "name": "Samosa",
+	  "description": "Crispy fried pastry filled with spiced potatoes.",
+	  "image": "/foods/samosa.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 25
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 121,
+	  "name": "Sandwich",
+	  "description": "Fresh bread with your choice of fillings.",
+	  "image": "/foods/sandwich.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 30
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.5,
+	  "available": true
+	},
+	{
+	  "id": 122,
+	  "name": "Pepsi",
+	  "description": "Chilled carbonated soft drink to refresh your day.",
+	  "image": "/foods/pepsi.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 40
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.3,
+	  "available": true
+	},
+	{
+	  "id": 123,
+	  "name": "Lassi",
+	  "description": "A refreshing yogurt-based drink, sweetened to perfection.",
+	  "image": "/foods/lassi.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 50
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.8,
+	  "available": true
+	},
+	{
+	  "id": 124,
+	  "name": "Iced Latte",
+	  "description": "Chilled coffee blended with milk and ice.",
+	  "image": "/foods/icedlatte.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 70
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 125,
+	  "name": "Sprite",
+	  "description": "Lemon-lime flavored carbonated soft drink.",
+	  "image": "/foods/sprite.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 40
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.3,
+	  "available": true
+	},
+	{
+	  "id": 126,
+	  "name": "Cappuccino",
+	  "description": "Rich espresso topped with steamed milk and foam.",
+	  "image": "/foods/capuccino.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 70
+		}
+	  ],
+	  "category": "Beverages",
+	  "rating": 4.6,
+	  "available": true
+	},
+	{
+	  "id": 127,
+	  "name": "Nimki",
+	  "description": "Crispy and savory fried snack made with flour.",
+	  "image": "/foods/nimki.png",
+	  "sizes": [
+		{
+		  "name": "Regular",
+		  "price": 20
+		}
+	  ],
+	  "category": "Snacks",
+	  "rating": 4.2,
+	  "available": true
+	}
+  ]
+  

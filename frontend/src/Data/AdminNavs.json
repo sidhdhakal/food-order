@@ -1,0 +1,28 @@
+[
+    {
+      "name": "Dashboard",
+      "id": 1,
+      "icon": "duo-icons:dashboard"
+    },
+    {
+      "name": "Menu",
+      "id": 2,
+      "icon": "ph:hamburger-duotone"
+    },
+    {
+      "name": "Orders",
+      "id": 3,
+      "icon": "lets-icons:order-duotone-line"
+    },
+    {
+      "name": "Customers",
+      "id": 4,
+      "icon": "pepicons-print:people"
+    },
+    {
+      "name": "Feedback",
+      "id": 5,
+      "icon": "ic:twotone-feedback"
+    }
+  ]
+  

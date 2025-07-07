@@ -1,0 +1,55 @@
+[
+    {
+      "id": "FB001",
+      "orderId": "ORD123",
+      "date": "2025-01-17",
+      "category": "Food Quality",
+      "rating": 5,
+      "title": "Amazing Burger!",
+      "comment": "The chicken burger was perfectly cooked and very tasty. Will order again!",
+      "items": [
+        "Chicken Burger",
+        "French Fries"
+      ],
+      "customerName": "John Doe",
+      "response": {
+        "text": "Thank you for your wonderful feedback! We're glad you enjoyed your meal.",
+        "date": "2025-01-17",
+        "from": "Restaurant Manager"
+      }
+    },
+    {
+      "id": "FB002",
+      "orderId": "ORD124",
+      "date": "2025-01-17",
+      "category": "Service",
+      "rating": 4,
+      "title": "Quick Service",
+      "comment": "Food was prepared quickly, but would appreciate if the staff were more friendly.",
+      "items": [
+        "Veggie Pizza"
+      ],
+      "customerName": "Jane Smith",
+      "response": null
+    },
+    {
+      "id": "FB003",
+      "orderId": "ORD120",
+      "date": "2025-01-16",
+      "category": "App Experience",
+      "rating": 3,
+      "title": "App Needs Improvement",
+      "comment": "The app is good but sometimes crashes during payment.",
+      "items": [
+        "Chicken Wings",
+        "Sprite"
+      ],
+      "customerName": "Mike Johnson",
+      "response": {
+        "text": "We apologize for the inconvenience. Our team is working on fixing the app issues.",
+        "date": "2025-01-16",
+        "from": "Technical Support"
+      }
+    }
+  ]
+  
