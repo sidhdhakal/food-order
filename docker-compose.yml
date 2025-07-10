@@ -1,51 +1,40 @@
 version: '3.8'
 
 services:
-  # 1. The MongoDB Database Service
   mongo:
-    image: mongo:6.0
-    ports:
-      # Exposes the database to your host machine on the default port
-      # so you can connect with tools like MongoDB Compass if you want.
-      - "27017:27017"
-    volumes:
-      # This ensures your database data persists even if the container stops.
-      - mongodb_data:/data/db
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
     environment:
-      # Sets up the initial root user and password for the database.
-      # These credentials should be used in your DB_CONNECTION_STRING.
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
 
-  # 2. The Backend Node.js Service
   backend:
-    build:
-      context: ./backend      # Tells Docker to build from the 'backend' folder
-      dockerfile: Dockerfile
+    build: ./backend
+    container_name: backend
+    restart: unless-stopped
     ports:
-      # Maps port 5000 on your local machine to port 4000 inside the container,
-      # matching the port your server.js is listening on.
-      - "5000:4000"
-    environment:
-      # Loads the database connection string and JWT secret from your .env file.
-      # This is the secure and flexible way to handle configuration.
-      DB_CONNECTION_STRING: ${DB_CONNECTION_STRING}
-      JWT_SECRET: ${JWT_SECRET}
+      - "4000:4000"
+    env_file:
+      - ./backend/.env
     depends_on:
-      # This ensures the 'mongo' service is started and running before the backend starts.
-      # This prevents your app from crashing if the database isn't ready.
       - mongo
+    command: sh ./wait-for-mongo.sh
 
-  # 3. The Frontend React/Vite Service
   frontend:
-    build:
-      context: ./frontend     # Tells Docker to build from the 'frontend' folder
-      dockerfile: Dockerfile
+    build: ./frontend
+    container_name: frontend
+    restart: unless-stopped
     ports:
-      # Maps port 8080 on your local machine to port 80 inside the container,
-      # which is the port Nginx is serving on.
-      - "8080:80"
+      - "3000:80"
+    env_file:
+      - ./frontend/.env
+    depends_on:
+      - backend
 
-# This top-level declaration is required to create the named volume for MongoDB.
 volumes:
-  mongodb_data:
+  mongo-data:

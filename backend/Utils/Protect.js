@@ -19,7 +19,7 @@ exports.protect = async (req, res, next) => {
 
     if(token==undefined) return 
 
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const freshUser = await User.findById(decoded.id);
 
     if (!freshUser)
