@@ -1,28 +1,30 @@
 #!/bin/bash
 
-# Local frontend address (React usually runs on 5173 in Vite)
+# --- Configuration ---
 LOCAL_HOST="localhost"
 FRONTEND_PORT="5173"
+NEW_VALUE="FRONTEND_URL=\"http://${LOCAL_HOST}:${FRONTEND_PORT}\""
 
-# Desired value
-new_value="FRONTEND_URL=\"http://${LOCAL_HOST}:${FRONTEND_PORT}\""
+# --- Path Logic (This is the key fix) ---
+# Get the directory where the script itself is located.
+SCRIPT_DIR=$(dirname "$0")
+# Build an absolute path to the target file, no matter where the script is run from.
+FILE_TO_FIND="${SCRIPT_DIR}/../backend/.env"
 
-# Path to the .env file
-file_to_find="../backend/.env.docker"
-
-# Check if file exists
-if [ ! -f "$file_to_find" ]; then
-  echo "❌ ERROR: File not found at $file_to_find"
-  exit 1
+# --- Main Logic ---
+# Check if the .env file exists. If not, create it.
+if [ ! -f "$FILE_TO_FIND" ]; then
+  echo "🟡 INFO: File not found at $FILE_TO_FIND. Creating it..."
+  touch "$FILE_TO_FIND"
 fi
 
-# Check if FRONTEND_URL line exists
-if grep -q "^FRONTEND_URL=" "$file_to_find"; then
-  # Update the existing line
-  sed -i -e "s|^FRONTEND_URL.*|$new_value|g" "$file_to_find"
-  echo "✅ FRONTEND_URL updated to: $new_value"
+# Check if the FRONTEND_URL line already exists in the file
+if grep -q "^FRONTEND_URL=" "$FILE_TO_FIND"; then
+  # It exists, so update it using sed
+  sed -i -e "s|^FRONTEND_URL.*|$NEW_VALUE|" "$FILE_TO_FIND"
+  echo "✅ FRONTEND_URL updated in ${FILE_TO_FIND}"
 else
-  # Append the line if it doesn't exist
-  echo "$new_value" >> "$file_to_find"
-  echo "➕ FRONTEND_URL added: $new_value"
+  # It does not exist, so append it to the end of the file
+  echo "$NEW_VALUE" >> "$FILE_TO_FIND"
+  echo "➕ FRONTEND_URL added to ${FILE_TO_FIND}"
 fi

@@ -1,26 +1,30 @@
 #!/bin/bash
 
-# Localhost IP and Port
+# --- Configuration ---
 LOCAL_HOST="localhost"
-PORT="4000"  # your local backend port
+BACKEND_PORT="4000"
+NEW_VALUE="VITE_BACKEND_URL=\"http://${LOCAL_HOST}:${BACKEND_PORT}\""
 
-# Path to the .env file
-file_to_find="../frontend/.env"
+# --- Path Logic (This is the key fix) ---
+# Get the directory where the script itself is located.
+SCRIPT_DIR=$(dirname "$0")
+# Build an absolute path to the target file, no matter where the script is run from.
+FILE_TO_FIND="${SCRIPT_DIR}/../frontend/.env"
 
-# Check current value of VITE_BACKEND_URL
-current_url=$(grep VITE_BACKEND_URL "$file_to_find")
+# --- Main Logic ---
+# Check if the .env file exists. If not, create it.
+if [ ! -f "$FILE_TO_FIND" ]; then
+  echo "🟡 INFO: File not found at $FILE_TO_FIND. Creating it..."
+  touch "$FILE_TO_FIND"
+fi
 
-# Desired value
-new_value="VITE_BACKEND_URL=\"http://${LOCAL_HOST}:${PORT}\""
-
-# Update if it's different
-if [[ "$current_url" != "$new_value" ]]; then
-    if [ -f "$file_to_find" ]; then
-        sed -i -e "s|VITE_BACKEND_URL.*|$new_value|g" "$file_to_find"
-        echo "✅ .env updated to use local backend: $new_value"
-    else
-        echo "❌ ERROR: $file_to_find not found."
-    fi
+# Check if the VITE_BACKEND_URL line already exists in the file
+if grep -q "^VITE_BACKEND_URL=" "$FILE_TO_FIND"; then
+  # It exists, so update it using sed
+  sed -i -e "s|^VITE_BACKEND_URL.*|$NEW_VALUE|" "$FILE_TO_FIND"
+  echo "✅ VITE_BACKEND_URL updated in ${FILE_TO_FIND}"
 else
-    echo "ℹ️ No change needed. Already using local backend."
+  # It does not exist, so append it to the end of the file
+  echo "$NEW_VALUE" >> "$FILE_TO_FIND"
+  echo "➕ VITE_BACKEND_URL added to ${FILE_TO_FIND}"
 fi
