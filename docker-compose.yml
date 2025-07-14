@@ -8,10 +8,10 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
-    ports:
-      - "27017:27017"
     volumes:
       - mongo-data:/data/db
+    networks:
+      - foodmate-net
 
   backend:
     build: ./backend
@@ -23,7 +23,8 @@ services:
       - ./backend/.env
     depends_on:
       - mongo
-    command: sh ./wait-for-mongo.sh
+    networks:
+      - foodmate-net
 
   frontend:
     build: ./frontend
@@ -35,6 +36,12 @@ services:
       - ./frontend/.env
     depends_on:
       - backend
+    networks:
+      - foodmate-net
 
 volumes:
   mongo-data:
+
+networks:
+  foodmate-net:
+    driver: bridge
