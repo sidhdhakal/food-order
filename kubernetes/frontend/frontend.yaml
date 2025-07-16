@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: mern 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: siddhartha54/foodmate-frontend:latest
+          ports:
+            - containerPort: 80    
+          env:
+            - name: VITE_BACKEND_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: frontend-config
+                  key: VITE_BACKEND_URL

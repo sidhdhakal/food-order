@@ -15,25 +15,17 @@ spec:
     spec:
       containers:
         - name: backend
-          image: "siddhartha54/foodmate-backend:latest"
+          image: siddhartha54/foodmate-backend:v.10
           ports:
             - containerPort: 4000
           env:
             - name: PORT
-              value: "4000"
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: PORT
             - name: MONGODB_URI
-              value: mongodb://root:root@mongo:27017/foodmate?authSource=admin
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: backend
-  namespace: mern 
-spec:
-  selector:
-    app: backend
-  ports:
-    - protocol: TCP
-      port: 4000
-      targetPort: 4000
+              valueFrom:
+                secretKeyRef:
+                  name: backend-secret
+                  key: MONGODB_URI

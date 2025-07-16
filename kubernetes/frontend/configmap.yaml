@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: mern
+data:
+  VITE_BACKEND_URL: "http://backend-service:4000"
