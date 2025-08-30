@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1
+kind: Kustomization
+
+resources:
+  - backend/backend.yaml
+  - backend/service.yml
+  - frontend/frontend.yaml
+  - frontend/service.yml
+  - mongo/deployment.yaml
+  - mongo/service.yaml
+  - ingress.yaml
+  - namespace.yaml

@@ -13,12 +13,13 @@ connectmongo();
 // Define the list of origins that are allowed to access your backend
 const corsOptions = {
     origin: [
-        'http://localhost:3000', // <--- IMPORTANT: Added your frontend's Docker origin
+        'http://localhost:3000/', // <--- IMPORTANT: Added your frontend's Docker origin
         'http://localhost:5173', // Your original local dev origin
         'https://food-mate-v1.vercel.app' // Your production origin
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    crredentials : true
 };
 
 // --- Middleware ---
