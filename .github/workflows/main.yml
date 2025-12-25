@@ -85,3 +85,4 @@ jobs:
             Docker Tag: ${{ env.FRONTEND_TAG }}
 
             Frontend deployed Successfull on EC2 🚀
+ 
