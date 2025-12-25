@@ -6,5 +6,5 @@ on:
     tags:
       - "v*"
 jobs:
-  build-and-deploy:
+  build-and-deploys:
     runs-on: ubuntu-latest
