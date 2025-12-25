@@ -12,7 +12,7 @@ pipeline {
     }
     
     stages {
-        stage("Validate Parameters") {
+        stage("Validate Parameter") {
             steps {
                 script {
                     if (params.FRONTEND_DOCKER_TAG == '' || params.BACKEND_DOCKER_TAG == '') {
