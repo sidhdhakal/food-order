@@ -1,6 +1,87 @@
+name: Frontend CI/CD (Docker Hub)
+
 on:
   push:
     tags:
-      - 'v*'
+      - "v*"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-      
+    steps:
+      # 1️⃣ Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2️⃣ Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 3️⃣ Generate random 2-digit Docker tag
+      - name: Generate Docker Tag
+        run: |
+          TAG=v.$(shuf -i 10-99 -n 1)
+          echo "FRONTEND_TAG=$TAG" >> $GITHUB_ENV
+          echo "Generated tag: $TAG"
+
+      # 4️⃣ Build & Push Frontend Image
+      - name: Build & Push Frontend Image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/mis-frontend:${{ env.FRONTEND_TAG }} .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/mis-frontend:${{ env.FRONTEND_TAG }}
+
+      # 5️⃣ Deploy Frontend on EC2
+      - name: Deploy Frontend on EC2
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            cd ~/MIS
+            export FRONTEND_TAG=${{ env.FRONTEND_TAG }}
+            docker compose pull frontend
+            docker compose up -d frontend
+            docker image prune -f
+
+      # 6️⃣ GitHub Commit Status
+      - name: Notify Frontend Deployment Success (GitHub)
+        if: success()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.sha,
+              state: "success",
+              description: "✅ Frontend deployed (Tag: ${{ env.FRONTEND_TAG }})",
+              context: "Frontend Deployment"
+            })
+
+      # 7️⃣ Gmail Notification
+      - name: Send Gmail Notification (Success)
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "✅ Frontend Deployment Successfully"
+          to: ${{ secrets.GMAIL_USERNAME }}
+          from: GitHub Actions <${{ secrets.GMAIL_USERNAME }}>
+          body: |
+            🎉 Frontend Deployment Successfuly!
+
+            Repository: ${{ github.repository }}
+            Branch: devops
+            Commit: ${{ github.sha }}
+            Workflow: ${{ github.workflow }}
+            Run ID: ${{ github.run_id }}
+            Docker Tag: ${{ env.FRONTEND_TAG }}
+
+            Frontend deployed Successfully on EC2 🚀
