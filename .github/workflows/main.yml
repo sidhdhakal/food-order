@@ -84,4 +84,4 @@ jobs:
             Run ID: ${{ github.run_id }}
             Docker Tag: ${{ env.FRONTEND_TAG }}
 
-            Frontend deployed Successful on EC2 🚀
+            Frontend deployed Successfull on EC2 🚀
