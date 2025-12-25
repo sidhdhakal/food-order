@@ -1,1 +1,10 @@
 on push
+name: Frontend CI/CD (Docker Hub)
+
+on:
+  push:
+    tags:
+      - "v*"
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
