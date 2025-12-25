@@ -1,4 +1,3 @@
-on push
 name: Frontend CI/CD (Docker Hub)
 
 on:
